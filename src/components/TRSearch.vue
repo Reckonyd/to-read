@@ -1,13 +1,13 @@
 <template>
-
+  
 </template>
 
 <script>
 export default {
-
+  name: 'trsearch'
 }
 </script>
 
-<style lang="scss" scoped>
+<style>
 
 </style>

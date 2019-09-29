@@ -1,18 +1,18 @@
 <template>
   <div class="header">
-    <h1>Welcome To ToRead!</h1>
+    <h1>ToRead</h1>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'toreadheader'
+  name: 'trheader'
 }
 </script>
 
 <style lang="scss" scoped>
-  $header-bg-color: #d35656;
-  $header-txt-color: #242424;
+  $header-bg-color: #f66767;
+  $header-txt-color: #363636;
 
   .header {
     color: $header-txt-color;
