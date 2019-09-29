@@ -1,0 +1,39 @@
+{
+  "name": "todolearn",
+  "version": "0.1.0",
+  "description": "TodoLearn helps readers and learners to organize their material and thoughts to a seamless space.",
+  "private": true,
+  "scripts": {
+    "start": "webpack-dev-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/thanos.valimitis/todolearn.git"
+  },
+  "author": "Thanos Valimitis",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://gitlab.com/thanos.valimitis/todolearn/issues"
+  },
+  "homepage": "https://gitlab.com/thanos.valimitis/todolearn#readme",
+  "devDependencies": {
+    "@babel/core": "^7.6.2",
+    "@babel/preset-env": "^7.6.2",
+    "babel-loader": "^8.0.6",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^3.2.0",
+    "html-webpack-plugin": "^3.2.0",
+    "node-sass": "^4.12.0",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^8.0.0",
+    "vue-loader": "^15.7.1",
+    "vue-template-compiler": "^2.6.10",
+    "webpack": "^4.41.0",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.8.1",
+    "webpack-merge": "^4.2.2"
+  },
+  "dependencies": {
+    "vue": "^2.6.10"
+  }
+}
