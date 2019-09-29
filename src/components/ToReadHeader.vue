@@ -1,12 +1,12 @@
 <template>
   <div class="header">
-    <h1>Welcome To TodoRead!</h1>
+    <h1>Welcome To ToRead!</h1>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'header'
+  name: 'toreadheader'
 }
 </script>
 

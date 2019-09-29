@@ -1,16 +1,16 @@
 <template>
-  <Header></Header>
+  <ToReadHeader></ToReadHeader>
 </template>
 
 <script>
-import Header from './Header.vue'
+import ToReadHeader from './ToReadHeader.vue'
 export default {
   name: 'app',
   data() {
     return {test: 'Thanos'}
   },
   components: {
-    Header,
+    ToReadHeader,
     
   }
 }

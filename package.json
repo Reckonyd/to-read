@@ -4,8 +4,12 @@
   "description": "TodoLearn helps readers and learners to organize their material and thoughts to a seamless space.",
   "private": true,
   "scripts": {
+    "build": "webpack",
     "start": "webpack-dev-server"
   },
+  "browserslist": [
+    "defaults"
+  ],
   "repository": {
     "type": "git",
     "url": "git+ssh://git@gitlab.com/thanos.valimitis/todolearn.git"
@@ -19,6 +23,7 @@
   "devDependencies": {
     "@babel/core": "^7.6.2",
     "@babel/preset-env": "^7.6.2",
+    "autoprefixer": "^9.6.1",
     "babel-loader": "^8.0.6",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.2.0",
