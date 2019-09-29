@@ -1,7 +1,7 @@
 <template>
   <div>
-    <TRSearch></TRSearch>  
-    <TRListView :toReadList="list"></TRListView>  
+    <TRSearch @searching="onSearch"></TRSearch>  
+    <TRListView :toReadList="searchList.length === 0 ? list : searchList"></TRListView>  
   </div>
 </template>
 
@@ -15,7 +15,15 @@ export default {
   name: "trmain",
   data() {
     return {
-      list: []
+      list: [],
+      searchList: []
+    }
+  },
+  methods: {
+    onSearch: function(search='') {
+      this.searchList = this.list.filter(item =>{ 
+         return item.author.toLowerCase().indexOf(search.toLowerCase()) === 0
+      })
     }
   },
   mounted() {
@@ -25,6 +33,7 @@ export default {
         const list = responce.data
         list.forEach(({id, author, download_url}) => this.list.push({id, author, download_url}))
       })
+    
   },
   components: {
     TRSearch,
