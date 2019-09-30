@@ -1,6 +1,5 @@
 {
   "singleQuote": true,
   "trailingComma": "all",
-  "semi": false,
-  "parser": "vue"
+  "semi": false
 }
