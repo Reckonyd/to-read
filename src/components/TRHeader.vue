@@ -6,18 +6,18 @@
 
 <script>
 export default {
-  name: 'trheader'
+  name: 'TrHeader',
 }
 </script>
 
 <style lang="scss" scoped>
-  $header-bg-color: #f66767;
-  $header-txt-color: #363636;
+$header-bg-color: #f66767;
+$header-txt-color: #363636;
 
-  .header {
-    color: $header-txt-color;
-    background-color: $header-bg-color;
-    text-align: center;
-    padding: 1.5rem;
-  }
+.header {
+  color: $header-txt-color;
+  background-color: $header-bg-color;
+  text-align: center;
+  padding: 1.5rem;
+}
 </style>

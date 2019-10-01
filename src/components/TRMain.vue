@@ -11,7 +11,11 @@ import TRListView from './TRListView.vue'
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
-  name: 'trmain',
+  name: 'Trmain',
+  components: {
+    TRSearch,
+    TRListView,
+  },
   data() {
     return {
       search: '',
@@ -23,21 +27,16 @@ export default {
       return this.getFilteredToReadList(this.search)
     },
   },
+  mounted() {
+    this.initList()
+  },
   methods: {
     ...mapActions(['initList']),
     onSearch(search) {
       this.search = search
     },
   },
-  mounted() {
-    this.initList()
-  },
-  components: {
-    TRSearch,
-    TRListView,
-  },
 }
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

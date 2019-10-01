@@ -1,11 +1,11 @@
 <template>
   <div>
     <TRListItem
-      class="item-box"
       v-for="item in list"
       :key="item.id"
       :author="item.author"
       :url="item.download_url"
+      class="item-box"
     ></TRListItem>
   </div>
 </template>
@@ -14,10 +14,15 @@
 import TRListItem from './TRListItem.vue'
 
 export default {
-  name: 'trlistview',
-  props: ['list'],
+  name: 'Trlistview',
   components: {
     TRListItem,
+  },
+  props: {
+    list: {
+      type: Array,
+      required: true,
+    },
   },
 }
 </script>

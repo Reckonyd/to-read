@@ -2,9 +2,9 @@
   <div>
     <form @submit.prevent>
       <label for="search">Search</label>
-      <input v-model="search" type="text" id="search" />
+      <input id="search" v-model="search" type="text" />
     </form>
-    <span>{{searching}}</span>
+    <span>{{ searching }}</span>
   </div>
 </template>
 
@@ -12,12 +12,18 @@
 import debounce from 'lodash/debounce'
 
 export default {
-  name: 'trsearch',
+  name: 'Trsearch',
   data() {
     return {
       search: '',
       searching: '',
     }
+  },
+  watch: {
+    search() {
+      this.searching = 'Waiting For You To Stop Typing...'
+      this.debounceFunc()
+    },
   },
   methods: {
     debouncedEmit: function() {
@@ -28,14 +34,7 @@ export default {
       this.debouncedEmit()
     }, 300),
   },
-  watch: {
-    search() {
-      this.searching = 'Waiting For You To Stop Typing...'
-      this.debounceFunc()
-    },
-  },
 }
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
