@@ -1,26 +1,36 @@
 <template>
   <div>
-    <TRSearch></TRSearch>
-    <TRListView :list="filteredList"></TRListView>
+    <TRSearch @emitSearch="onSearch"></TRSearch>
+    <TRListView :list="list"></TRListView>
   </div>
 </template>
 
 <script>
 import TRSearch from './TRSearch.vue'
 import TRListView from './TRListView.vue'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'trmain',
   data() {
-    return {}
+    return {
+      search: '',
+    }
   },
   computed: {
-    filteredList: function() {
-      return this.$store.state.toReadList.list
+    ...mapGetters(['getFilteredToReadList']),
+    list() {
+      return this.getFilteredToReadList(this.search)
     },
   },
-  created() {
-    this.$store.dispatch('initList')
+  methods: {
+    ...mapActions(['initList']),
+    onSearch(search) {
+      this.search = search
+    },
+  },
+  mounted() {
+    this.initList()
   },
   components: {
     TRSearch,

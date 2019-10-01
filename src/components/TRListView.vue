@@ -38,4 +38,10 @@ $box-border-color: #d35656;
   margin: 0 auto;
   padding: 1rem;
 }
+
+@media screen and (min-width: 1024px) {
+  .item-box {
+    max-width: 50%;
+  }
+}
 </style>
