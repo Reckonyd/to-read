@@ -13,7 +13,7 @@
       "autoFix": true
     }
   ],
-  "eslint.workingDirectories": ["./src"],
+
   "eslint.autoFixOnSave": true,
   "editor.formatOnPaste": false,
   "editor.formatOnSave": false,

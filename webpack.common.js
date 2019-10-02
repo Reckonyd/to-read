@@ -1,5 +1,6 @@
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const Dotenv = require('dotenv-webpack')
 
 module.exports = {
   entry: './src/app.js',
@@ -21,5 +22,6 @@ module.exports = {
       title: 'Todo Learn',
       template: 'src/index.html',
     }),
+    new Dotenv(),
   ],
 }
