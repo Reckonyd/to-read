@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-import cheerio from 'cheerio'
 
 Vue.use(Vuex)
 
@@ -26,30 +25,28 @@ export default new Vuex.Store({
 
   // Actions
   actions: {
-    addItem({ commit }, url) {
-      axios
-        .get(`https://cors-anywhere.herokuapp.com/${url}`)
-        .then(response => {
-          const $ = cheerio.load(response.data)
+    async addItem({ commit }, url) {
+      let pageInfo = {}
 
-          const extractMeta = property =>
-            $(`meta[property=${property}]`).attr('content') ||
-            $(`meta[property="og:${property}"]`).attr('content') ||
-            $(`meta[property="twitter:${property}"]`).attr('content')
+      await axios({
+        method: 'POST',
+        url:
+          'https://api.apify.com/v2/acts/reckonyd~scraper-for-toread/run-sync?token=BwR8gDfPP87djAARwZTbQtmGA',
+        data: {
+          url,
+          width: 1024,
+          height: 748,
+        },
+        config: {
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+          },
+        },
+      }).then(response => {
+        pageInfo = { url, ...response.data }
+      })
 
-          const readInfo = {
-            id: this.state.listCount++,
-            url,
-            title: $('title')
-              .first()
-              .text(),
-            description: extractMeta('description'),
-            image: `https://api.apiflash.com/v1/urltoimage?access_key=${process.env.API_KEY}&url=${url}&width=1024&height=500`,
-          }
-
-          commit('ADD_LIST_ITEM', readInfo)
-        })
-        .catch(err => console.log(err))
+      commit('ADD_LIST_ITEM', pageInfo)
     },
   },
 

@@ -6,7 +6,7 @@
       :url="item.url"
       :title="item.title"
       :description="item.description"
-      :image="item.image"
+      :image="item.image_url"
       class="item-box"
     ></TRListItem>
   </div>
