@@ -1,8 +1,10 @@
 <template>
   <div>
-    <h2>{{ author }}</h2>
-    <img :src="url" alt="Test Image" />
-    <p>Test</p>
+    <h2>{{ title }}</h2>
+    <a :href="url" target="_blank" rel="noopener noreferrer">
+      <img :src="image" alt="Test Image" />
+    </a>
+    <p>{{ description }}</p>
   </div>
 </template>
 
@@ -10,11 +12,20 @@
 export default {
   name: 'Trlistitem',
   props: {
-    author: {
+    url: {
       type: String,
       required: true,
     },
-    url: {
+    title: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      default: 'placeholder',
+      required: false,
+    },
+    image: {
       type: String,
       required: true,
     },
@@ -30,7 +41,6 @@ h2 {
 
 img {
   max-width: 100%;
-  height: 350px;
   box-shadow: 4px 2px 8px #151515;
   border-radius: 5px;
 }

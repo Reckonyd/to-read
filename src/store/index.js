@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import listTest from '../../tests/listTest'
+import axios from 'axios'
+import cheerio from 'cheerio'
 
 Vue.use(Vuex)
 
@@ -8,30 +9,54 @@ export default new Vuex.Store({
   // State
   state: {
     toReadList: [],
+    listCount: 0,
   },
 
   // Getters
   getters: {
     getFilteredToReadList: state => (search = ' ') => {
-      return state.toReadList.filter(
-        item => item.author.toLowerCase().indexOf(search.toLowerCase()) === 0,
-      )
+      if (state.toReadList.length !== 0) {
+        return state.toReadList.filter(
+          item => item.title.toLowerCase().indexOf(search.toLowerCase()) === 0,
+        )
+      }
+      return []
     },
   },
 
   // Actions
   actions: {
-    initList({ commit }) {
-      commit('INIT_LIST', listTest())
+    addItem({ commit }, url) {
+      axios
+        .get(`https://cors-anywhere.herokuapp.com/${url}`)
+        .then(response => {
+          const $ = cheerio.load(response.data)
+
+          const extractMeta = property =>
+            $(`meta[property=${property}]`).attr('content') ||
+            $(`meta[property="og:${property}"]`).attr('content') ||
+            $(`meta[property="twitter:${property}"]`).attr('content')
+
+          const readInfo = {
+            id: this.state.listCount++,
+            url,
+            title: $('title')
+              .first()
+              .text(),
+            description: extractMeta('description'),
+            image: `https://api.apiflash.com/v1/urltoimage?access_key=${process.env.API_KEY}&url=${url}&width=1024&height=500`,
+          }
+
+          commit('ADD_LIST_ITEM', readInfo)
+        })
+        .catch(err => console.log(err))
     },
   },
 
   // Mutations
   mutations: {
-    INIT_LIST(state, list) {
-      state.toReadList = list
+    ADD_LIST_ITEM(state, item) {
+      state.toReadList.push(item)
     },
-    ADD_LIST_ITEM(state, item) {},
-    REMOVE_LIST_ITEM(state, item) {},
   },
 })

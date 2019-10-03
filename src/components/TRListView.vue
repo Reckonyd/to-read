@@ -3,8 +3,10 @@
     <TRListItem
       v-for="item in list"
       :key="item.id"
-      :author="item.author"
-      :url="item.download_url"
+      :url="item.url"
+      :title="item.title"
+      :description="item.description"
+      :image="item.image"
       class="item-box"
     ></TRListItem>
   </div>
