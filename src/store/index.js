@@ -28,23 +28,24 @@ export default new Vuex.Store({
     async addItem({ commit }, url) {
       let pageInfo = {}
 
-      await axios({
+      let response = await axios({
         method: 'POST',
         url:
-          'https://api.apify.com/v2/acts/reckonyd~scraper-for-toread/run-sync?token=BwR8gDfPP87djAARwZTbQtmGA',
+          'https://api.apify.com/v2/acts/reckonyd~scraper-for-toread/run-sync?token=' +
+          process.env.API_KEY,
         data: {
           url,
-          width: 1024,
-          height: 748,
+          width: 1366,
+          height: 768,
         },
         config: {
           headers: {
             'Content-Type': 'application/json; charset=utf-8',
           },
         },
-      }).then(response => {
-        pageInfo = { url, ...response.data }
       })
+
+      pageInfo = { url, ...response.data }
 
       commit('ADD_LIST_ITEM', pageInfo)
     },
