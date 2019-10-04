@@ -1,8 +1,17 @@
 <template>
   <div id="testing">
-    <label for="url">Enter Url</label>
-    <input v-model="url" type="text" />
-    <button @click="addItem(url)">Add</button>
+    <input
+      v-model="url"
+      type="text"
+      placeholder="Enter URL"
+      class="flex-grow bg-gray-200 text-center placeholder-gray-600 rounded focus:bg-gray-400 focus:outline-none"
+    />
+    <button
+      class="ml-2 p-2 text-gray-100 rounded bg-red-800"
+      @click="addItem(url)"
+    >
+      Add
+    </button>
   </div>
 </template>
 

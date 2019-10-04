@@ -1,10 +1,14 @@
 <template>
   <div>
-    <h2>{{ title }}</h2>
+    <h2 class="my-5 font-semibold text-2xl">{{ title }}</h2>
     <a :href="url" target="_blank" rel="noopener noreferrer">
-      <img :src="image" alt="Test Image" />
+      <img
+        class="mx-auto rounded shadow-md max-w-4xl"
+        :src="image"
+        alt="Test Image"
+      />
     </a>
-    <p>{{ description }}</p>
+    <p class="my-5 mx-5 text-lg">{{ description }}</p>
   </div>
 </template>
 
@@ -33,19 +37,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-h2 {
-  text-align: center;
-  margin-bottom: 0.5em;
-}
-
-img {
-  max-width: 100%;
-  box-shadow: 4px 2px 8px #151515;
-  border-radius: 5px;
-}
-
-p {
-  margin-top: 0.7em;
-}
-</style>
+<style scoped></style>

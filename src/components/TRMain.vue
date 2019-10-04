@@ -1,8 +1,8 @@
 <template>
   <div>
-    <TRSearch @emitSearch="onSearch"></TRSearch>
-    <TRAdd></TRAdd>
-    <TRListView :list="list"></TRListView>
+    <TRSearch class="w-4/5 my-3 mx-auto" @emitSearch="onSearch"></TRSearch>
+    <TRAdd class="flex w-4/5 my-3 mx-auto"></TRAdd>
+    <TRListView class="my-4 max-w-5xl mx-auto" :list="list"></TRListView>
   </div>
 </template>
 
@@ -38,4 +38,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped></style>

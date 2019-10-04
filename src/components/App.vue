@@ -1,7 +1,9 @@
 <template>
   <div>
-    <TRHeader></TRHeader>
-    <TRMain></TRMain>
+    <TRHeader
+      class="p-5 bg-red-800 font-serif font-semibold text-3xl text-center text-white shadow"
+    ></TRHeader>
+    <TRMain class="container mx-auto"></TRMain>
   </div>
 </template>
 
@@ -18,19 +20,14 @@ export default {
 }
 </script>
 
-<style lang="scss">
-$global-background: #f9f9f9;
+<style>
+@tailwind base;
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
+@tailwind components;
+
+@tailwind utilities;
+
 body {
-  background-color: $global-background;
-  width: 100%;
-  height: 100vh;
-  margin: 0 auto;
-  font-family: Arial, Helvetica, sans-serif;
+  @apply bg-gray-800;
 }
 </style>

@@ -1,10 +1,14 @@
 <template>
   <div>
-    <form @submit.prevent>
-      <label for="search">Search</label>
-      <input id="search" v-model="search" type="text" />
-    </form>
-    <span>{{ searching }}</span>
+    <input
+      id="search"
+      v-model="search"
+      class="w-full mx-auto p-2 bg-gray-200 text-center placeholder-gray-600 rounded focus:bg-gray-400 focus:outline-none"
+      type="text"
+      placeholder="Search"
+      @submit.prevent
+    />
+    <span class="text-gray-100">{{ searching }}</span>
   </div>
 </template>
 
@@ -37,4 +41,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped></style>
