@@ -54,8 +54,6 @@ export default new Vuex.Store({
       }
     },
     deleteItem({ commit, state }, id) {
-      console.log(id)
-      console.log(state.toReadList.findIndex(item => item.id === id))
       commit(
         'REMOVE_LIST_ITEM',
         state.toReadList.findIndex(item => item.id === id),
