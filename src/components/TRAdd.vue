@@ -52,6 +52,7 @@ export default {
     onClick() {
       if (!this.error && this.url) {
         this.addItem(this.url)
+        this.url = ''
       }
     },
   },
