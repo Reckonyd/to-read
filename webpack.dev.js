@@ -1,12 +1,15 @@
 const merge = require('webpack-merge')
 const common = require('./webpack.common.js')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { HotModuleReplacementPlugin } = require('webpack')
 
 module.exports = merge(common, {
   mode: 'development',
   devServer: {
     contentBase: './dist',
     hot: true,
+    open: true,
+    historyApiFallback: true,
   },
   module: {
     rules: [
@@ -27,6 +30,7 @@ module.exports = merge(common, {
     ],
   },
   plugins: [
+    new HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       title: 'ToRead',
       template: 'src/index.html',

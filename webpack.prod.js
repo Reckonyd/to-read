@@ -15,20 +15,10 @@ module.exports = merge(common, {
     path: path.resolve(__dirname, 'dist'),
   },
   optimization: {
-    minimizer: [new TerserPlugin(), new OptimizeCssAssetsWebpackPlugin()],
+    minimizer: [new OptimizeCssAssetsWebpackPlugin(), new TerserPlugin()],
   },
   module: {
     rules: [
-      {
-        enforce: 'pre',
-        test: /\.(js|vue)$/,
-        loader: 'eslint-loader',
-        exclude: /node_modules/,
-      },
-      {
-        test: /\.js?$/,
-        loader: 'babel-loader',
-      },
       {
         test: /\.css$/,
         use: [
