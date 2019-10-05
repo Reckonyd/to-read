@@ -1,7 +1,7 @@
 <template>
   <div>
     <TRSearch class="w-4/5 my-3 mx-auto" @emitSearch="onSearch"></TRSearch>
-    <TRAdd class="flex w-4/5 my-3 mx-auto"></TRAdd>
+    <TRAdd class="w-4/5 my-3 mx-auto"></TRAdd>
     <TRListView class="my-4 max-w-5xl mx-auto" :list="list"></TRListView>
   </div>
 </template>

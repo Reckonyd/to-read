@@ -1,5 +1,6 @@
 <template>
   <div>
+    <TRDelete class="relative" @delete="deleteItem(id)" />
     <h2 class="my-5 font-semibold text-2xl">{{ title }}</h2>
     <a :href="url" target="_blank" rel="noopener noreferrer">
       <img
@@ -13,9 +14,19 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+import TRDelete from './TRDelete.vue'
+
 export default {
   name: 'Trlistitem',
+  components: {
+    TRDelete,
+  },
   props: {
+    id: {
+      type: Number,
+      required: true,
+    },
     url: {
       type: String,
       required: true,
@@ -26,13 +37,15 @@ export default {
     },
     description: {
       type: String,
-      default: 'placeholder',
-      required: false,
+      required: true,
     },
     image: {
       type: String,
       required: true,
     },
+  },
+  methods: {
+    ...mapActions(['deleteItem']),
   },
 }
 </script>

@@ -2,6 +2,7 @@
   <div>
     <TRListItem
       v-for="item in list"
+      :id="item.id"
       :key="item.id"
       :url="item.url"
       :title="item.title"
