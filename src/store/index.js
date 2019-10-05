@@ -8,7 +8,6 @@ export default new Vuex.Store({
   // State
   state: {
     toReadList: [],
-    listCount: 3,
     waiting: false,
   },
 
@@ -30,7 +29,6 @@ export default new Vuex.Store({
   actions: {
     async addItem({ commit }, url) {
       let pageInfo = {}
-      this.state.waiting = true
 
       let response = await axios({
         method: 'POST',
@@ -49,28 +47,36 @@ export default new Vuex.Store({
         },
       })
 
-      this.state.waiting = false
-
       pageInfo = { url, ...response.data }
 
       if (!pageInfo.notFound) {
         commit('ADD_LIST_ITEM', pageInfo)
       }
     },
-    deleteItem({ commit }, id) {
-      this.state.listCount--
-      commit('REMOVE_LIST_ITEM', this.state.toReadList.indexOf(id))
+    deleteItem({ commit, state }, id) {
+      console.log(id)
+      console.log(state.toReadList.findIndex(item => item.id === id))
+      commit(
+        'REMOVE_LIST_ITEM',
+        state.toReadList.findIndex(item => item.id === id),
+      )
+    },
+    changeWaitingStatus({ commit }, value) {
+      commit('CHANGE_WAITING_STATUS', value)
     },
   },
 
   // Mutations
   mutations: {
     ADD_LIST_ITEM(state, item) {
-      item.id = state.listCount++
+      item.id = state.toReadList.length + 1
       state.toReadList.push(item)
     },
     REMOVE_LIST_ITEM(state, index) {
       state.toReadList.splice(index, 1)
+    },
+    CHANGE_WAITING_STATUS(state, value) {
+      state.waiting = value
     },
   },
 })
