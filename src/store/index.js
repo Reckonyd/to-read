@@ -8,7 +8,7 @@ export default new Vuex.Store({
   // State
   state: {
     toReadList: [],
-    waiting: false,
+    waiting: 0,
   },
 
   // Getters
@@ -27,8 +27,10 @@ export default new Vuex.Store({
 
   // Actions
   actions: {
-    async addItem({ commit }, url) {
+    async addItem({ commit, dispatch }, url) {
       let pageInfo = {}
+
+      dispatch('changeWaitingStatus', 1)
 
       let response = await axios({
         method: 'POST',
@@ -50,6 +52,7 @@ export default new Vuex.Store({
       pageInfo = { url, ...response.data }
 
       if (!pageInfo.notFound) {
+        dispatch('changeWaitingStatus', -1)
         commit('ADD_LIST_ITEM', pageInfo)
       }
     },
@@ -74,7 +77,7 @@ export default new Vuex.Store({
       state.toReadList.splice(index, 1)
     },
     CHANGE_WAITING_STATUS(state, value) {
-      state.waiting = value
+      state.waiting += value
     },
   },
 })
