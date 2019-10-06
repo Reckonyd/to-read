@@ -32,7 +32,17 @@ module.exports = merge(common, {
                 require('tailwindcss'),
                 require('autoprefixer'),
                 purgecss({
-                  content: ['./src/**/*.vue'],
+                  content: ['./src/**/*.html', './src/**/*.vue'],
+                  extractors: [
+                    {
+                      extractor: class {
+                        static extract(content) {
+                          return content.match(/[\w-:/]+(?<!:)/g) || []
+                        }
+                      },
+                      extensions: ['vue'],
+                    },
+                  ],
                 }),
               ],
             },
