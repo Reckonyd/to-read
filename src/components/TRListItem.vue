@@ -4,7 +4,7 @@
     <a :href="url" target="_blank" rel="noopener noreferrer">
       <img
         class="mx-auto w-full rounded-t shadow-md"
-        :src="image"
+        :src="`data:image/jpeg;base64,${image}`"
         :alt="`Image of ${title}`"
       />
     </a>
