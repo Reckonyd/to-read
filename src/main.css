@@ -1,3 +1,32 @@
 @tailwind base;
 @tailwind components;
+
+.btn {
+  @apply bg-red-700 text-gray-100;
+}
+
+.btn:hover {
+  @apply bg-red-600;
+}
+
+.btn:focus {
+  @apply outline-none shadow-outline;
+}
+
+.btn:active {
+  @apply bg-red-800; 
+}
+
+.inputArea {
+  @apply bg-gray-200 text-center ;
+}
+
+.inputArea::placeholder {
+  @apply text-gray-600;
+}
+
+.inputArea:focus {
+  @apply bg-gray-300 outline-none;
+}
+
 @tailwind utilities;

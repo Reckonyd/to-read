@@ -8,7 +8,7 @@
       :title="item.title"
       :description="item.description"
       :image="item.image_url"
-      class="flex flex-col bg-gray-700 text-gray-100 my-3 text-center border-b-8 border-red-700 rounded shadow"
+      class="flex flex-col lg:w-5/12 bg-gray-700 text-gray-100 mt-3 mx-1 sm:mx-2 text-center border-b-8 border-red-700 rounded-t shadow"
     ></TRListItem>
   </div>
 </template>

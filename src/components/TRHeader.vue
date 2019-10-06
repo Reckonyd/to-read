@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h1>ToRead</h1>
+    <h1 class="font-serif font-semibold text-3xl text-center text-white">
+      ToRead
+    </h1>
   </div>
 </template>
 

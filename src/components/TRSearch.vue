@@ -3,8 +3,9 @@
     <input
       id="search"
       v-model="search"
-      class="w-full mx-auto p-2 bg-gray-200 text-center placeholder-gray-600 rounded focus:bg-gray-400 focus:outline-none"
+      class="w-full p-1 inputArea rounded shadow"
       type="text"
+      aria-label="Search Read Items"
       placeholder="Search"
       @submit.prevent
     />

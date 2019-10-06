@@ -1,25 +1,21 @@
 <template>
-  <div class="flex flex-wrap">
+  <div>
     <input
       v-model="url"
       type="text"
+      aria-label="Enter a valid URL: https://www.examble.com/"
       placeholder="Enter a valid URL: https://www.examble.com/"
       :class="[
         'flex-grow',
-        'text-center',
+        error ? errorStyle : 'inputArea',
         'rounded',
-        'placeholder-gray-600',
-        error ? 'bg-red-200' : 'bg-gray-200',
-        'focus:outline-none',
+        'shadow',
       ]"
     />
-    <button
-      class="ml-2 p-2 text-gray-100 rounded bg-red-800"
-      @click="onClick()"
-    >
+    <button class="ml-2 p-2 btn rounded shadow" @click="onClick()">
       Add
     </button>
-    <div :class="{ 'lds-ellipsis': waiting }">
+    <div :class="waiting ? waitingStyle : ''">
       <div></div>
       <div></div>
       <div></div>
@@ -37,6 +33,8 @@ export default {
     return {
       url: '',
       error: false,
+      errorStyle: ['bg-red-200', 'focus:bg-red-400', 'text-center'],
+      waitingStyle: ['lds-ellipsis', 'ml-1'],
     }
   },
   computed: {
@@ -64,11 +62,11 @@ export default {
   display: inline-block;
   position: relative;
   width: 64px;
-  height: 64px;
+  /* height: 64px; */
 }
 .lds-ellipsis div {
   position: absolute;
-  top: 27px;
+  top: 15px;
   width: 11px;
   height: 11px;
   border-radius: 50%;
