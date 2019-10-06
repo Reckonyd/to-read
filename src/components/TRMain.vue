@@ -16,7 +16,7 @@
 import TRSearch from './TRSearch.vue'
 import TRListView from './TRListView.vue'
 import TRAdd from './TRAdd.vue'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Trmain',
@@ -36,7 +36,11 @@ export default {
       return this.getFilteredToReadList(this.search)
     },
   },
+  mounted() {
+    this.initList()
+  },
   methods: {
+    ...mapActions(['initList']),
     onSearch(search) {
       this.search = search
     },

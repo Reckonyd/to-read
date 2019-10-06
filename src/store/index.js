@@ -27,7 +27,18 @@ export default new Vuex.Store({
 
   // Actions
   actions: {
-    async addItem({ commit, dispatch }, url) {
+    initList({ commit }) {
+      let list = []
+      for (let index = 0; index < localStorage.length; index++) {
+        let key = localStorage.key(index)
+        if (key.indexOf('toReadItem') > -1) {
+          list.push(JSON.parse(localStorage.getItem(key)))
+        }
+      }
+
+      commit('INIT_LIST', list)
+    },
+    async addItem({ commit, dispatch, state }, url) {
       let pageInfo = {}
 
       dispatch('changeWaitingStatus', 1)
@@ -49,14 +60,21 @@ export default new Vuex.Store({
         },
       })
 
-      pageInfo = { url, ...response.data }
+      pageInfo.id = state.toReadList.length + 1
+      pageInfo.url = url
+      pageInfo = { ...pageInfo, ...response.data }
 
       if (!pageInfo.notFound) {
+        localStorage.setItem(
+          `toReadItem${pageInfo.id}`,
+          JSON.stringify(pageInfo),
+        )
         dispatch('changeWaitingStatus', -1)
         commit('ADD_LIST_ITEM', pageInfo)
       }
     },
     deleteItem({ commit, state }, id) {
+      localStorage.removeItem(`toReadItem${id}`)
       commit(
         'REMOVE_LIST_ITEM',
         state.toReadList.findIndex(item => item.id === id),
@@ -69,8 +87,10 @@ export default new Vuex.Store({
 
   // Mutations
   mutations: {
+    INIT_LIST(state, list) {
+      state.toReadList = list
+    },
     ADD_LIST_ITEM(state, item) {
-      item.id = state.toReadList.length + 1
       state.toReadList.push(item)
     },
     REMOVE_LIST_ITEM(state, index) {
