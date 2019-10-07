@@ -5,5 +5,17 @@ module.exports = {
   variants: {
     backgroundColor: ['responsive', 'focus', 'hover', 'active'],
   },
-  plugins: [],
+  plugins: [
+    function({ addUtilities }) {
+      const justifyEvenly = {
+        '.justify-evenly': {
+          justifyContent: 'space-evenly',
+        },
+      }
+
+      addUtilities(justifyEvenly, {
+        variants: ['responsive'],
+      })
+    },
+  ],
 }
