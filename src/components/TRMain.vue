@@ -37,7 +37,7 @@ export default {
     },
   },
   mounted() {
-    // this.initList()
+    this.initList()
   },
   methods: {
     ...mapActions(['initList']),
