@@ -4,8 +4,8 @@
     <a :href="url" target="_blank" rel="noopener noreferrer">
       <img
         class="mx-auto w-full rounded-t shadow-md"
-        :src="`data:image/jpeg;base64,${image}`"
-        :alt="`Image of ${title}`"
+        :src="image"
+        :alt="imageAlt"
       />
     </a>
     <h2 class="mt-3 font-bold tracking-wider text-2xl">{{ title }}</h2>
@@ -42,6 +42,11 @@ export default {
     image: {
       type: String,
       required: true,
+    },
+    imageAlt: {
+      type: String,
+      default: `Image of`,
+      required: false,
     },
   },
   methods: {

@@ -64,11 +64,16 @@ export default new Vuex.Store({
       pageInfo.url = url
       pageInfo = { ...pageInfo, ...response.data }
 
+      if (pageInfo.encoded) {
+        pageInfo.image_url = `data:image/jpeg;base64,${pageInfo.image_url}`
+      }
+
       if (!pageInfo.notFound) {
         localStorage.setItem(
           `toReadItem${pageInfo.id}`,
           JSON.stringify(pageInfo),
         )
+
         dispatch('changeWaitingStatus', -1)
         commit('ADD_LIST_ITEM', pageInfo)
       }
