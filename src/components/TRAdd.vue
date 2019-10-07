@@ -12,7 +12,7 @@
         'shadow',
       ]"
     />
-    <button class="ml-2 p-2 btn rounded shadow" @click="onClick()">
+    <button class="mx-1 p-2 btn rounded shadow" @click="onClick()">
       Add
     </button>
     <div :class="waiting ? waitingStyle : ''">
@@ -34,7 +34,7 @@ export default {
       url: '',
       error: false,
       errorStyle: ['bg-red-200', 'focus:bg-red-400', 'text-center'],
-      waitingStyle: ['lds-ellipsis', 'ml-1'],
+      waitingStyle: ['lds-ellipsis'],
     }
   },
   computed: {

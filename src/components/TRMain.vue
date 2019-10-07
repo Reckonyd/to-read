@@ -6,7 +6,7 @@
     ></TRSearch>
     <TRAdd class="flex md:w-4/5 mx-2 md:mx-auto my-2"></TRAdd>
     <TRListView
-      class="flex flex-col flex-wrap justify-around lg:flex-row"
+      class="flex flex-col flex-wrap justify-evenly lg:flex-row mx-1 mt-4"
       :list="list"
     ></TRListView>
   </div>
@@ -37,7 +37,7 @@ export default {
     },
   },
   mounted() {
-    this.initList()
+    // this.initList()
   },
   methods: {
     ...mapActions(['initList']),
