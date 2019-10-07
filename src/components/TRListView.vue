@@ -9,7 +9,7 @@
       :description="item.description"
       :image="item.image_url"
       :image-alt="item.image_alt"
-      class="flex flex-col lg:w-5/12 bg-gray-700 text-gray-100 my-2 mx-1 sm:mx-2 text-center border-b-8 border-red-700 rounded-t shadow"
+      class="flex flex-col lg:w-5/12 bg-gray-700 text-gray-100 my-2 mx-1 sm:mx-2 text-center border-b-8 border-red-700 rounded-t shadow overflow-hidden"
     ></TRListItem>
   </div>
 </template>

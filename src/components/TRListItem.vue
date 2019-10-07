@@ -3,13 +3,15 @@
     <TRDelete class="relative" @delete="deleteItem(id)" />
     <a :href="url" target="_blank" rel="noopener noreferrer">
       <img
-        class="mx-auto w-full rounded-t shadow-md"
+        class="object-cover object-center mx-auto w-full h-64 rounded-t shadow-md"
         :src="image"
         :alt="imageAlt"
       />
     </a>
-    <h2 class="mt-3 font-bold tracking-wider text-2xl">{{ title }}</h2>
-    <p class="my-4 mx-5 text-lg">{{ description }}</p>
+    <h2 class="my-4 mx-3 font-bold tracking-wider text-2xl">{{ title }}</h2>
+    <p class="mb-4 mx-5 text-lg text-left leading-tight">
+      {{ description }}
+    </p>
   </div>
 </template>
 
