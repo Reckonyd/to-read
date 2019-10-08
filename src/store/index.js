@@ -8,6 +8,7 @@ export default new Vuex.Store({
   // State
   state: {
     toReadList: [],
+    directories: [],
     waiting: 0,
   },
 
@@ -22,6 +23,18 @@ export default new Vuex.Store({
           .reverse()
       }
       return []
+    },
+    getItemsNotInDir: state => {
+      if (state.directories.length > 0) {
+        let notInDirList = []
+        state.directories.forEach(dir => {
+          notInDirList = state.toReadList.filter(
+            item => !dir.itemList.includes(item.id),
+          )
+        })
+        return notInDirList
+      }
+      return state.toReadList
     },
   },
 
