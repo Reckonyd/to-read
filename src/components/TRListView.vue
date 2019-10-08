@@ -1,10 +1,9 @@
 <template>
-  <div>
+  <div class="flex flex-col flex-wrap justify-evenly lg:flex-row mx-1 mt-4">
     <TRListItem
       v-for="item in list"
       :key="item.id"
       :to-read-item="item"
-      class="flex flex-col lg:w-5/12 bg-gray-700 text-gray-100 my-2 mx-1 sm:mx-2 text-center border-b-8 border-red-700 rounded-t shadow"
     ></TRListItem>
   </div>
 </template>

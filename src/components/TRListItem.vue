@@ -1,10 +1,12 @@
 <template>
-  <div>
-    <TRDelete class="relative" @delete="deleteItem(toReadItem.id)" />
+  <div
+    class="flex flex-col lg:w-5/12 bg-gray-700 text-gray-100 my-2 mx-1 sm:mx-2 text-center border-b-8 border-red-700 rounded-t shadow"
+  >
+    <TRDelete @delete="deleteItem(toReadItem.id)" />
     <a :href="toReadItem.url" target="_blank" rel="noopener noreferrer">
       <img
         :class="[
-          !toReadItem.encoded ? imageStyle : '',
+          toReadItem.encoded ? '' : imageStyle,
           'mx-auto',
           'w-full',
           'rounded-t',
