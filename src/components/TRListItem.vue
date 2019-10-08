@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TRDelete class="relative" @delete="deleteItem(id)" />
+    <TRDelete class="relative" @delete="deleteItem(toReadItem.id)" />
     <a :href="toReadItem.url" target="_blank" rel="noopener noreferrer">
       <img
         :class="[
