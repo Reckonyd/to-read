@@ -12,7 +12,6 @@
 import TRListItem from './TRListItem.vue'
 
 export default {
-  name: 'Trlistview',
   components: {
     TRListItem,
   },

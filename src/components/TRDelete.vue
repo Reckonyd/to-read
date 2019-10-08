@@ -11,9 +11,7 @@
 </template>
 
 <script>
-export default {
-  name: 'Trdelete',
-}
+export default {}
 </script>
 
 <style></style>

@@ -9,9 +9,7 @@
 </template>
 
 <script>
-export default {
-  name: 'TrHeader',
-}
+export default {}
 </script>
 
 <style scoped></style>

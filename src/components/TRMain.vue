@@ -13,7 +13,6 @@ import TRAdd from './TRAdd.vue'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-  name: 'Trmain',
   components: {
     TRSearch,
     TRListView,

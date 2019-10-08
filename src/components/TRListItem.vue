@@ -30,7 +30,6 @@ import { mapActions } from 'vuex'
 import TRDelete from './TRDelete.vue'
 
 export default {
-  name: 'Trlistitem',
   components: {
     TRDelete,
   },
