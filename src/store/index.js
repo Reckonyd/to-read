@@ -36,6 +36,8 @@ export default new Vuex.Store({
         }
       }
 
+      list.sort((a, b) => a.id - b.id)
+
       commit('INIT_LIST', list)
     },
     async addItem({ commit, dispatch, state }, url) {
