@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import uuidv4 from 'uuid/v4'
 
 Vue.use(Vuex)
 
@@ -53,7 +54,7 @@ export default new Vuex.Store({
 
       commit('INIT_LIST', list)
     },
-    async addItem({ commit, dispatch, state }, url) {
+    async addItem({ commit, dispatch }, url) {
       let pageInfo = {}
 
       dispatch('changeWaitingStatus', 1)
@@ -75,7 +76,7 @@ export default new Vuex.Store({
         },
       })
 
-      pageInfo.id = state.toReadList.length + 1
+      pageInfo.id = uuidv4()
       pageInfo.url = url
       pageInfo = { ...pageInfo, ...response.data }
 
