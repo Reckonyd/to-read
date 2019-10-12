@@ -22,7 +22,7 @@
         draggable="false"
       />
     </a>
-    <h2 class="my-4 mx-3 font-bold tracking-wider text-xl" d>
+    <h2 class="my-4 mx-3 font-bold tracking-wider text-xl">
       {{ toReadItem.title }}
     </h2>
     <p class="mb-5 mx-6 text-lg text-left leading-tight">

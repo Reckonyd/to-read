@@ -1,14 +1,21 @@
 <template>
-  <div class="flex flex-col flex-wrap justify-evenly lg:flex-row mx-1 mt-4">
+  <div
+    :class="[
+      dragging ? 'bg-gray-600 rounded' : '',
+      'flex flex-col flex-wrap justify-evenly lg:flex-row mx-1 mt-4',
+    ]"
+  >
     <TRListItem
       v-for="item in list"
       :key="item.id"
       :to-read-item="item"
+      :class="overItem && item.id === dropID ? 'opacity-50' : ''"
       draggable="true"
-      @dragstart.native="onDragStart(item.id)"
-      @dragenter.native="onDragEnter(item.id)"
-      @dragover.native.prevent="onDragOver"
-      @drop.native.prevent="onDrop()"
+      @dragstart.native="onDragStart(item)"
+      @dragenter.native="onDragEnter(item)"
+      @dragover.native.prevent=""
+      @drop.native.prevent="onDrop"
+      @dragend.native="onDragEnd"
     >
     </TRListItem>
   </div>
@@ -30,26 +37,30 @@ export default {
   },
   data() {
     return {
-      dragID: null,
-      dropID: null,
+      dragID: 0,
+      dropID: 0,
+      dragging: false,
+      overItem: false,
     }
   },
-  computed: {
-    getDropID: function() {
-      return this.dropID
-    },
-  },
+
   methods: {
     ...mapActions(['swapItems']),
-    onDragStart(id) {
-      this.dragID = id
+    onDragStart(item) {
+      this.dragging = true
+      this.dragID = item.id
     },
-    onDragEnter(id) {
-      this.dropID = id
+    onDragEnter(item) {
+      this.overItem = true
+      this.dropID = item.id
     },
-    onDragOver() {},
     onDrop() {
-      this.swapItems({ firstID: this.dragID, secondID: this.getDropID })
+      if (this.dragID !== this.dropID)
+        this.swapItems({ firstID: this.dragID, secondID: this.dropID })
+    },
+    onDragEnd() {
+      this.dragging = false
+      this.overItem = false
     },
   },
 }
