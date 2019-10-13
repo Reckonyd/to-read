@@ -89,6 +89,15 @@ export default new Vuex.Store({
         state.toReadList.findIndex(item => item.id === id),
       )
     },
+    addDirectory({ commit }, name) {
+      const dir = {
+        id: uuidv4(),
+        name,
+        itemList: [],
+      }
+
+      commit('ADD_DIR', dir)
+    },
     deleteDirectory({ commit, state }, id) {
       commit('REMOVE_DIR', state.directories.findIndex(dir => dir.id === id))
     },
@@ -107,6 +116,9 @@ export default new Vuex.Store({
     },
     REMOVE_LIST_ITEM(state, index) {
       state.toReadList.splice(index, 1)
+    },
+    ADD_DIR(state, dir) {
+      state.directories.push(dir)
     },
     REMOVE_DIR(state, index) {
       state.directories.splice(index, 1)

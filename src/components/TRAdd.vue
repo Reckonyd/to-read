@@ -12,9 +12,21 @@
         'shadow',
       ]"
     />
-    <button class="mx-1 p-2 btn rounded shadow" @click="onClick()">
+    <button class="mx-1 p-2 btn rounded shadow" @click="onAdd()">
       Add
     </button>
+    <div class="flex">
+      <button class="mx-1 p-2 btn rounded shadow" @click="onCreateDir()">
+        {{ addDir ? 'Add Directory' : 'Create Directory' }}
+      </button>
+      <input
+        v-model="dirName"
+        type="text"
+        aria-label="Enter a Directory name"
+        placeholder="Enter a Directory Name"
+        :class="[{ hidden: dirInput }, 'inputArea rounded shadow']"
+      />
+    </div>
     <div :class="waiting ? waitingStyle : ''">
       <div></div>
       <div></div>
@@ -32,6 +44,9 @@ export default {
   data() {
     return {
       url: '',
+      dirName: '',
+      dirInput: true,
+      addDir: false,
       error: false,
       errorStyle: ['bg-red-200', 'focus:bg-red-400', 'text-center'],
       waitingStyle: ['lds-ellipsis'],
@@ -44,13 +59,24 @@ export default {
     url() {
       this.error = !isUrl(this.url, { require_protocol: true }) && this.url
     },
+    dirName() {
+      this.addDir = this.dirName
+    },
   },
   methods: {
-    ...mapActions(['addItem']),
-    onClick() {
+    ...mapActions(['addItem', 'addDirectory']),
+    onAdd() {
       if (!this.error && this.url) {
         this.addItem(this.url)
         this.url = ''
+      }
+    },
+    onCreateDir() {
+      this.dirInput = this.dirInput ? false : true
+      if (this.addDir) {
+        this.addDirectory(this.dirName)
+        this.dirName = ''
+        this.addDir = false
       }
     },
   },
