@@ -25,18 +25,6 @@ export default new Vuex.Store({
       }
       return []
     },
-    getItemsNotInDir: state => {
-      if (state.directories.length > 0) {
-        let notInDirList = []
-        state.directories.forEach(dir => {
-          notInDirList = state.toReadList.filter(
-            item => !dir.itemList.includes(item.id),
-          )
-        })
-        return notInDirList
-      }
-      return state.toReadList
-    },
   },
 
   // Actions

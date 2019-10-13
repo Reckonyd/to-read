@@ -17,7 +17,7 @@
 <script>
 import TRListItem from './TRListItem.vue'
 import TRDirectory from './TRDirectory.vue'
-import { mapState, mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   components: {
@@ -32,9 +32,14 @@ export default {
   },
   computed: {
     ...mapState(['directories']),
-    ...mapGetters(['getItemsNotInDir']),
     noDirList: function() {
-      return this.getItemsNotInDir
+      let dirItemList = []
+
+      this.directories.forEach(dir => {
+        dir.itemList.forEach(item => dirItemList.push(item))
+      })
+
+      return this.list.filter(item => !dirItemList.includes(item.id))
     },
   },
 }
