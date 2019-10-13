@@ -1,22 +1,31 @@
 <template>
   <div
-    class="flex flex-wrap justify-evenly w-full my-2 p-2 bg-indigo-800 rounded shadow-2xl"
+    class="relative flex flex-wrap justify-evenly w-full my-2 p-2 bg-indigo-800 rounded shadow-2xl"
   >
+    <TRDelete @delete="onDelete(dir.id)"></TRDelete>
+    <TRMinimize @minimize="onMinimize()"></TRMinimize>
     <h2 class="w-full ml-3 mt-3 text-gray-200 text-xl">{{ dir.name }}</h2>
-    <TRListItem
-      v-for="item in directoryList"
-      :key="item.id"
-      :to-read-item="item"
-    ></TRListItem>
+    <div :class="[{ hidden: minimized }, 'flex flex-wrap justify-evenly my-2']">
+      <TRListItem
+        v-for="item in directoryList"
+        :key="item.id"
+        :to-read-item="item"
+      ></TRListItem>
+    </div>
   </div>
 </template>
 
 <script>
 import TRListItem from './TRListItem'
+import TRDelete from './TRDelete'
+import TRMinimize from './TRMinimize'
+import { mapActions } from 'vuex'
 
 export default {
   components: {
     TRListItem,
+    TRDelete,
+    TRMinimize,
   },
   props: {
     dir: {
@@ -28,9 +37,23 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      minimized: false,
+    }
+  },
   computed: {
     directoryList: function() {
       return this.list.filter(item => this.dir.itemList.includes(item.id))
+    },
+  },
+  methods: {
+    ...mapActions(['deleteDirectory']),
+    onDelete(id) {
+      this.deleteDirectory(id)
+    },
+    onMinimize() {
+      this.minimized = this.minimized ? false : true
     },
   },
 }

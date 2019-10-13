@@ -101,6 +101,9 @@ export default new Vuex.Store({
         state.toReadList.findIndex(item => item.id === id),
       )
     },
+    deleteDirectory({ commit, state }, id) {
+      commit('REMOVE_DIR', state.directories.findIndex(dir => dir.id === id))
+    },
     changeWaitingStatus({ commit }, value) {
       commit('CHANGE_WAITING_STATUS', value)
     },
@@ -116,6 +119,9 @@ export default new Vuex.Store({
     },
     REMOVE_LIST_ITEM(state, index) {
       state.toReadList.splice(index, 1)
+    },
+    REMOVE_DIR(state, index) {
+      state.directories.splice(index, 1)
     },
     CHANGE_WAITING_STATUS(state, value) {
       state.waiting += value
