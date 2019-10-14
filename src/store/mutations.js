@@ -8,11 +8,10 @@ const mutations = {
   REMOVE_LIST_ITEM(state, index) {
     state.toReadList.splice(index, 1)
   },
-  SWAP_ITEMS(state, { firstID, secondID }) {
-    const firstItem = state.toReadList.find(item => item.id === firstID)
-    const secondItem = state.toReadList.find(item => item.id === secondID)
-    const firstItemIndex = state.toReadList.indexOf(firstItem)
-    const secondItemIndex = state.toReadList.indexOf(secondItem)
+  SWAP_ITEMS(
+    state,
+    { firstItemIndex, firstItem, secondItemIndex, secondItem },
+  ) {
     state.toReadList.splice(firstItemIndex, 1, secondItem)
     state.toReadList.splice(secondItemIndex, 1, firstItem)
   },
