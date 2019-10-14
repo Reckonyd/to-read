@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import TRListItem from './TRListItem.vue'
+import TRListItem from './items/TRListItem'
 
 export default {
   components: {
