@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import TRHeader from './TRHeader.vue'
-import TRMain from './TRMain.vue'
+import TRHeader from './layout/TRHeader'
+import TRMain from './layout/TRMain'
 
 export default {
   name: 'App',

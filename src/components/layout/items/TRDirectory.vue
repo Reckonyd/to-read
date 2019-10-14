@@ -17,8 +17,8 @@
 
 <script>
 import TRListItem from './TRListItem'
-import TRDelete from './TRDelete'
-import TRMinimize from './TRMinimize'
+import TRDelete from '../../buttons/TRDelete'
+import TRMinimize from '../../buttons/TRMinimize'
 import { mapActions } from 'vuex'
 
 export default {

@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import TRListItem from './TRListItem.vue'
-import TRDirectory from './TRDirectory.vue'
+import TRListItem from './items/TRListItem'
+import TRDirectory from './items/TRDirectory'
 import { mapState } from 'vuex'
 
 export default {
