@@ -32,8 +32,8 @@
 </template>
 
 <script>
+import TRDelete from '../../buttons/TRDelete'
 import { mapActions } from 'vuex'
-import TRDelete from './TRDelete.vue'
 
 export default {
   components: {

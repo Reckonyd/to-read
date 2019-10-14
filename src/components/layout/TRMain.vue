@@ -7,9 +7,9 @@
 </template>
 
 <script>
-import TRSearch from './TRSearch.vue'
-import TRListView from './TRListView.vue'
-import TRAdd from './TRAdd.vue'
+import TRSearch from './inputs/TRSearch'
+import TRListView from './TRListView'
+import TRAdd from './inputs/TRAdd'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {

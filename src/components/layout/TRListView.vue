@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import TRListItem from './TRListItem.vue'
+import TRListItem from './items/TRListItem'
 import { mapActions } from 'vuex'
 
 export default {
