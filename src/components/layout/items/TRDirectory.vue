@@ -10,6 +10,7 @@
         v-for="item in directoryList"
         :key="item.id"
         :to-read-item="item"
+        :dir-id="dir.id"
       ></TRListItem>
     </div>
   </div>

@@ -71,6 +71,31 @@ const actions = {
   deleteDirectory({ commit, state }, id) {
     commit('REMOVE_DIR', state.directories.findIndex(dir => dir.id === id))
   },
+  selectAction({ commit, state }, { id, dirId, isSelected }) {
+    if (isSelected) {
+      commit('ADD_SELECTED', { itemId: id, whatDir: dirId })
+    } else {
+      commit(
+        'REMOVE_SELECTED',
+        state.selectedItems.findIndex(
+          selectedItem => selectedItem.itemId === id,
+        ),
+      )
+    }
+  },
+  moveItemsToDirectory({ commit, dispatch }, dirId) {
+    commit('MOVE_TO_DIR', dirId)
+    dispatch('clearSelected')
+  },
+  deleteSelected({ state, dispatch }) {
+    state.selectedItems.forEach(selectedItem => {
+      dispatch('deleteItem', selectedItem.itemId)
+    })
+    dispatch('clearSelected')
+  },
+  clearSelected({ commit }) {
+    commit('CLEAR_SELECTED')
+  },
   changeWaitingStatus({ commit }, value) {
     commit('CHANGE_WAITING_STATUS', value)
   },

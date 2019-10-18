@@ -2,6 +2,7 @@
   <div
     class="relative flex flex-col lg:w-5/12 bg-gray-700 text-gray-100 my-2 mx-1 sm:mx-2 text-center border-b-8 border-red-700 rounded-t shadow"
   >
+    <TRSelect :selected="isSelected" @select="onSelect"></TRSelect>
     <TRDelete @delete="deleteItem(toReadItem.id)" />
     <a :href="toReadItem.url" target="_blank" rel="noopener noreferrer">
       <img
@@ -27,16 +28,23 @@
 
 <script>
 import TRDelete from '../../buttons/TRDelete'
-import { mapActions } from 'vuex'
+import TRSelect from '../../buttons/TRSelect'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   components: {
     TRDelete,
+    TRSelect,
   },
   props: {
     toReadItem: {
       type: Object,
       required: true,
+    },
+    dirId: {
+      type: String,
+      default: undefined,
+      required: false,
     },
   },
   data: function() {
@@ -44,8 +52,25 @@ export default {
       imageStyle: ['object-contain', 'h-64'],
     }
   },
+  computed: {
+    ...mapState(['selectedItems']),
+    isSelected: function() {
+      return this.selectedItems.find(
+        selectedItem => this.toReadItem.id === selectedItem.itemId,
+      )
+        ? true
+        : false
+    },
+  },
   methods: {
-    ...mapActions(['deleteItem']),
+    ...mapActions(['deleteItem', 'selectAction']),
+    onSelect(isSelected) {
+      this.selectAction({
+        id: this.toReadItem.id,
+        dirId: this.dirId,
+        isSelected,
+      })
+    },
   },
 }
 </script>
