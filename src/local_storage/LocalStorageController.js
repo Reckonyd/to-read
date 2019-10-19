@@ -1,26 +1,22 @@
-export default class LocalStorageController {
-  constructor() {
-    this.store = {}
-  }
+const storeTemplate = { toReadList: [] }
 
-  setLocalStorage() {
-    localStorage.setItem('store', JSON.stringify(this.store))
+export default class LocalStorageController {
+  constructor() {}
+
+  setLocalStorage(store) {
+    localStorage.setItem('store', JSON.stringify(store))
   }
 
   getLocalStorage() {
-    return JSON.parse(localStorage.getItem('store'))
+    const LSStore = JSON.parse(localStorage.getItem('store'))
+    return LSStore ? LSStore : storeTemplate
   }
 
   addItemToLocalStorage(itemListName, item) {
     let tempStore = { ...this.getLocalStorage() }
-
-    if (!Object.prototype.hasOwnProperty.call(tempStore, itemListName)) {
-      tempStore = { ...tempStore, [itemListName]: [] }
-    }
     tempStore[itemListName].push(item)
 
-    this.store = tempStore
-    this.setLocalStorage()
+    this.setLocalStorage(tempStore)
   }
 
   removeItemFromLocalStorage(itemListName, itemIndex) {
@@ -28,7 +24,6 @@ export default class LocalStorageController {
 
     tempStore[itemListName].splice(itemIndex, 1)
 
-    this.store = tempStore
-    this.setLocalStorage()
+    this.setLocalStorage(tempStore)
   }
 }
