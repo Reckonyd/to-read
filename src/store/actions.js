@@ -1,19 +1,13 @@
 import axios from 'axios'
 import uuidv4 from 'uuid/v4'
+import LocalStorageController from '../local_storage/LocalStorageController'
+
+const LSController = new LocalStorageController()
 
 const actions = {
-  initList({ commit }) {
-    let list = []
-    for (let index = 0; index < localStorage.length; index++) {
-      let key = localStorage.key(index)
-      if (key.indexOf('toReadItem') > -1) {
-        list.push(JSON.parse(localStorage.getItem(key)))
-      }
-    }
-
-    list.sort((a, b) => a.id - b.id)
-
-    commit('INIT_LIST', list)
+  initLists({ commit }) {
+    const lists = LSController.getLocalStorage()
+    commit('INIT_LISTS', lists)
   },
   async addItem({ commit, dispatch }, url) {
     let pageInfo = {}
@@ -46,18 +40,16 @@ const actions = {
     }
 
     if (!pageInfo.notFound) {
-      localStorage.setItem(`toReadItem${pageInfo.id}`, JSON.stringify(pageInfo))
-
+      LSController.addItemToLocalStorage('toReadList', pageInfo)
       dispatch('changeWaitingStatus', -1)
       commit('ADD_LIST_ITEM', pageInfo)
     }
   },
   deleteItem({ commit, state }, id) {
-    localStorage.removeItem(`toReadItem${id}`)
-    commit(
-      'REMOVE_LIST_ITEM',
-      state.toReadList.findIndex(item => item.id === id),
-    )
+    const itemIndex = state.toReadList.findIndex(item => item.id === id)
+
+    LSController.removeItemFromLocalStorage('toReadList', itemIndex)
+    commit('REMOVE_LIST_ITEM', itemIndex)
   },
   addDirectory({ commit }, name) {
     const dir = {
