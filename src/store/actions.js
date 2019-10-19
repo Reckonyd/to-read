@@ -58,10 +58,14 @@ const actions = {
       itemList: [],
     }
 
+    LSController.addItemToLocalStorage('directories', dir)
     commit('ADD_DIR', dir)
   },
   deleteDirectory({ commit, state }, id) {
-    commit('REMOVE_DIR', state.directories.findIndex(dir => dir.id === id))
+    const dirIndex = state.directories.findIndex(dir => dir.id === id)
+
+    LSController.removeItemFromLocalStorage('directories', dirIndex)
+    commit('REMOVE_DIR', dirIndex)
   },
   selectAction({ commit, state }, { id, dirId, isSelected }) {
     if (isSelected) {
@@ -75,8 +79,24 @@ const actions = {
       )
     }
   },
-  moveItemsToDirectory({ commit, dispatch }, dirId) {
-    commit('MOVE_TO_DIR', dirId)
+  moveItemsToDirectory({ state, commit, dispatch }, dirId) {
+    state.selectedItems.forEach(selectedItem => {
+      if (selectedItem.whatDir !== dirId) {
+        if (dirId != -1) {
+          commit('MOVE_TO_DIR', { dirId, itemId: selectedItem.itemId })
+        }
+
+        if (selectedItem.whatDir) {
+          commit('REMOVE_FROM_DIR', {
+            dirId: selectedItem.whatDir,
+            itemId: selectedItem.itemId,
+          })
+        }
+      }
+    })
+
+    LSController.modifyLocalStorageList('directories', state.directories)
+
     dispatch('clearSelected')
   },
   deleteSelected({ state, dispatch }) {

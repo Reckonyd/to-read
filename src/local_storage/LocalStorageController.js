@@ -1,4 +1,4 @@
-const storeTemplate = { toReadList: [] }
+const storeTemplate = { toReadList: [], directories: [] }
 
 export default class LocalStorageController {
   constructor() {}
@@ -15,6 +15,14 @@ export default class LocalStorageController {
   addItemToLocalStorage(itemListName, item) {
     let tempStore = { ...this.getLocalStorage() }
     tempStore[itemListName].push(item)
+
+    this.setLocalStorage(tempStore)
+  }
+
+  modifyLocalStorageList(itemListName, value) {
+    let tempStore = { ...this.getLocalStorage() }
+
+    tempStore[itemListName] = value
 
     this.setLocalStorage(tempStore)
   }
