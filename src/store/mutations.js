@@ -17,9 +17,11 @@ const mutations = {
   MOVE_TO_DIR(state, dirId) {
     state.selectedItems.forEach(selectedItem => {
       if (selectedItem.whatDir !== dirId) {
-        state.directories
-          .find(dir => dir.id === dirId)
-          .itemList.push(selectedItem.itemId)
+        if (dirId != -1) {
+          state.directories
+            .find(dir => dir.id === dirId)
+            .itemList.push(selectedItem.itemId)
+        }
 
         if (selectedItem.whatDir) {
           let oldContainingDir = state.directories.find(

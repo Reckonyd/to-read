@@ -17,6 +17,12 @@
         ]"
       >
         <li
+          class="hover:bg-orange-900 cursor-pointer"
+          @click="onMoveToFolder(-1)"
+        >
+          No Folder
+        </li>
+        <li
           v-for="directory in directories"
           :key="directory.id"
           class="hover:bg-orange-900 cursor-pointer"
