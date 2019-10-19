@@ -30,10 +30,10 @@ export default {
     },
   },
   mounted() {
-    this.initList()
+    this.initLists()
   },
   methods: {
-    ...mapActions(['initList']),
+    ...mapActions(['initLists']),
     onSearch(search) {
       this.search = search
     },

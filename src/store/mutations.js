@@ -1,6 +1,6 @@
 const mutations = {
-  INIT_LIST(state, list) {
-    state.toReadList = list
+  INIT_LISTS(state, lists) {
+    state.toReadList = lists ? lists.toReadList : []
   },
   ADD_LIST_ITEM(state, item) {
     state.toReadList.push(item)
