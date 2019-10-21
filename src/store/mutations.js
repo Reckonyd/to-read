@@ -32,6 +32,13 @@ const mutations = {
   CLEAR_SELECTED(state) {
     state.selectedItems = []
   },
+  SWAP_ITEMS(
+    state,
+    { firstItemIndex, firstItem, secondItemIndex, secondItem },
+  ) {
+    state.toReadList.splice(firstItemIndex, 1, secondItem)
+    state.toReadList.splice(secondItemIndex, 1, firstItem)
+  },
   CHANGE_WAITING_STATUS(state, value) {
     state.waiting += value
   },

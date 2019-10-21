@@ -108,6 +108,18 @@ const actions = {
   clearSelected({ commit }) {
     commit('CLEAR_SELECTED')
   },
+  swapItems({ commit, state }, { firstID, secondID }) {
+    const firstItem = state.toReadList.find(item => item.id === firstID)
+    const secondItem = state.toReadList.find(item => item.id === secondID)
+    const firstItemIndex = state.toReadList.indexOf(firstItem)
+    const secondItemIndex = state.toReadList.indexOf(secondItem)
+    commit('SWAP_ITEMS', {
+      firstItemIndex,
+      firstItem,
+      secondItemIndex,
+      secondItem,
+    })
+  },
   changeWaitingStatus({ commit }, value) {
     commit('CHANGE_WAITING_STATUS', value)
   },

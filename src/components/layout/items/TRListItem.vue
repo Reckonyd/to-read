@@ -2,9 +2,18 @@
   <div
     class="relative flex flex-col lg:w-5/12 bg-gray-700 text-gray-100 my-2 mx-1 sm:mx-2 text-center border-b-8 border-red-700 rounded-t shadow"
   >
-    <TRSelect :selected="isSelected" @select="onSelect"></TRSelect>
-    <TRDelete @delete="deleteItem(toReadItem.id)" />
-    <a :href="toReadItem.url" target="_blank" rel="noopener noreferrer">
+    <TRSelect
+      draggable="false"
+      :selected="isSelected"
+      @select="onSelect"
+    ></TRSelect>
+    <TRDelete draggable="false" @delete="deleteItem(toReadItem.id)" />
+    <a
+      :href="toReadItem.url"
+      target="_blank"
+      rel="noopener noreferrer"
+      draggable="false"
+    >
       <img
         :class="[
           toReadItem.encoded ? '' : imageStyle,
@@ -15,6 +24,7 @@
         ]"
         :src="toReadItem.image_url"
         :alt="toReadItem.image_alt || `Image of ${toReadItem.title}`"
+        draggable="false"
       />
     </a>
     <h2 class="my-4 mx-3 font-bold tracking-wider text-xl">
