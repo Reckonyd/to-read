@@ -16,12 +16,7 @@ const mutations = {
     state.directories.splice(index, 1)
   },
   MOVE_TO_DIR(state, { dirId, itemId }) {
-    state.directories.find(dir => dir.id === dirId).itemList.push(itemId)
-  },
-  REMOVE_FROM_DIR(state, { dirId, itemId }) {
-    let oldContainingDir = state.directories.find(dir => dir.id === dirId)
-      .itemList
-    oldContainingDir.splice(oldContainingDir.indexOf(itemId), 1)
+    state.toReadList.find(item => item.id === itemId).dirId = dirId
   },
   ADD_SELECTED(state, selected) {
     state.selectedItems.push(selected)

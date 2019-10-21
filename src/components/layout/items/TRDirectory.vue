@@ -10,7 +10,6 @@
         v-for="item in directoryList"
         :key="item.id"
         :to-read-item="item"
-        :dir-id="dir.id"
       ></TRListItem>
     </div>
   </div>
@@ -45,7 +44,7 @@ export default {
   },
   computed: {
     directoryList: function() {
-      return this.list.filter(item => this.dir.itemList.includes(item.id))
+      return this.list.filter(item => item.dirId === this.dir.id)
     },
   },
   methods: {

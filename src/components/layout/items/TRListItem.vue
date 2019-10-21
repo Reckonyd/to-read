@@ -51,11 +51,6 @@ export default {
       type: Object,
       required: true,
     },
-    dirId: {
-      type: String,
-      default: undefined,
-      required: false,
-    },
   },
   data: function() {
     return {
@@ -77,7 +72,7 @@ export default {
     onSelect(isSelected) {
       this.selectAction({
         id: this.toReadItem.id,
-        dirId: this.dirId,
+        dirId: this.toReadItem.dirId,
         isSelected,
       })
     },

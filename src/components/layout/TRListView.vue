@@ -54,13 +54,7 @@ export default {
   computed: {
     ...mapState(['directories']),
     noDirList: function() {
-      let dirItemList = []
-
-      this.directories.forEach(dir => {
-        dir.itemList.forEach(item => dirItemList.push(item))
-      })
-
-      return this.list.filter(item => !dirItemList.includes(item.id))
+      return this.list.filter(item => item.dirId === -1)
     },
   },
   methods: {

@@ -32,6 +32,7 @@ const actions = {
     })
 
     pageInfo.id = uuidv4()
+    pageInfo.dirId = -1
     pageInfo.url = url
     pageInfo = { ...pageInfo, ...response.data }
 
@@ -55,7 +56,6 @@ const actions = {
     const dir = {
       id: uuidv4(),
       name,
-      itemList: [],
     }
 
     LSController.addItemToLocalStorage('directories', dir)
@@ -63,8 +63,12 @@ const actions = {
   },
   deleteDirectory({ commit, state }, id) {
     const dirIndex = state.directories.findIndex(dir => dir.id === id)
+    state.toReadList.forEach(item => {
+      item.dirId = item.dirId === id ? -1 : item.dirId
+    })
 
     LSController.removeItemFromLocalStorage('directories', dirIndex)
+    LSController.modifyLocalStorageList('toReadList', state.toReadList)
     commit('REMOVE_DIR', dirIndex)
   },
   selectAction({ commit, state }, { id, dirId, isSelected }) {
@@ -82,21 +86,11 @@ const actions = {
   moveItemsToDirectory({ state, commit, dispatch }, dirId) {
     state.selectedItems.forEach(selectedItem => {
       if (selectedItem.whatDir !== dirId) {
-        if (dirId != -1) {
-          commit('MOVE_TO_DIR', { dirId, itemId: selectedItem.itemId })
-        }
-
-        if (selectedItem.whatDir) {
-          commit('REMOVE_FROM_DIR', {
-            dirId: selectedItem.whatDir,
-            itemId: selectedItem.itemId,
-          })
-        }
+        commit('MOVE_TO_DIR', { dirId, itemId: selectedItem.itemId })
       }
     })
 
-    LSController.modifyLocalStorageList('directories', state.directories)
-
+    LSController.modifyLocalStorageList('toReadList', state.toReadList)
     dispatch('clearSelected')
   },
   deleteSelected({ state, dispatch }) {
