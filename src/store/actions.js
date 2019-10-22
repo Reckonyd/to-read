@@ -1,13 +1,9 @@
 import axios from 'axios'
 import uuidv4 from 'uuid/v4'
-import LocalStorageController from '../local_storage/LocalStorageController'
-
-const LSController = new LocalStorageController()
 
 const actions = {
   initLists({ commit }) {
-    const lists = LSController.getLocalStorage()
-    commit('INIT_LISTS', lists)
+    commit('INIT_LISTS')
   },
   async addItem({ commit, dispatch }, url) {
     let pageInfo = {}
@@ -41,7 +37,6 @@ const actions = {
     }
 
     if (!pageInfo.notFound) {
-      LSController.addItemToLocalStorage('toReadList', pageInfo)
       dispatch('changeWaitingStatus', -1)
       commit('ADD_LIST_ITEM', pageInfo)
     }
@@ -49,7 +44,6 @@ const actions = {
   deleteItem({ commit, state }, id) {
     const itemIndex = state.toReadList.findIndex(item => item.id === id)
 
-    LSController.removeItemFromLocalStorage('toReadList', itemIndex)
     commit('REMOVE_LIST_ITEM', itemIndex)
   },
   addDirectory({ commit }, name) {
@@ -58,18 +52,12 @@ const actions = {
       name,
     }
 
-    LSController.addItemToLocalStorage('directories', dir)
     commit('ADD_DIR', dir)
   },
   deleteDirectory({ commit, state }, id) {
     const dirIndex = state.directories.findIndex(dir => dir.id === id)
-    state.toReadList.forEach(item => {
-      item.dirId = item.dirId === id ? -1 : item.dirId
-    })
 
-    LSController.removeItemFromLocalStorage('directories', dirIndex)
-    LSController.modifyLocalStorageList('toReadList', state.toReadList)
-    commit('REMOVE_DIR', dirIndex)
+    commit('REMOVE_DIR', { dirIndex, id })
   },
   selectAction({ commit, state }, { id, dirId, isSelected }) {
     if (isSelected) {
@@ -90,7 +78,6 @@ const actions = {
       }
     })
 
-    LSController.modifyLocalStorageList('toReadList', state.toReadList)
     dispatch('clearSelected')
   },
   deleteSelected({ state, dispatch }) {
@@ -102,17 +89,14 @@ const actions = {
   clearSelected({ commit }) {
     commit('CLEAR_SELECTED')
   },
-  swapItems({ commit, state }, { firstID, secondID }) {
-    const firstItem = state.toReadList.find(item => item.id === firstID)
-    const secondItem = state.toReadList.find(item => item.id === secondID)
-    const firstItemIndex = state.toReadList.indexOf(firstItem)
-    const secondItemIndex = state.toReadList.indexOf(secondItem)
-    commit('SWAP_ITEMS', {
-      firstItemIndex,
-      firstItem,
-      secondItemIndex,
-      secondItem,
-    })
+  swapItems({ commit }, droppedOnItemInfo) {
+    commit('SWAP_ITEMS', droppedOnItemInfo)
+  },
+  swapDirs({ commit }, dirId) {
+    commit('SWAP_DIRS', dirId)
+  },
+  changeDraggedItemInfo({ commit }, value) {
+    commit('CHANGE_DRAGGED_ITEM_INFO', value)
   },
   changeWaitingStatus({ commit }, value) {
     commit('CHANGE_WAITING_STATUS', value)

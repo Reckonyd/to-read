@@ -1,6 +1,8 @@
 <template>
   <div
-    class="relative flex flex-wrap justify-evenly w-full my-2 p-2 bg-indigo-800 rounded shadow-2xl"
+    class="relative flex flex-wrap justify-evenly w-11/12 mx-auto my-2 p-2 bg-indigo-800 rounded shadow-2xl"
+    @dragover.prevent
+    @drop.prevent="onDirDrop"
   >
     <TRDelete @delete="onDelete(dir.id)"></TRDelete>
     <TRMinimize @minimize="onMinimize()"></TRMinimize>
@@ -10,6 +12,9 @@
         v-for="item in directoryList"
         :key="item.id"
         :to-read-item="item"
+        @dragStarted="onDragStart"
+        @dropped="onDrop"
+        @dragEnded="onDragEnd"
       ></TRListItem>
     </div>
   </div>
@@ -48,12 +53,30 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['deleteDirectory']),
+    ...mapActions([
+      'deleteDirectory',
+      'swapItems',
+      'swapDirs',
+      'changeDraggedItemInfo',
+    ]),
     onDelete(id) {
       this.deleteDirectory(id)
     },
     onMinimize() {
       this.minimized = this.minimized ? false : true
+    },
+    onDragStart(itemInfo) {
+      this.changeDraggedItemInfo(itemInfo)
+    },
+    onDrop(itemInfo) {
+      this.swapItems(itemInfo)
+    },
+    onDirDrop() {
+      this.swapDirs(this.dir.id)
+      this.changeDraggedItemInfo({})
+    },
+    onDragEnd() {
+      this.changeDraggedItemInfo({})
     },
   },
 }

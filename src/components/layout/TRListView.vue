@@ -1,9 +1,13 @@
 <template>
   <div
     :class="[
-      dragging ? 'bg-gray-600 rounded' : '',
       'flex flex-col flex-wrap justify-evenly lg:flex-row mx-1 mt-4',
+      overList ? 'bg-gray-600' : '',
     ]"
+    @dragenter.self="overList = true"
+    @dragover.prevent
+    @dragleave.self="overList = false"
+    @drop.self.prevent="onListDrop"
   >
     <TRDirectory
       v-for="directory in directories"
@@ -15,13 +19,9 @@
       v-for="item in noDirList"
       :key="item.id"
       :to-read-item="item"
-      :class="overItem && item.id === dropID ? 'opacity-50' : ''"
-      draggable="true"
-      @dragstart.native="onDragStart(item)"
-      @dragenter.native="onDragEnter(item)"
-      @dragover.native.prevent=""
-      @drop.native.prevent="onDrop"
-      @dragend.native="onDragEnd"
+      @dragStarted="onDragStart"
+      @dropped="onDrop"
+      @dragEnded="onDragEnd"
     >
     </TRListItem>
   </div>
@@ -45,10 +45,7 @@ export default {
   },
   data() {
     return {
-      dragID: 0,
-      dropID: 0,
-      dragging: false,
-      overItem: false,
+      overList: false,
     }
   },
   computed: {
@@ -58,22 +55,21 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['swapItems']),
-    onDragStart(item) {
-      this.dragging = true
-      this.dragID = item.id
+    ...mapActions(['swapItems', 'swapDirs', 'changeDraggedItemInfo']),
+    onDragStart(itemInfo) {
+      this.changeDraggedItemInfo(itemInfo)
     },
-    onDragEnter(item) {
-      this.overItem = true
-      this.dropID = item.id
+    onDrop(itemInfo) {
+      this.swapItems(itemInfo)
     },
-    onDrop() {
-      if (this.dragID !== this.dropID)
-        this.swapItems({ firstID: this.dragID, secondID: this.dropID })
+    onListDrop() {
+      this.swapDirs(-1)
+      this.changeDraggedItemInfo({})
+      this.overList = false
     },
     onDragEnd() {
-      this.dragging = false
-      this.overItem = false
+      this.changeDraggedItemInfo({})
+      this.overList = false
     },
   },
 }

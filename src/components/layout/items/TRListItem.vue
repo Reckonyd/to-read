@@ -1,6 +1,11 @@
 <template>
   <div
     class="relative flex flex-col lg:w-5/12 bg-gray-700 text-gray-100 my-2 mx-1 sm:mx-2 text-center border-b-8 border-red-700 rounded-t shadow"
+    draggable="true"
+    @dragstart="onDragStart"
+    @dragover.prevent
+    @drop.prevent="onDrop"
+    @dragend="onDragEnd"
   >
     <TRSelect
       draggable="false"
@@ -27,10 +32,10 @@
         draggable="false"
       />
     </a>
-    <h2 class="my-4 mx-3 font-bold tracking-wider text-xl">
+    <h2 class="my-4 mx-3 font-bold tracking-wider text-xl" draggable="false">
       {{ toReadItem.title }}
     </h2>
-    <p class="mb-5 mx-6 text-lg text-left leading-tight">
+    <p class="mb-5 mx-6 text-lg text-left leading-tight" draggable="false">
       {{ toReadItem.description }}
     </p>
   </div>
@@ -75,6 +80,21 @@ export default {
         dirId: this.toReadItem.dirId,
         isSelected,
       })
+    },
+    onDragStart() {
+      this.$emit('dragStarted', {
+        id: this.toReadItem.id,
+        dir: this.toReadItem.dirId,
+      })
+    },
+    onDrop() {
+      this.$emit('dropped', {
+        id: this.toReadItem.id,
+        dir: this.toReadItem.dirId,
+      })
+    },
+    onDragEnd() {
+      this.$emit('dragEnded')
     },
   },
 }
