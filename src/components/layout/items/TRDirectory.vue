@@ -1,5 +1,6 @@
 <template>
   <div
+    v-show="hasSearchItem"
     class="relative flex flex-wrap justify-evenly w-11/12 mx-auto my-2 p-2 bg-indigo-800 rounded shadow-2xl"
     @dragover.prevent
     @drop.prevent="onDirDrop"
@@ -24,7 +25,7 @@
 import TRListItem from './TRListItem'
 import TRDelete from '../../buttons/TRDelete'
 import TRMinimize from '../../buttons/TRMinimize'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 
 export default {
   components: {
@@ -37,10 +38,6 @@ export default {
       type: Object,
       required: true,
     },
-    list: {
-      type: Array,
-      required: true,
-    },
   },
   data() {
     return {
@@ -48,8 +45,15 @@ export default {
     }
   },
   computed: {
+    ...mapState(['search']),
+    ...mapGetters(['getFilteredToReadList']),
     directoryList: function() {
-      return this.list.filter(item => item.dirId === this.dir.id)
+      return this.getFilteredToReadList.filter(
+        item => item.dirId === this.dir.id,
+      )
+    },
+    hasSearchItem: function() {
+      return this.directoryList.length > 0 || this.search === ''
     },
   },
   methods: {

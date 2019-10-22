@@ -13,7 +13,6 @@
       v-for="directory in directories"
       :key="directory.id"
       :dir="directory"
-      :list="list"
     ></TRDirectory>
     <TRListItem
       v-for="item in noDirList"
@@ -30,18 +29,12 @@
 <script>
 import TRListItem from './items/TRListItem'
 import TRDirectory from './items/TRDirectory'
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 
 export default {
   components: {
     TRListItem,
     TRDirectory,
-  },
-  props: {
-    list: {
-      type: Array,
-      required: true,
-    },
   },
   data() {
     return {
@@ -50,8 +43,9 @@ export default {
   },
   computed: {
     ...mapState(['directories']),
+    ...mapGetters(['getFilteredToReadList']),
     noDirList: function() {
-      return this.list.filter(item => item.dirId === -1)
+      return this.getFilteredToReadList.filter(item => item.dirId === -1)
     },
   },
   methods: {

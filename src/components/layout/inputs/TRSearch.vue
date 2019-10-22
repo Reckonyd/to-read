@@ -9,30 +9,34 @@
       placeholder="Search"
       @submit.prevent
     />
-    <span class="text-gray-100">{{ searching }}</span>
+    <span class="text-gray-100">{{
+      searching ? 'Waiting For You To Stop Typing...' : ''
+    }}</span>
   </div>
 </template>
 
 <script>
 import debounce from 'lodash/debounce'
+import { mapActions } from 'vuex'
 
 export default {
   data() {
     return {
       search: '',
-      searching: '',
+      searching: false,
     }
   },
   watch: {
     search() {
-      this.searching = 'Waiting For You To Stop Typing...'
+      this.searching = true
       this.debounceFunc()
     },
   },
   methods: {
+    ...mapActions(['searchAction']),
     debouncedEmit: function() {
-      this.$emit('emitSearch', this.search)
-      this.searching = ''
+      this.searching = false
+      this.searchAction(this.search)
     },
     debounceFunc: debounce(function() {
       this.debouncedEmit()

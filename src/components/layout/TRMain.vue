@@ -1,9 +1,9 @@
 <template>
   <div class="container mx-auto">
-    <TRSearch @emitSearch="onSearch"></TRSearch>
+    <TRSearch></TRSearch>
     <TRAdd></TRAdd>
     <TRActions></TRActions>
-    <TRListView :list="list"></TRListView>
+    <TRListView></TRListView>
   </div>
 </template>
 
@@ -12,7 +12,7 @@ import TRListView from './TRListView'
 import TRSearch from './inputs/TRSearch'
 import TRAdd from './inputs/TRAdd'
 import TRActions from './inputs/TRActions'
-import { mapGetters, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   components: {
@@ -21,25 +21,11 @@ export default {
     TRAdd,
     TRActions,
   },
-  data() {
-    return {
-      search: '',
-    }
-  },
-  computed: {
-    ...mapGetters(['getFilteredToReadList']),
-    list() {
-      return this.getFilteredToReadList(this.search)
-    },
-  },
   mounted() {
     this.initLists()
   },
   methods: {
     ...mapActions(['initLists']),
-    onSearch(search) {
-      this.search = search
-    },
   },
 }
 </script>

@@ -5,6 +5,9 @@ const actions = {
   initLists({ commit }) {
     commit('INIT_LISTS')
   },
+  searchAction({ commit }, value) {
+    commit('CHANGE_SEARCH', value)
+  },
   async addItem({ commit, dispatch }, url) {
     let pageInfo = {}
 

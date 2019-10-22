@@ -9,6 +9,9 @@ const mutations = {
     state.toReadList = lists.toReadList
     state.directories = lists.directories
   },
+  CHANGE_SEARCH(state, value) {
+    state.search = value
+  },
   ADD_LIST_ITEM(state, item) {
     state.toReadList.push(item)
     LSController.addItemToLocalStorage('toReadList', item)

@@ -1,9 +1,10 @@
 const getters = {
-  getFilteredToReadList: state => (search = ' ') => {
+  getFilteredToReadList: state => {
     if (state.toReadList.length !== 0) {
       return state.toReadList
         .filter(
-          item => item.title.toLowerCase().indexOf(search.toLowerCase()) > -1,
+          item =>
+            item.title.toLowerCase().indexOf(state.search.toLowerCase()) > -1,
         )
         .reverse()
     }
