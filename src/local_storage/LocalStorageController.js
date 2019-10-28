@@ -2,7 +2,9 @@ const storeTemplate = { toReadList: [], directories: [] }
 
 export default class LocalStorageController {
   constructor() {
-    this.setLocalStorage(storeTemplate)
+    if (!localStorage.getItem('store')) {
+      this.setLocalStorage(storeTemplate)
+    }
   }
 
   setLocalStorage(store) {
