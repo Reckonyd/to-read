@@ -40,9 +40,10 @@ const actions = {
     }
 
     if (!pageInfo.notFound) {
-      dispatch('changeWaitingStatus', -1)
       commit('ADD_LIST_ITEM', pageInfo)
     }
+
+    dispatch('changeWaitingStatus', -1)
   },
   deleteItem({ commit, state }, id) {
     const itemIndex = state.toReadList.findIndex(item => item.id === id)
