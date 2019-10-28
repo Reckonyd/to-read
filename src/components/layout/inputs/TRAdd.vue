@@ -7,8 +7,8 @@
         aria-label="Enter a valid URL: https://www.example.com/"
         placeholder="Enter a valid URL: https://www.example.com/"
         :class="[
-          'flex-grow mr-1 p-2 inputArea rounded shadow',
-          { errorStyle: error },
+          'flex-grow mr-1 p-2 rounded shadow',
+          error ? errorStyle : 'inputArea',
         ]"
       />
       <button class="p-2 btn rounded shadow" @click="onAdd()">
@@ -54,7 +54,7 @@ export default {
       createDir: false,
       createDirDisplayText: 'Create Directory',
       error: false,
-      errorStyle: ['bg-red-200', 'focus:bg-red-400', 'text-center'],
+      errorStyle: ['bg-red-300', 'focus:bg-red-400', 'text-center'],
       waitingStyle: ['lds-ellipsis mb-10 self-center'],
     }
   },
