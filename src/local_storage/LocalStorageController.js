@@ -2,17 +2,17 @@ const storeTemplate = { toReadList: [], directories: [] }
 
 export default class LocalStorageController {
   constructor() {
-    if (!localStorage.getItem('store')) {
+    if (!localStorage.getItem('toReadStore')) {
       this.setLocalStorage(storeTemplate)
     }
   }
 
   setLocalStorage(store) {
-    localStorage.setItem('store', JSON.stringify(store))
+    localStorage.setItem('toReadStore', JSON.stringify(store))
   }
 
   getLocalStorage() {
-    const LSStore = JSON.parse(localStorage.getItem('store'))
+    const LSStore = JSON.parse(localStorage.getItem('toReadStore'))
     return LSStore ? LSStore : storeTemplate
   }
 
