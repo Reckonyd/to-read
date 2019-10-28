@@ -1,13 +1,13 @@
 <template>
   <div
     v-show="hasSearchItem"
-    class="relative flex flex-wrap justify-evenly w-11/12 mx-auto my-2 p-2 bg-indigo-800 rounded shadow-2xl"
+    class="relative w-11/12 mx-auto my-2 p-3 bg-gray-900 rounded-t shadow-md"
     @dragover.prevent
     @drop.prevent="onDirDrop"
   >
     <TRDelete @delete="onDelete(dir.id)"></TRDelete>
     <TRMinimize @minimize="onMinimize()"></TRMinimize>
-    <h2 class="w-full ml-3 mt-3 text-gray-200 text-xl">{{ dir.name }}</h2>
+    <h2 class="mx-4 text-gray-200 text-xl">{{ dir.name | capitalize }}</h2>
     <div :class="[{ hidden: minimized }, 'flex flex-wrap justify-evenly my-2']">
       <TRListItem
         v-for="item in directoryList"
@@ -32,6 +32,13 @@ export default {
     TRListItem,
     TRDelete,
     TRMinimize,
+  },
+  filters: {
+    capitalize: function(value) {
+      if (!value) return ''
+      value = value.toString()
+      return value.charAt(0).toUpperCase() + value.slice(1)
+    },
   },
   props: {
     dir: {

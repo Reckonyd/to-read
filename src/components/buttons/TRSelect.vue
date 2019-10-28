@@ -1,9 +1,9 @@
 <template>
   <button
-    class="absolute px-2 py-1 bg-gray-500 hover:bg-gray-900 outline-none font-black text-lg focus:shadow-outline shadow rounded-tl opacity-75"
+    class="absolute px-2 py-1 bg-orange-600 hover:bg-orange-500 outline-none text-md focus:shadow-outline shadow rounded-tl"
     @click="onSelect()"
   >
-    {{ selected ? '&#x025FC;' : '&#x025FB;' }}
+    <font-awesome-icon :icon="[selected ? 'fas' : 'far', 'square']" />
   </button>
 </template>
 

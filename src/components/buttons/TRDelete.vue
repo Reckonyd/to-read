@@ -1,6 +1,6 @@
 <template>
   <button
-    class="absolute top-0 right-0 h-8 w-8 btn rounded-tr shadow opacity-75"
+    class="absolute top-0 right-0 h-8 w-8 btn text-xl rounded-tr shadow"
     aria-label="Delete Item"
     @click="$emit('delete')"
   >

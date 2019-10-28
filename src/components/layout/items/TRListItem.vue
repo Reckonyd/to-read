@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative flex flex-col lg:w-5/12 bg-gray-700 text-gray-100 my-2 mx-1 sm:mx-2 text-center border-b-8 border-red-700 rounded-t shadow"
+    class="relative w-11/12 md:w-5/12 mx-auto my-2 text-gray-200 bg-gray-700 rounded-t shadow-md"
     draggable="true"
     @dragstart="onDragStart"
     @dragover.prevent
@@ -21,21 +21,21 @@
     >
       <img
         :class="[
-          toReadItem.encoded ? '' : imageStyle,
-          'mx-auto',
-          'w-full',
-          'rounded-t',
-          'shadow-md',
+          toReadItem.encoded ? 'object-cover' : imageStyle,
+          'w-full h-64 rounded-t shadow-md',
         ]"
         :src="toReadItem.image_url"
         :alt="toReadItem.image_alt || `Image of ${toReadItem.title}`"
         draggable="false"
       />
     </a>
-    <h2 class="my-4 mx-3 font-bold tracking-wider text-xl" draggable="false">
+    <h2
+      class="my-4 mx-4 font-bold text-center text-lg md:text-xl"
+      draggable="false"
+    >
       {{ toReadItem.title }}
     </h2>
-    <p class="mb-5 mx-6 text-lg text-left leading-tight" draggable="false">
+    <p class="mb-5 mx-6 lg:text-lg text-left leading-tight" draggable="false">
       {{ toReadItem.description }}
     </p>
   </div>
@@ -59,7 +59,7 @@ export default {
   },
   data: function() {
     return {
-      imageStyle: ['object-contain', 'h-64'],
+      imageStyle: 'object-contain',
     }
   },
   computed: {

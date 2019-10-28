@@ -1,6 +1,6 @@
 <template>
   <button
-    class="absolute top-0 right-0 mr-10 px-3 py-1 btn shadow opacity-75"
+    class="absolute top-0 right-0 mr-10 px-3 py-1 btn text-md shadow"
     @click="$emit('minimize')"
   >
     &#x0005F;

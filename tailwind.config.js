@@ -3,7 +3,7 @@ module.exports = {
     extend: {},
   },
   variants: {
-    backgroundColor: ['responsive', 'focus', 'hover', 'active'],
+    backgroundColor: ['responsive', 'odd', 'even', 'focus', 'hover', 'active'],
   },
   plugins: [
     function({ addUtilities }) {

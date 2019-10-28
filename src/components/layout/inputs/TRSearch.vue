@@ -1,9 +1,9 @@
 <template>
-  <div class="md:w-4/5 mx-2 md:mx-auto my-2">
+  <div class="w-11/12 lg:w-4/5 mx-2 mx-auto my-2">
     <input
       id="search"
       v-model="search"
-      class="w-full p-1 inputArea rounded shadow"
+      class="w-full p-2 inputArea rounded shadow"
       type="text"
       aria-label="Search Read Items"
       placeholder="Search"

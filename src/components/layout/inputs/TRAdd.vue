@@ -1,31 +1,37 @@
 <template>
-  <div class="flex md:w-4/5 mx-2 md:mx-auto my-2">
-    <input
-      v-model="url"
-      type="text"
-      aria-label="Enter a valid URL: https://www.examble.com/"
-      placeholder="Enter a valid URL: https://www.examble.com/"
-      :class="[
-        'flex-grow',
-        error ? errorStyle : 'inputArea',
-        'rounded',
-        'shadow',
-      ]"
-    />
-    <button class="mx-1 p-2 btn rounded shadow" @click="onAdd()">
-      Add
-    </button>
-    <div class="flex">
-      <button class="mx-1 p-2 btn rounded shadow" @click="onCreateDir()">
-        {{ addDir ? 'Add Directory' : 'Create Directory' }}
+  <div class="flex flex-col lg:flex-row w-11/12 lg:w-4/5 mx-auto">
+    <div class="flex lg:flex-grow mb-2">
+      <input
+        v-model="url"
+        type="text"
+        aria-label="Enter a valid URL: https://www.example.com/"
+        placeholder="Enter a valid URL: https://www.example.com/"
+        :class="[
+          'flex-grow mr-1 p-2 inputArea rounded shadow',
+          { errorStyle: error },
+        ]"
+      />
+      <button class="p-2 btn rounded shadow" @click="onAdd()">
+        Add Item
       </button>
+    </div>
+    <div class="flex mb-2">
       <input
         v-model="dirName"
         type="text"
         aria-label="Enter a Directory name"
         placeholder="Enter a Directory Name"
-        :class="[{ hidden: dirInput }, 'inputArea rounded shadow']"
+        :class="[
+          { 'lg:hidden': !createDir },
+          'lg:order-1 flex-grow mr-1 lg:mr-0 lg:ml-1 p-2 inputArea rounded shadow',
+        ]"
       />
+      <button
+        class="lg:order-0 lg:ml-1 p-2 btn rounded shadow"
+        @click="onCreateDir()"
+      >
+        {{ dirName ? 'Add Directory' : createDirDisplayText }}
+      </button>
     </div>
     <div :class="waiting ? waitingStyle : ''">
       <div></div>
@@ -45,11 +51,11 @@ export default {
     return {
       url: '',
       dirName: '',
-      dirInput: true,
-      addDir: false,
+      createDir: false,
+      createDirDisplayText: 'Create Directory',
       error: false,
       errorStyle: ['bg-red-200', 'focus:bg-red-400', 'text-center'],
-      waitingStyle: ['lds-ellipsis'],
+      waitingStyle: ['lds-ellipsis mb-10 self-center'],
     }
   },
   computed: {
@@ -58,9 +64,6 @@ export default {
   watch: {
     url() {
       this.error = !isUrl(this.url, { require_protocol: true }) && this.url
-    },
-    dirName() {
-      this.addDir = this.dirName
     },
   },
   methods: {
@@ -72,71 +75,14 @@ export default {
       }
     },
     onCreateDir() {
-      this.dirInput = this.dirInput ? false : true
-      if (this.addDir) {
+      this.createDir = this.createDir ? false : true
+      if (this.dirName) {
         this.addDirectory(this.dirName)
         this.dirName = ''
-        this.addDir = false
       }
     },
   },
 }
 </script>
 
-<style scoped>
-.lds-ellipsis {
-  display: inline-block;
-  position: relative;
-  width: 64px;
-  /* height: 64px; */
-}
-.lds-ellipsis div {
-  position: absolute;
-  top: 15px;
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  background: #fff;
-  animation-timing-function: cubic-bezier(0, 1, 1, 0);
-}
-.lds-ellipsis div:nth-child(1) {
-  left: 6px;
-  animation: lds-ellipsis1 0.6s infinite;
-}
-.lds-ellipsis div:nth-child(2) {
-  left: 6px;
-  animation: lds-ellipsis2 0.6s infinite;
-}
-.lds-ellipsis div:nth-child(3) {
-  left: 26px;
-  animation: lds-ellipsis2 0.6s infinite;
-}
-.lds-ellipsis div:nth-child(4) {
-  left: 45px;
-  animation: lds-ellipsis3 0.6s infinite;
-}
-@keyframes lds-ellipsis1 {
-  0% {
-    transform: scale(0);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-@keyframes lds-ellipsis3 {
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(0);
-  }
-}
-@keyframes lds-ellipsis2 {
-  0% {
-    transform: translate(0, 0);
-  }
-  100% {
-    transform: translate(19px, 0);
-  }
-}
-</style>
+<style scoped></style>

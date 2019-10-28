@@ -1,7 +1,7 @@
 <template>
   <div
     :class="[
-      'flex flex-col flex-wrap justify-evenly lg:flex-row mx-1 mt-4',
+      'flex flex-col md:flex-row md:flex-wrap md:justify-evenly',
       overList ? 'bg-gray-600' : '',
     ]"
     @dragenter.self="overList = true"
