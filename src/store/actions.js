@@ -19,7 +19,7 @@ const actions = {
       response = await axios({
         method: 'POST',
         url: '/.netlify/functions/apify',
-        data: url,
+        data: JSON.stringify(url),
       })
     } else {
       response = await axios({
