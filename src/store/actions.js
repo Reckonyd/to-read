@@ -19,7 +19,6 @@ const actions = {
       APIFY_API = await axios({
         method: 'GET',
         url: '/.netlify/functions/apify',
-        data: url,
       })
     }
 
