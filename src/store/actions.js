@@ -13,19 +13,7 @@ const actions = {
 
     dispatch('changeWaitingStatus', 1)
 
-    let APIFY_API = ''
-
-    if (process.env.NODE_ENV === 'production') {
-      let response = await axios({
-        url: '/.netlify/functions/apify',
-        method: 'get',
-        responseType: 'json',
-      })
-
-      APIFY_API = response.data
-    } else {
-      APIFY_API = process.env.API_URL + process.env.API_KEY
-    }
+    const APIFY_API = process.env.API_URL + process.env.API_KEY
 
     let response = await axios({
       method: 'POST',
