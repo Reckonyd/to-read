@@ -19,8 +19,10 @@ const actions = {
       APIFY_API = await axios({
         url: '/.netlify/functions/apify',
         method: 'get',
-        responseType: 'text',
+        responseType: 'json',
       })
+
+      console.log(APIFY_API)
     } else {
       APIFY_API = process.env.API_URL + process.env.API_KEY
     }
