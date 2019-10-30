@@ -15,9 +15,7 @@ const actions = {
 
     let response = await axios({
       method: 'POST',
-      url:
-        'https://api.apify.com/v2/acts/reckonyd~scraper-for-toread/run-sync?token=' +
-        process.env.API_KEY,
+      url: process.env.API_URL + process.env.API_KEY,
       data: {
         url,
         width: 1366,

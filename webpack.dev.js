@@ -2,6 +2,7 @@ const merge = require('webpack-merge')
 const common = require('./webpack.common.js')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { HotModuleReplacementPlugin } = require('webpack')
+const Dotenv = require('dotenv-webpack')
 
 module.exports = merge(common, {
   mode: 'development',
@@ -35,5 +36,6 @@ module.exports = merge(common, {
       title: 'ToRead',
       template: 'src/index.html',
     }),
+    new Dotenv(),
   ],
 })
