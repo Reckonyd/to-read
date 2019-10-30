@@ -6,7 +6,7 @@ exports.handler = async (event, context, callback) => {
     method: event.method,
     url: process.env.API_URL + process.env.API_KEY,
     data: {
-      url,
+      url: event.body,
       width: 1366,
       height: 768,
     },
