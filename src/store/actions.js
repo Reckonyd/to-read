@@ -23,6 +23,8 @@ const actions = {
       APIFY_API = process.env.API_URL + process.env.API_KEY
     }
 
+    console.log(APIFY_API)
+
     let response = await axios({
       method: 'POST',
       url: APIFY_API,
