@@ -13,20 +13,29 @@ const actions = {
 
     dispatch('changeWaitingStatus', 1)
 
-    let response = await axios({
-      method: 'POST',
-      url: process.env.API_URL + process.env.API_KEY,
-      data: {
-        url,
-        width: 1366,
-        height: 768,
-      },
-      config: {
-        headers: {
-          'Content-Type': 'application/json; charset=utf-8',
+    let response
+
+    if (process.env.NODE_ENV === 'production') {
+      response = await axios({
+        method: 'POST',
+        url: '../../.netlify/functions/apify',
+      })
+    } else {
+      response = await axios({
+        method: 'POST',
+        url: process.env.API_URL + process.env.API_KEY,
+        data: {
+          url,
+          width: 1366,
+          height: 768,
         },
-      },
-    })
+        config: {
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+          },
+        },
+      })
+    }
 
     pageInfo.id = uuidv4()
     pageInfo.dirId = -1
