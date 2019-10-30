@@ -16,14 +16,14 @@ const actions = {
     let APIFY_API = ''
 
     if (process.env.NODE_ENV === 'production') {
-      axios.get('./.netlify/functions/apify').then(response => {
-        APIFY_API = response.data
+      APIFY_API = await axios({
+        url: '/.netlify/functions/apify',
+        method: 'get',
+        responseType: 'text',
       })
     } else {
       APIFY_API = process.env.API_URL + process.env.API_KEY
     }
-
-    console.log(APIFY_API)
 
     let response = await axios({
       method: 'POST',
