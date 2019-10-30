@@ -18,7 +18,7 @@ const actions = {
     if (process.env.NODE_ENV === 'production') {
       response = await axios({
         method: 'POST',
-        url: '../../.netlify/functions/apify',
+        url: '/.netlify/functions/apify',
       })
     } else {
       response = await axios({
