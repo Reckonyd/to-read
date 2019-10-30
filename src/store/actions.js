@@ -48,6 +48,14 @@ const actions = {
   deleteItem({ commit, state }, id) {
     const itemIndex = state.toReadList.findIndex(item => item.id === id)
 
+    const selectedIndex = state.selectedItems.findIndex(
+      selectedItem => selectedItem.itemId === id,
+    )
+
+    if (selectedIndex > -1) {
+      commit('REMOVE_SELECTED')
+    }
+
     commit('REMOVE_LIST_ITEM', itemIndex)
   },
   addDirectory({ commit }, name) {
@@ -67,12 +75,11 @@ const actions = {
     if (isSelected) {
       commit('ADD_SELECTED', { itemId: id, whatDir: dirId })
     } else {
-      commit(
-        'REMOVE_SELECTED',
-        state.selectedItems.findIndex(
-          selectedItem => selectedItem.itemId === id,
-        ),
+      const selectedIndex = state.selectedItems.findIndex(
+        selectedItem => selectedItem.itemId === id,
       )
+
+      commit('REMOVE_SELECTED', selectedIndex)
     }
   },
   moveItemsToDirectory({ state, commit, dispatch }, dirId) {
