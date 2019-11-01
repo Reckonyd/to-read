@@ -9,31 +9,20 @@ const actions = {
     commit('CHANGE_SEARCH', value)
   },
   async addItem({ commit, dispatch }, url) {
-    let pageInfo = {}
-
     dispatch('changeWaitingStatus', 1)
 
-    const APIFY_API = process.env.API_URL + process.env.API_KEY
+    let siteData = await axios.post('http://localhost:5050/apifySiteInfo', url)
+    let imageData = await axios.post(
+      'http://localhost:5050/apifySiteImage',
+      url,
+    )
 
-    let response = await axios({
-      method: 'POST',
-      url: APIFY_API,
-      data: {
-        url,
-        width: 1366,
-        height: 768,
-      },
-      config: {
-        headers: {
-          'Content-Type': 'application/json; charset=utf-8',
-        },
-      },
-    })
+    let pageInfo = {}
 
     pageInfo.id = uuidv4()
     pageInfo.dirId = -1
     pageInfo.url = url
-    pageInfo = { ...pageInfo, ...response.data }
+    pageInfo = { ...pageInfo, ...siteData.data, ...imageData.data }
 
     if (pageInfo.encoded) {
       pageInfo.image_url = `data:image/jpeg;base64,${pageInfo.image_url}`
