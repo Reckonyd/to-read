@@ -1,8 +1,7 @@
 const axios = require('axios')
 
 exports.handler = async (event, context, callback) => {
-  const APIFY_API =
-    'https://api.apify.com/v2/acts/htanoo~scraper-for-toread-site-data/run-sync?token=6RJWdmGAhtNzaz8cXWvdpeYpx'
+  const APIFY_API = process.env.API_SITE_INFO_URL + process.env.API_KEY
 
   try {
     let response = await axios({
