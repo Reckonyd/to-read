@@ -13,21 +13,14 @@ exports.handler = async (event, context, callback) => {
       },
     })
 
-    return {
+    callback(null, {
       statusCode: 200,
       body: JSON.stringify(response.data),
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-      },
-    }
+    })
   } catch (err) {
-    console.log(err)
-    return {
-      statusCode: 404,
-      body: err,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-      },
-    }
+    callback(null, {
+      statusCode: 200,
+      body: JSON.stringify(err),
+    })
   }
 }
