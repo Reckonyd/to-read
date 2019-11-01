@@ -11,8 +11,8 @@ const actions = {
   async addItem({ commit, dispatch }, url) {
     dispatch('changeWaitingStatus', 1)
 
-    let siteData = await axios.post('/functions/apifySiteInfo', url)
-    let imageData = await axios.post('/functions/apifySiteImage', url)
+    let siteData = await axios.post('/.netlify/functions/apifySiteInfo', url)
+    let imageData = await axios.post('/.netlify/functions/apifySiteImage', url)
 
     let pageInfo = {}
 
