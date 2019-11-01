@@ -11,29 +11,10 @@ const actions = {
   async addItem({ commit, dispatch }, url) {
     dispatch('changeWaitingStatus', 1)
 
-<<<<<<< HEAD
     let siteData = await axios.post('/functions/apifySiteInfo', url)
     let imageData = await axios.post('/functions/apifySiteImage', url)
 
     let pageInfo = {}
-=======
-    let APIFY_API = process.env.API_URL + process.env.API_KEY
-
-    let response = await axios({
-      method: 'POST',
-      url: APIFY_API,
-      data: {
-        url,
-        width: 1366,
-        height: 768,
-      },
-      config: {
-        headers: {
-          'Content-Type': 'application/json; charset=utf-8',
-        },
-      },
-    })
->>>>>>> 53c626dff5e0bdf3ba3e30fdd607b243fe16dde5
 
     pageInfo.id = uuidv4()
     pageInfo.dirId = -1
