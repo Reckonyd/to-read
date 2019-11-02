@@ -82,6 +82,7 @@ export default {
       })
     },
     onDragStart() {
+      event.dataTransfer.setData('text', 'anything')
       this.$emit('dragStarted', {
         id: this.toReadItem.id,
         dir: this.toReadItem.dirId,
