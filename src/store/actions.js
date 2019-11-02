@@ -13,12 +13,14 @@ const actions = {
 
     let pageDataResults = await axios.post(
       '/.netlify/functions/getSiteData',
+      // 'http://localhost:5050/getSiteData',
       url,
     )
 
     if (pageDataResults.data.image_url === '') {
       let imageData = await axios.post(
         '/.netlify/functions/getSiteScreenshot',
+        // 'http://localhost:5050/getSiteScreenshot',
         url,
       )
 

@@ -39,14 +39,19 @@ exports.handler = async (event, context) => {
     await page.setRequestInterception(true)
 
     page.on('request', request => {
-      if (blockedResources.some(resource => request.indexOf(resource) !== -1)) {
+      if (
+        blockedResources.some(
+          resource => request.url().indexOf(resource) !== -1,
+        )
+      ) {
+        console.log('Aborted')
         request.abort()
       } else {
         request.continue()
       }
     })
 
-    await page.goto(event.body, { waitUntil: 'networkidle0' })
+    await page.goto(event.body, { waitUntil: 'networkidle2' })
 
     console.log('Getting Page Image...')
     const screenshotBuffer = await page.screenshot({
@@ -68,5 +73,8 @@ exports.handler = async (event, context) => {
   return {
     statusCode: 200,
     body: image_url,
+    // headers: {
+    //   'Access-Control-Allow-Origin': '*',
+    // },
   }
 }
