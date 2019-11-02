@@ -11,7 +11,7 @@ const actions = {
   async addItem({ commit, dispatch }, url) {
     dispatch('changeWaitingStatus', 1)
 
-    let results = await axios.post('http://localhost:5050/getSiteData', url)
+    let results = await axios.post('/.netlify/functions/getSiteData', url)
 
     console.log(results.data)
     let pageInfo = {}
