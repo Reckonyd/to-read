@@ -14,7 +14,7 @@ exports.handler = async (event, context) => {
   try {
     console.log('Opening:', event.body)
     const page = await browser.newPage()
-    await page.goto(event.body, { waitUntil: 'networkidle0' })
+    await page.goto(event.body)
 
     console.log('Getting Page Image...')
     const screenshotBuffer = await page.screenshot({
