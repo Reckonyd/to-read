@@ -1,6 +1,25 @@
 const chromium = require('chrome-aws-lambda')
-const { PuppeteerBlocker } = require('@cliqz/adblocker-puppeteer')
-const fetch = require('cross-fetch')
+
+const blockedResources = [
+  'quantserve',
+  'adzerk',
+  'doubleclick',
+  'adition',
+  'exelator',
+  'sharethrough',
+  'twitter',
+  'google-analytics',
+  'fontawesome',
+  'facebook',
+  'analytics',
+  'optimizely',
+  'clicktale',
+  'mixpanel',
+  'zedo',
+  'clicksor',
+  'tiqcdn',
+  'googlesyndication',
+]
 
 exports.handler = async (event, context) => {
   let image_url = ''
@@ -16,11 +35,18 @@ exports.handler = async (event, context) => {
   try {
     console.log('Opening:', event.body)
     const page = await browser.newPage()
-    await page.goto(event.body, { waitUntil: 'networkidle0' })
 
-    await PuppeteerBlocker.fromPrebuiltAdsAndTracking(fetch).then(blocker => {
-      blocker.enableBlockingInPage(page)
+    await page.setRequestInterception(true)
+
+    page.on('request', request => {
+      if (blockedResources.some(resource => request.indexOf(resource) !== -1)) {
+        request.abort()
+      } else {
+        request.continue()
+      }
     })
+
+    await page.goto(event.body, { waitUntil: 'networkidle0' })
 
     console.log('Getting Page Image...')
     const screenshotBuffer = await page.screenshot({
