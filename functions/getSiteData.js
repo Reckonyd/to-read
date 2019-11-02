@@ -84,17 +84,6 @@ exports.handler = async (event, context) => {
     })
 
     resObj = results
-
-    if (resObj.image_url === '') {
-      const screenshotBuffer = await page.screenshot({
-        type: 'jpeg',
-        quality: 90,
-        encoding: 'base64',
-      })
-      resObj.image_url = screenshotBuffer
-      resObj.encoded = true
-      console.log('Saved to base64...')
-    }
   } catch (err) {
     console.log('ERROR:', err)
     resObj = {
@@ -108,5 +97,8 @@ exports.handler = async (event, context) => {
   return {
     statusCode: 200,
     body: JSON.stringify(resObj),
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
   }
 }
