@@ -1,4 +1,6 @@
 const chromium = require('chrome-aws-lambda')
+const { PuppeteerBlocker } = require('@cliqz/adblocker-puppeteer')
+const fetch = require('cross-fetch')
 
 exports.handler = async (event, context) => {
   let image_url = ''
@@ -14,7 +16,11 @@ exports.handler = async (event, context) => {
   try {
     console.log('Opening:', event.body)
     const page = await browser.newPage()
-    await page.goto(event.body)
+    await page.goto(event.body, { waitUntil: 'networkidle0' })
+
+    await PuppeteerBlocker.fromPrebuiltAdsAndTracking(fetch).then(blocker => {
+      blocker.enableBlockingInPage(page)
+    })
 
     console.log('Getting Page Image...')
     const screenshotBuffer = await page.screenshot({
@@ -36,5 +42,8 @@ exports.handler = async (event, context) => {
   return {
     statusCode: 200,
     body: image_url,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
   }
 }
