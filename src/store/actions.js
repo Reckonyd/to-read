@@ -11,15 +11,15 @@ const actions = {
   async addItem({ commit, dispatch }, url) {
     dispatch('changeWaitingStatus', 1)
 
-    let siteData = await axios.post('/.netlify/functions/apifySiteInfo', url)
-    let imageData = await axios.post('/.netlify/functions/apifySiteImage', url)
+    let results = await axios.post('http://localhost:5050/getSiteData', url)
 
+    console.log(results.data)
     let pageInfo = {}
 
     pageInfo.id = uuidv4()
     pageInfo.dirId = -1
     pageInfo.url = url
-    pageInfo = { ...pageInfo, ...siteData.data, ...imageData.data }
+    pageInfo = { ...pageInfo, ...results.data }
 
     if (pageInfo.encoded) {
       pageInfo.image_url = `data:image/jpeg;base64,${pageInfo.image_url}`
