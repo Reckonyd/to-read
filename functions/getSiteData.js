@@ -16,9 +16,6 @@ exports.handler = async (event, context) => {
     const page = await browser.newPage()
     await page.goto(event.body, { waitUntil: 'domcontentloaded' })
 
-    console.log('Setting Viewport...')
-    await page.setViewport({ width: 1024, height: 768 })
-
     console.log('Getting Page Data...')
     const results = await page.evaluate(function() {
       let tempObj = {}
