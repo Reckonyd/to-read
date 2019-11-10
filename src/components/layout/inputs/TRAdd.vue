@@ -19,8 +19,8 @@
       <input
         v-model="dirName"
         type="text"
-        aria-label="Enter a Directory name"
-        placeholder="Enter a Directory Name"
+        aria-label="Enter a Folder name"
+        placeholder="Enter a Folder Name"
         :class="[
           { 'lg:hidden': !createDir },
           'lg:order-1 flex-grow mr-1 lg:mr-0 lg:ml-1 p-2 inputArea rounded shadow',
@@ -30,7 +30,7 @@
         class="lg:order-0 lg:ml-1 p-2 btn rounded shadow"
         @click="onCreateDir()"
       >
-        {{ dirName ? 'Add Directory' : createDirDisplayText }}
+        {{ dirName ? 'Add Folder' : createDirDisplayText }}
       </button>
     </div>
     <div :class="waiting ? waitingStyle : ''">
@@ -52,7 +52,7 @@ export default {
       url: '',
       dirName: '',
       createDir: false,
-      createDirDisplayText: 'Create Directory',
+      createDirDisplayText: 'Create Folder',
       error: false,
       errorStyle: ['bg-red-300', 'focus:bg-red-400', 'text-center'],
       waitingStyle: ['lds-ellipsis mb-10 self-center'],
