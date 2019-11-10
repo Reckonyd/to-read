@@ -44,7 +44,6 @@ exports.handler = async (event, context) => {
           resource => request.url().indexOf(resource) !== -1,
         )
       ) {
-        console.log('Aborted')
         request.abort()
       } else {
         request.continue()
