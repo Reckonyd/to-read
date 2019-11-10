@@ -2,6 +2,7 @@
   "name": "functions",
   "version": "1.0.0",
   "description": "ToRead Serverless Functions",
+  "main": "getSiteData.js",
   "author": "Thanos Valimitis",
   "license": "ISC",
   "dependencies": {

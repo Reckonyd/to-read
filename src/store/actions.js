@@ -22,7 +22,7 @@ const actions = {
         url,
       )
 
-      pageDataResults.data.image_url = imageData.data
+      pageDataResults.data.image_url = `data:image/jpeg;base64,${imageData.data}`
       pageDataResults.data.encoded = true
     }
 
@@ -34,10 +34,6 @@ const actions = {
     pageInfo = {
       ...pageInfo,
       ...pageDataResults.data,
-    }
-
-    if (pageInfo.encoded) {
-      pageInfo.image_url = `data:image/jpeg;base64,${pageInfo.image_url}`
     }
 
     if (!pageInfo.notFound) {
