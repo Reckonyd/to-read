@@ -39,6 +39,7 @@ const actions = {
       }
     } catch (err) {
       console.log(err)
+      pageInfo.error = err
     }
 
     if (!pageInfo.notFound && !pageInfo.error) {
