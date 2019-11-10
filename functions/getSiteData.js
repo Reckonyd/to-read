@@ -14,7 +14,7 @@ exports.handler = async (event, context) => {
   try {
     console.log('Opening:', event.body)
     const page = await browser.newPage()
-    await page.goto(event.body, { waitUntil: 'domcontentloaded' })
+    await page.goto(event.body, { waitUntil: 'networkidle0' })
 
     console.log('Getting Page Data...')
     const results = await page.evaluate(function() {
