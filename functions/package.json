@@ -5,6 +5,9 @@
   "main": "getSiteData.js",
   "author": "Thanos Valimitis",
   "license": "ISC",
+  "scripts": {
+    "postinstall": "netlify-lambda install"
+  },
   "dependencies": {
     "chrome-aws-lambda": "^2.0.0",
     "puppeteer-core": "^2.0.0"
