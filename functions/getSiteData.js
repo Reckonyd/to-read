@@ -1,5 +1,26 @@
 const chromium = require('chrome-aws-lambda')
 
+const blockedResources = [
+  'quantserve',
+  'adzerk',
+  'doubleclick',
+  'adition',
+  'exelator',
+  'sharethrough',
+  'twitter',
+  'google-analytics',
+  'fontawesome',
+  'facebook',
+  'analytics',
+  'optimizely',
+  'clicktale',
+  'mixpanel',
+  'zedo',
+  'clicksor',
+  'tiqcdn',
+  'googlesyndication',
+]
+
 exports.handler = async (event, context) => {
   let resObj = {}
 
@@ -14,6 +35,22 @@ exports.handler = async (event, context) => {
   try {
     console.log('Opening:', event.body)
     const page = await browser.newPage()
+
+    await page.setRequestInterception(true)
+
+    page.on('request', request => {
+      if (
+        blockedResources.some(
+          resource => request.url().indexOf(resource) !== -1,
+        )
+      ) {
+        console.log('Aborted')
+        request.abort()
+      } else {
+        request.continue()
+      }
+    })
+
     await page.goto(event.body, { waitUntil: 'networkidle0' })
 
     console.log('Getting Page Data...')
