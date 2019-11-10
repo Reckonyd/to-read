@@ -50,7 +50,7 @@ exports.handler = async (event, context) => {
       }
     })
 
-    await page.goto(event.body, { waitUntil: 'networkidle2' })
+    await page.goto(event.body, { waitUntil: 'networkidle0' })
 
     console.log('Getting Page Image...')
     const screenshotBuffer = await page.screenshot({
