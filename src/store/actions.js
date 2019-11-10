@@ -13,14 +13,26 @@ const actions = {
     dispatch('setFailStatus', '')
 
     let pageInfo = {}
+    let pageDataResults = {}
 
     try {
-      let pageDataResults = await axios.post(
+      pageDataResults = await axios.post(
         '/.netlify/functions/getSiteData',
-        url,
+        JSON.stringify({ url, wait: 'networkidle0' }),
       )
+    } catch (err) {
+      try {
+        pageDataResults = await axios.post(
+          '/.netlify/functions/getSiteData',
+          JSON.stringify({ url, wait: 'domcontentloaded' }),
+        )
+      } catch (err) {
+        pageInfo.error = err
+      }
+    }
 
-      if (pageDataResults.data.image_url === '') {
+    if (pageDataResults.data.image_url === '') {
+      try {
         let imageData = await axios.post(
           '/.netlify/functions/getSiteScreenshot',
           url,
@@ -28,18 +40,17 @@ const actions = {
 
         pageDataResults.data.image_url = `data:image/jpeg;base64,${imageData.data}`
         pageDataResults.data.encoded = true
+      } catch (err) {
+        pageInfo.error = err
       }
+    }
 
-      pageInfo.id = uuidv4()
-      pageInfo.dirId = -1
-      pageInfo.url = url
-      pageInfo = {
-        ...pageInfo,
-        ...pageDataResults.data,
-      }
-    } catch (err) {
-      console.log(err)
-      pageInfo.error = err
+    pageInfo.id = uuidv4()
+    pageInfo.dirId = -1
+    pageInfo.url = url
+    pageInfo = {
+      ...pageInfo,
+      ...pageDataResults.data,
     }
 
     if (!pageInfo.notFound && !pageInfo.error) {

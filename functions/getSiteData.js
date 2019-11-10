@@ -23,6 +23,7 @@ const blockedResources = [
 
 exports.handler = async (event, context) => {
   let resObj = {}
+  const { url, wait } = JSON.parse(event.body)
 
   console.log('Launching Puppeteer...')
   const browser = await chromium.puppeteer.launch({
@@ -33,7 +34,7 @@ exports.handler = async (event, context) => {
   })
 
   try {
-    console.log('Opening:', event.body)
+    console.log('Opening:', url)
     const page = await browser.newPage()
 
     await page.setRequestInterception(true)
@@ -50,7 +51,7 @@ exports.handler = async (event, context) => {
       }
     })
 
-    await page.goto(event.body, { waitUntil: 'networkidle0' })
+    await page.goto(url, { waitUntil: wait })
 
     console.log('Getting Page Data...')
     const results = await page.evaluate(function() {
