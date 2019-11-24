@@ -10,7 +10,6 @@ const actions = {
       file.text().then(text => {
         const storeData = JSON.parse(text)
         if (storeData.exported) {
-          console.log('Exported Pass')
           commit('STORE_IMPORT', {
             toReadList: storeData.toReadList,
             directories: storeData.directories,
