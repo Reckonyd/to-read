@@ -4,11 +4,19 @@
       <input
         v-model="url"
         type="text"
-        aria-label="Enter a valid URL: https://www.example.com/"
-        placeholder="Enter a valid URL: https://www.example.com/"
+        :aria-label="
+          failStatus !== ''
+            ? failStatus
+            : 'Enter a valid URL: https://www.example.com/'
+        "
+        :placeholder="
+          failStatus !== ''
+            ? failStatus
+            : 'Enter a valid URL: https://www.example.com/'
+        "
         :class="[
           'flex-grow mr-1 p-2 rounded shadow',
-          error ? errorStyle : 'inputArea',
+          wrongUrl || failStatus != '' ? errorStyle : 'inputArea',
         ]"
       />
       <button class="p-2 btn rounded shadow" @click="onAdd()">
@@ -52,24 +60,30 @@ export default {
       url: '',
       dirName: '',
       createDir: false,
-      createDirDisplayText: 'Create Folder',
-      error: false,
-      errorStyle: ['bg-red-300', 'focus:bg-red-400', 'text-center'],
+      createDirDisplayText: 'Create Directory',
+      wrongUrl: false,
+      errorStyle: [
+        'bg-red-300',
+        'focus:bg-red-400',
+        'text-center',
+        'outline-none',
+        'placeholder-gray-700',
+      ],
       waitingStyle: ['lds-ellipsis mb-10 self-center'],
     }
   },
   computed: {
-    ...mapState(['waiting']),
+    ...mapState(['waiting', 'failStatus']),
   },
   watch: {
     url() {
-      this.error = !isUrl(this.url, { require_protocol: true }) && this.url
+      this.wrongUrl = !isUrl(this.url, { require_protocol: true }) && this.url
     },
   },
   methods: {
     ...mapActions(['addItem', 'addDirectory']),
     onAdd() {
-      if (!this.error && this.url) {
+      if (!this.wrongUrl && this.url) {
         this.addItem(this.url)
         this.url = ''
       }

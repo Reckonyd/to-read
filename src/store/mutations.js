@@ -80,6 +80,9 @@ const mutations = {
   CHANGE_WAITING_STATUS(state, value) {
     state.waiting += value
   },
+  SET_FAIL_STATUS(state, value) {
+    state.failStatus = value
+  },
 }
 
 export default mutations

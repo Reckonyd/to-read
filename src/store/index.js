@@ -14,6 +14,7 @@ export default new Vuex.Store({
     selectedItems: [],
     draggedItemInfo: {},
     waiting: 0,
+    failStatus: '',
   },
   getters,
   actions,

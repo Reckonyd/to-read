@@ -9,38 +9,54 @@ const actions = {
     commit('CHANGE_SEARCH', value)
   },
   async addItem({ commit, dispatch }, url) {
-    let pageInfo = {}
-
     dispatch('changeWaitingStatus', 1)
+    dispatch('setFailStatus', '')
 
-    let APIFY_API = process.env.API_URL + process.env.API_KEY
+    let pageInfo = {}
+    let pageDataResults = {}
 
-    let response = await axios({
-      method: 'POST',
-      url: APIFY_API,
-      data: {
-        url,
-        width: 1366,
-        height: 768,
-      },
-      config: {
-        headers: {
-          'Content-Type': 'application/json; charset=utf-8',
-        },
-      },
-    })
+    try {
+      pageDataResults = await axios.post(
+        '/.netlify/functions/getSiteData',
+        JSON.stringify({ url, wait: 'networkidle0' }),
+      )
+    } catch (err) {
+      try {
+        pageDataResults = await axios.post(
+          '/.netlify/functions/getSiteData',
+          JSON.stringify({ url, wait: 'domcontentloaded' }),
+        )
+      } catch (err) {
+        pageInfo.error = err
+      }
+    }
+
+    if (pageDataResults.data.image_url === '') {
+      try {
+        let imageData = await axios.post(
+          '/.netlify/functions/getSiteScreenshot',
+          url,
+        )
+
+        pageDataResults.data.image_url = `data:image/jpeg;base64,${imageData.data}`
+        pageDataResults.data.encoded = true
+      } catch (err) {
+        pageInfo.error = err
+      }
+    }
 
     pageInfo.id = uuidv4()
     pageInfo.dirId = -1
     pageInfo.url = url
-    pageInfo = { ...pageInfo, ...response.data }
-
-    if (pageInfo.encoded) {
-      pageInfo.image_url = `data:image/jpeg;base64,${pageInfo.image_url}`
+    pageInfo = {
+      ...pageInfo,
+      ...pageDataResults.data,
     }
 
-    if (!pageInfo.notFound) {
+    if (!pageInfo.notFound && !pageInfo.error) {
       commit('ADD_LIST_ITEM', pageInfo)
+    } else {
+      dispatch('setFailStatus', `Failed To Fetch ${url}`)
     }
 
     dispatch('changeWaitingStatus', -1)
@@ -104,6 +120,9 @@ const actions = {
   },
   changeWaitingStatus({ commit }, value) {
     commit('CHANGE_WAITING_STATUS', value)
+  },
+  setFailStatus({ commit }, value) {
+    commit('SET_FAIL_STATUS', value)
   },
 }
 
