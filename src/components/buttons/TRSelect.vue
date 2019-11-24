@@ -1,6 +1,7 @@
 <template>
   <button
     class="absolute px-2 py-1 bg-orange-600 hover:bg-orange-500 outline-none text-md focus:shadow-outline shadow rounded-tl"
+    aria-label="Select Item"
     @click="onSelect()"
   >
     <font-awesome-icon :icon="[selected ? 'fas' : 'far', 'square']" />
