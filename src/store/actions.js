@@ -41,7 +41,7 @@ const actions = {
         pageDataResults.data.image_url = `data:image/jpeg;base64,${imageData.data}`
         pageDataResults.data.encoded = true
       } catch (err) {
-        pageInfo.error = err
+        pageDataResults.data.image_url = '/assets/android-chrome-256x256.png'
       }
     }
 
