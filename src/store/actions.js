@@ -5,6 +5,24 @@ const actions = {
   initLists({ commit }) {
     commit('INIT_LISTS')
   },
+  import({ commit, dispatch }, file) {
+    if (file.type === 'application/json') {
+      file.text().then(text => {
+        const storeData = JSON.parse(text)
+        if (storeData.exported) {
+          console.log('Exported Pass')
+          commit('STORE_IMPORT', {
+            toReadList: storeData.toReadList,
+            directories: storeData.directories,
+          })
+          dispatch('initLists')
+        }
+      })
+    }
+  },
+  export({ commit }) {
+    commit('STORE_EXPORT')
+  },
   searchAction({ commit }, value) {
     commit('CHANGE_SEARCH', value)
   },

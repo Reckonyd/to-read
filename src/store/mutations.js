@@ -1,4 +1,5 @@
 import LocalStorageController from '../local_storage/LocalStorageController'
+import { saveAs } from 'file-saver'
 
 const LSController = new LocalStorageController()
 
@@ -8,6 +9,19 @@ const mutations = {
 
     state.toReadList = lists.toReadList
     state.directories = lists.directories
+  },
+  STORE_IMPORT(state, storeData) {
+    LSController.setLocalStorage(storeData)
+  },
+  STORE_EXPORT(state) {
+    const data = {
+      toReadList: state.toReadList,
+      directories: state.directories,
+      exported: true,
+    }
+    const blob = new Blob([JSON.stringify(data)], { type: 'application/json' })
+
+    saveAs(blob, 'toRead_Backup.json')
   },
   CHANGE_SEARCH(state, value) {
     state.search = value
