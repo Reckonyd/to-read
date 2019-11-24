@@ -1,6 +1,12 @@
 <template>
   <div class="flex justify-between w-full p-5 bg-red-800 shadow">
-    <input v-show="false" ref="fileInput" type="file" @change="onImport" />
+    <input
+      v-show="false"
+      ref="fileInput"
+      type="file"
+      accept=".json"
+      @change="onImport"
+    />
     <TRImport @import="$refs.fileInput.click()" />
     <h1 class="font-serif font-semibold text-3xl text-center text-white">
       ToRead
