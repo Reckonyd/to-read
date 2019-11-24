@@ -60,7 +60,7 @@ export default {
       url: '',
       dirName: '',
       createDir: false,
-      createDirDisplayText: 'Create Directory',
+      createDirDisplayText: 'Create Folder',
       wrongUrl: false,
       errorStyle: [
         'bg-red-300',
