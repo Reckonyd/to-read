@@ -38,13 +38,13 @@ const mutations = {
     state.directories.push(dir)
     LSController.addItemToLocalStorage('directories', dir)
   },
-  REMOVE_DIR(state, { index, id }) {
-    state.directories.splice(index, 1)
+  REMOVE_DIR(state, { dirIndex, id }) {
+    state.directories.splice(dirIndex, 1)
     state.toReadList.forEach(item => {
       item.dirId = item.dirId === id ? -1 : item.dirId
     })
 
-    LSController.removeItemFromLocalStorage('directories', index)
+    LSController.removeItemFromLocalStorage('directories', dirIndex)
     LSController.modifyLocalStorageList('toReadList', state.toReadList)
   },
   MOVE_TO_DIR(state, { dirId, itemId }) {
