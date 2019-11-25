@@ -6,17 +6,18 @@ const actions = {
     commit('INIT_LISTS')
   },
   import({ commit, dispatch }, file) {
-    if (file.type === 'application/json') {
-      file.text().then(text => {
-        const storeData = JSON.parse(text)
-        if (storeData.exported) {
-          commit('STORE_IMPORT', {
-            toReadList: storeData.toReadList,
-            directories: storeData.directories,
-          })
-          dispatch('initLists')
-        }
+    const storeData = JSON.parse(file)
+    if (
+      storeData &&
+      storeData.toReadList &&
+      storeData.directories &&
+      storeData.exported
+    ) {
+      commit('STORE_IMPORT', {
+        toReadList: storeData.toReadList,
+        directories: storeData.directories,
       })
+      dispatch('initLists')
     }
   },
   export({ commit }) {

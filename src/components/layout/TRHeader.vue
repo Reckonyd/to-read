@@ -28,7 +28,12 @@ export default {
   methods: {
     ...mapActions(['import', 'export']),
     onImport(ev) {
-      this.import(ev.target.files[0])
+      var self = this
+      const reader = new FileReader()
+      reader.onload = function(ev) {
+        self.import(ev.target.result)
+      }
+      reader.readAsText(ev.target.files[0])
       this.$refs.fileInput.value = ''
     },
   },
