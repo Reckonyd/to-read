@@ -10,7 +10,7 @@
     @drop.self.prevent="onListDrop"
   >
     <TRDirectory
-      v-for="directory in directories"
+      v-for="directory in getDirectories"
       :key="directory.id"
       :dir="directory"
     ></TRDirectory>
@@ -29,7 +29,7 @@
 <script>
 import TRListItem from './items/TRListItem'
 import TRDirectory from './items/TRDirectory'
-import { mapState, mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -42,8 +42,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['directories']),
-    ...mapGetters(['getFilteredToReadList']),
+    ...mapGetters(['getFilteredToReadList', 'getDirectories']),
     noDirList: function() {
       return this.getFilteredToReadList.filter(item => item.dirId === -1)
     },

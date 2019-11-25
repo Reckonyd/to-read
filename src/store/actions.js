@@ -7,17 +7,22 @@ const actions = {
   },
   import({ commit, dispatch }, file) {
     const storeData = JSON.parse(file)
-    if (
-      storeData &&
-      storeData.toReadList &&
-      storeData.directories &&
-      storeData.exported
-    ) {
-      commit('STORE_IMPORT', {
-        toReadList: storeData.toReadList,
-        directories: storeData.directories,
-      })
-      dispatch('initLists')
+    if (storeData) {
+      if (
+        Object.prototype.hasOwnProperty.call(storeData, 'toReadList') &&
+        Object.prototype.hasOwnProperty.call(storeData, 'directories')
+      ) {
+        if (
+          Array.isArray(storeData.toReadList) &&
+          Array.isArray(storeData.directories)
+        ) {
+          commit('STORE_IMPORT', {
+            toReadList: storeData.toReadList,
+            directories: storeData.directories,
+          })
+          dispatch('initLists')
+        }
+      }
     }
   },
   export({ commit }) {
