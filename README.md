@@ -56,8 +56,8 @@ Import all of your **bookmarks** from a **recent backup**.
 ## Contributing
 
 You are welcome to contribute as much as you want! 
-**Instructions** on how to begin are documented [here](\CONTRIBUTING.md).
+**Instructions** on how to begin are documented [here](CONTRIBUTING.md).
 
 ## Licence
 
-**ToRead Web App** is released under the [MIT Licence](\LICENSE) - 2019.
+**ToRead Web App** is released under the [MIT Licence](LICENSE) - 2019.
