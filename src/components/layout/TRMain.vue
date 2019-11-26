@@ -22,6 +22,7 @@ export default {
     TRActions,
   },
   mounted() {
+    // On Main mount initialize toReadList and directories arrays.
     this.initLists()
   },
   methods: {

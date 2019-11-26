@@ -1,5 +1,9 @@
+// No need to import puppeteer or puppeteer core
+// because chrome-aws-lambda chooses between the two
+// based on development or production respectively.
 const chromium = require('chrome-aws-lambda')
 
+// List of ad domains used on page Interceptor.
 const blockedResources = [
   'quantserve',
   'adzerk',
@@ -24,6 +28,8 @@ const blockedResources = [
 exports.handler = async (event, context) => {
   let image_url = ''
 
+  // Launch puppeteer default chromium arguments.
+  // except viewport (1366x768) for screenshot purpose.
   console.log('Launching Puppeteer...')
   const browser = await chromium.puppeteer.launch({
     executablePath: await chromium.executablePath,
@@ -32,10 +38,13 @@ exports.handler = async (event, context) => {
     headless: chromium.headless,
   })
 
+  // Begin Web Sraping
   try {
+    // Open user requested page.
     console.log('Opening:', event.body)
     const page = await browser.newPage()
 
+    // Intercept any ads.
     await page.setRequestInterception(true)
 
     page.on('request', request => {
@@ -50,8 +59,12 @@ exports.handler = async (event, context) => {
       }
     })
 
+    // Open user requested page.
+    // Networkidle0 means that we wait for the page to load
+    // and 0 connections for 500ms.
     await page.goto(event.body, { waitUntil: 'networkidle0' })
 
+    // Take screenshot and save it as a base64 string.
     console.log('Getting Page Image...')
     const screenshotBuffer = await page.screenshot({
       type: 'jpeg',
@@ -62,6 +75,7 @@ exports.handler = async (event, context) => {
     image_url = screenshotBuffer
     console.log('Saved to base64...')
   } catch (err) {
+    // Fail silently by setting image to empty string
     console.log('ERROR:', err)
     image_url = ''
   }

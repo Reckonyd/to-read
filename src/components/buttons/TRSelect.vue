@@ -18,6 +18,7 @@ export default {
     },
   },
   methods: {
+    // Change selected state and emit that value.
     onSelect() {
       const selection = this.selected ? false : true
       this.$emit('select', selection)

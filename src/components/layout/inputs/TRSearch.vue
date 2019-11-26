@@ -38,6 +38,8 @@ export default {
       this.searching = false
       this.searchAction(this.search)
     },
+
+    // Using lodash Debounce to limit the calls to searchAction.
     debounceFunc: debounce(function() {
       this.debouncedEmit()
     }, 300),

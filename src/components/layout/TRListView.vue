@@ -43,6 +43,8 @@ export default {
   },
   computed: {
     ...mapGetters(['getFilteredToReadList', 'getDirectories']),
+
+    // Return every item that is on the global directory (-1).
     noDirList: function() {
       return this.getFilteredToReadList.filter(item => item.dirId === -1)
     },

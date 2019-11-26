@@ -64,6 +64,8 @@ export default {
   },
   computed: {
     ...mapState(['selectedItems']),
+
+    // On user select change the select icon.
     isSelected: function() {
       return this.selectedItems.find(
         selectedItem => this.toReadItem.id === selectedItem.itemId,
@@ -82,7 +84,7 @@ export default {
       })
     },
     onDragStart() {
-      event.dataTransfer.setData('text', 'anything')
+      event.dataTransfer.setData('text', 'anything') // Added for Firefox dragNdrop support.
       this.$emit('dragStarted', {
         id: this.toReadItem.id,
         dir: this.toReadItem.dirId,

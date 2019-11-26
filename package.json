@@ -1,6 +1,6 @@
 {
   "name": "todolearn",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "TodoLearn helps readers and learners to organize their material and thoughts to a seamless space.",
   "private": true,
   "scripts": {

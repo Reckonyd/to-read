@@ -54,11 +54,15 @@ export default {
   computed: {
     ...mapState(['search']),
     ...mapGetters(['getFilteredToReadList']),
+
+    // Return only items that are inside this directory.
     directoryList: function() {
       return this.getFilteredToReadList.filter(
         item => item.dirId === this.dir.id,
       )
     },
+
+    // On user search show this directory only if contains the searched item.
     hasSearchItem: function() {
       return this.directoryList.length > 0 || this.search === ''
     },
