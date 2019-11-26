@@ -89,10 +89,15 @@ const actions = {
           url,
         )
 
-        // Set image_url to returned base64 string
-        // and set encoded property to true so styling would be handled differently.
-        pageDataResults.data.image_url = `data:image/jpeg;base64,${imageData.data}`
-        pageDataResults.data.encoded = true
+        // Check if getSiteScreenshot failed to capture the site
+        if (imageData.data !== '') {
+          // Set image_url to returned base64 string
+          // and set encoded property to true so styling would be handled differently.
+          pageDataResults.data.image_url = `data:image/jpeg;base64,${imageData.data}`
+          pageDataResults.data.encoded = true
+        } else {
+          pageDataResults.data.image_url = '/assets/android-chrome-256x256.png'
+        }
       } catch (err) {
         // On failure set image_url to favicon (chosen because of size).
         pageDataResults.data.image_url = '/assets/android-chrome-256x256.png'
