@@ -1,5 +1,5 @@
 import axios from 'axios'
-import uuidv4 from 'uuid/v4'
+import { v4 as uuidv4 } from 'uuid'
 
 const actions = {
   // Initialize Lists.
@@ -82,7 +82,7 @@ const actions = {
 
     // If image_url is not set from getSiteData scraping,
     // invoke getSiteScreenshot Netlify function (default 'networkidle0' option).
-    if (pageDataResults.data.image_url === '') {
+    if (pageDataResults.data.image_url) {
       try {
         let imageData = await axios.post(
           '/.netlify/functions/getSiteScreenshot',

@@ -15,6 +15,7 @@ import TRActions from './inputs/TRActions'
 import { mapActions } from 'vuex'
 
 export default {
+  name: 'TRMain',
   components: {
     TRListView,
     TRSearch,
@@ -30,5 +31,3 @@ export default {
   },
 }
 </script>
-
-<style scoped></style>

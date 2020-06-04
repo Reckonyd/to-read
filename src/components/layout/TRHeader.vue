@@ -21,6 +21,7 @@ import TRExport from '../buttons/TRExport'
 import { mapActions } from 'vuex'
 
 export default {
+  name: 'TRHeader',
   components: {
     TRImport,
     TRExport,
@@ -35,7 +36,7 @@ export default {
       const reader = new FileReader()
 
       // On success call the import function.
-      reader.onload = function(ev) {
+      reader.onload = function (ev) {
         self.import(ev.target.result)
       }
       // Read file data in text format.
@@ -47,5 +48,3 @@ export default {
   },
 }
 </script>
-
-<style scoped></style>

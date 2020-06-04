@@ -25,21 +25,24 @@ const blockedResources = [
   'googlesyndication',
 ]
 
-exports.handler = async (event, context) => {
-  let image_url = ''
+exports.handler = async (event, _context) => {
+  // Browser handle
+  let browser = null
 
-  // Launch puppeteer default chromium arguments.
-  // except viewport (1366x768) for screenshot purpose.
-  console.log('Launching Puppeteer...')
-  const browser = await chromium.puppeteer.launch({
-    executablePath: await chromium.executablePath,
-    args: chromium.args,
-    defaultViewport: { width: 1366, height: 768 },
-    headless: chromium.headless,
-  })
+  let image_url = ''
 
   // Begin Web Sraping
   try {
+    // Launch puppeteer default chromium arguments.
+    // except viewport (1366x768) for screenshot purpose.
+    console.log('Launching Puppeteer...')
+    browser = await chromium.puppeteer.launch({
+      executablePath: await chromium.executablePath,
+      args: chromium.args,
+      defaultViewport: { width: 1366, height: 768 },
+      headless: chromium.headless,
+    })
+
     // Open user requested page.
     console.log('Opening:', event.body)
     const page = await browser.newPage()
@@ -78,10 +81,12 @@ exports.handler = async (event, context) => {
     // Fail silently by setting image to empty string
     console.log('ERROR:', err)
     image_url = ''
+  } finally {
+    if (browser !== null) {
+      console.log('Closing Puppeteer...')
+      await browser.close()
+    }
   }
-
-  console.log('Closing Puppeteer...')
-  await browser.close()
 
   return {
     statusCode: 200,

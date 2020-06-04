@@ -60,7 +60,7 @@ const mutations = {
 
   // Delete directory item from directories array based on its index.
   /* Check every item in toReadList array:
-      If its directory id equals current directory (being removed) id, 
+      If its directory id equals current directory (being removed) id,
       set that value to global directory (-1).
       Else keep the value the same.
   */
@@ -99,9 +99,9 @@ const mutations = {
     state.selectedItems = []
   },
 
-  /* 
+  /*
     Comment naming scheme
-      DroppedOn => item that user drops dragged item on. 
+      DroppedOn => item that user drops dragged item on.
   */
   // Find both dragged and DroppedOn item index respectively.
   // Find both dragged and DroppedOn item object respectively.

@@ -10,6 +10,7 @@
 
 <script>
 export default {
+  name: 'TRSelect',
   props: {
     selected: {
       type: Boolean,
@@ -26,5 +27,3 @@ export default {
   },
 }
 </script>
-
-<style></style>

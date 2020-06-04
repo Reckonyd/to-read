@@ -1,4 +1,8 @@
 module.exports = {
+  purge: {
+    enabled: true,
+    content: ['./src/**/*.html', './src/**/*.vue'],
+  },
   theme: {
     extend: {},
   },
@@ -6,7 +10,7 @@ module.exports = {
     backgroundColor: ['responsive', 'odd', 'even', 'focus', 'hover', 'active'],
   },
   plugins: [
-    function({ addUtilities }) {
+    function ({ addUtilities }) {
       const justifyEvenly = {
         '.justify-evenly': {
           justifyContent: 'space-evenly',

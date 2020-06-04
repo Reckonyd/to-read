@@ -55,6 +55,7 @@ import { mapActions, mapState } from 'vuex'
 import isUrl from 'validator/lib/isURL'
 
 export default {
+  name: 'TRAdd',
   data() {
     return {
       url: '',
@@ -98,5 +99,3 @@ export default {
   },
 }
 </script>
-
-<style scoped></style>

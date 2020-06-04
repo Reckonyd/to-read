@@ -3,7 +3,9 @@ const common = require('./webpack.common.js')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { HotModuleReplacementPlugin } = require('webpack')
 
-module.exports = merge(common, {
+module.exports = merge.smartStrategy({
+  'module.rules.use': 'prepend',
+})(common, {
   mode: 'development',
   devServer: {
     contentBase: './dist',
@@ -15,17 +17,7 @@ module.exports = merge(common, {
     rules: [
       {
         test: /\.css$/,
-        use: [
-          'vue-style-loader',
-          { loader: 'css-loader', options: { importLoaders: 1 } },
-          {
-            loader: 'postcss-loader',
-            options: {
-              ident: 'postcss',
-              plugins: [require('tailwindcss')],
-            },
-          },
-        ],
+        use: ['vue-style-loader'],
       },
     ],
   },

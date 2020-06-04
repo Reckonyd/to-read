@@ -5,7 +5,7 @@
       'sticky top-0 z-10 flex justify-between lg:w-3/12 mx-auto bg-red-700 text-gray-200 shadow-md',
     ]"
   >
-    <h3 class="p-2 text-center bg-orange-600 ">Actions</h3>
+    <h3 class="p-2 text-center bg-orange-600">Actions</h3>
     <div class="relative flex-grow hover:bg-red-800 cursor-pointer">
       <div class="p-2 text-center" @click="showDirs = showDirs ? false : true">
         Move To Folder
@@ -45,6 +45,7 @@
 import { mapState, mapActions } from 'vuex'
 
 export default {
+  name: 'TRActions',
   data() {
     return {
       showDirs: false,
@@ -65,5 +66,3 @@ export default {
   },
 }
 </script>
-
-<style></style>

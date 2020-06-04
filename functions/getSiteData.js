@@ -25,23 +25,28 @@ const blockedResources = [
   'googlesyndication',
 ]
 
-exports.handler = async (event, context) => {
+exports.handler = async (event, _context) => {
+  // Browser handle
+  let browser = null
   // Scrape Results Object.
   let resObj = {}
   // Destructure user requested url and wait value.
   const { url, wait } = JSON.parse(event.body)
 
-  // Launch puppeteer default chromium arguments.
-  console.log('Launching Puppeteer...')
-  const browser = await chromium.puppeteer.launch({
-    executablePath: await chromium.executablePath,
-    args: chromium.args,
-    defaultViewport: chromium.defaultViewport,
-    headless: chromium.headless,
-  })
-
   // Begin Web Sraping.
   try {
+    // Launch puppeteer default chromium arguments.
+    console.log('Launching Puppeteer...')
+
+    console.log(await chromium.executablePath)
+
+    browser = await chromium.puppeteer.launch({
+      executablePath: await chromium.executablePath,
+      args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
+      headless: chromium.headless,
+    })
+
     // Open user requested page.
     console.log('Opening:', url)
     const page = await browser.newPage()
@@ -65,14 +70,14 @@ exports.handler = async (event, context) => {
     /* Based on the value of wait:
         Networkidle0 means that we wait for the page to load
         and 0 connections for 500ms.
-        Domcontentloaded means that we wait for the HTML document to be completely loaded and parsed 
+        Domcontentloaded means that we wait for the HTML document to be completely loaded and parsed
         without waiting for stylesheets, images, and subframes to finish loading.
     */
     await page.goto(url, { waitUntil: wait })
 
     // Scrape Data - Using Facebook and Twitter meta tags.
     console.log('Getting Page Data...')
-    const results = await page.evaluate(function() {
+    const results = await page.evaluate(function () {
       let tempObj = {}
 
       // Get title string from meta tags or title tag.
@@ -155,10 +160,12 @@ exports.handler = async (event, context) => {
     resObj = {
       notFound: true,
     }
+  } finally {
+    if (browser !== null) {
+      console.log('Closing Puppeteer...')
+      await browser.close()
+    }
   }
-
-  console.log('Closing Puppeteer...')
-  await browser.close()
 
   return {
     statusCode: 200,

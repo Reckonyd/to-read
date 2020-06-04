@@ -9,7 +9,7 @@
 </template>
 
 <script>
-export default {}
+export default {
+  name: 'TRDelete',
+}
 </script>
-
-<style scoped></style>

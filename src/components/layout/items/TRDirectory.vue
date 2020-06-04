@@ -28,13 +28,14 @@ import TRMinimize from '../../buttons/TRMinimize'
 import { mapActions, mapGetters, mapState } from 'vuex'
 
 export default {
+  name: 'TRDirectory',
   components: {
     TRListItem,
     TRDelete,
     TRMinimize,
   },
   filters: {
-    capitalize: function(value) {
+    capitalize: function (value) {
       if (!value) return ''
       value = value.toString()
       return value.charAt(0).toUpperCase() + value.slice(1)
@@ -56,14 +57,14 @@ export default {
     ...mapGetters(['getFilteredToReadList']),
 
     // Return only items that are inside this directory.
-    directoryList: function() {
+    directoryList: function () {
       return this.getFilteredToReadList.filter(
         item => item.dirId === this.dir.id,
       )
     },
 
     // On user search show this directory only if contains the searched item.
-    hasSearchItem: function() {
+    hasSearchItem: function () {
       return this.directoryList.length > 0 || this.search === ''
     },
   },
@@ -96,5 +97,3 @@ export default {
   },
 }
 </script>
-
-<style></style>

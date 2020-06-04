@@ -47,6 +47,7 @@ import TRSelect from '../../buttons/TRSelect'
 import { mapActions, mapState } from 'vuex'
 
 export default {
+  name: 'TRListItem',
   components: {
     TRDelete,
     TRSelect,
@@ -57,7 +58,7 @@ export default {
       required: true,
     },
   },
-  data: function() {
+  data: function () {
     return {
       imageStyle: 'object-contain',
     }
@@ -66,7 +67,7 @@ export default {
     ...mapState(['selectedItems']),
 
     // On user select change the select icon.
-    isSelected: function() {
+    isSelected: function () {
       return this.selectedItems.find(
         selectedItem => this.toReadItem.id === selectedItem.itemId,
       )
@@ -102,5 +103,3 @@ export default {
   },
 }
 </script>
-
-<style scoped></style>

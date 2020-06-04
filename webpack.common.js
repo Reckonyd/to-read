@@ -6,6 +6,10 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.vue$/,
+        use: ['vue-loader'],
+      },
+      {
         test: /\.js$/,
         exclude: /node_modules/,
         use: [
@@ -21,8 +25,11 @@ module.exports = {
         ],
       },
       {
-        test: /\.vue$/,
-        use: ['vue-loader'],
+        test: /\.css$/,
+        use: [
+          { loader: 'css-loader', options: { importLoaders: 1 } },
+          'postcss-loader',
+        ],
       },
     ],
   },

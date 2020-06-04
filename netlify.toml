@@ -6,8 +6,8 @@
 
 # For NetlifyCLI Development
 [dev]
+  framework = "#custom"
   command = "npm run dev"
   publish = "dist"
   port = 3000
-  functionsPort = 9000
   targetPort = 8080

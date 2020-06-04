@@ -20,6 +20,7 @@ import debounce from 'lodash/debounce'
 import { mapActions } from 'vuex'
 
 export default {
+  name: 'TRSearch',
   data() {
     return {
       search: '',
@@ -34,17 +35,15 @@ export default {
   },
   methods: {
     ...mapActions(['searchAction']),
-    debouncedEmit: function() {
+    debouncedEmit: function () {
       this.searching = false
       this.searchAction(this.search)
     },
 
     // Using lodash Debounce to limit the calls to searchAction.
-    debounceFunc: debounce(function() {
+    debounceFunc: debounce(function () {
       this.debouncedEmit()
     }, 300),
   },
 }
 </script>
-
-<style scoped></style>

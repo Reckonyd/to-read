@@ -9,7 +9,7 @@
 </template>
 
 <script>
-export default {}
+export default {
+  name: 'TRMinimize',
+}
 </script>
-
-<style></style>

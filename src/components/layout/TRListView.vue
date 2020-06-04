@@ -32,6 +32,7 @@ import TRDirectory from './items/TRDirectory'
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
+  name: 'TRListView',
   components: {
     TRListItem,
     TRDirectory,
@@ -45,7 +46,7 @@ export default {
     ...mapGetters(['getFilteredToReadList', 'getDirectories']),
 
     // Return every item that is on the global directory (-1).
-    noDirList: function() {
+    noDirList: function () {
       return this.getFilteredToReadList.filter(item => item.dirId === -1)
     },
   },
@@ -69,5 +70,3 @@ export default {
   },
 }
 </script>
-
-<style scoped></style>

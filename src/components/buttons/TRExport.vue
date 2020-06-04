@@ -8,7 +8,7 @@
 </template>
 
 <script>
-export default {}
+export default {
+  name: 'TRExport',
+}
 </script>
-
-<style></style>
