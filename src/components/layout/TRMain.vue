@@ -1,33 +1,34 @@
 <template>
-  <div class="flex flex-col">
-    <TRSearch></TRSearch>
-    <TRAdd></TRAdd>
-    <TRActions></TRActions>
-    <TRListView></TRListView>
-  </div>
+  <main class="main-container">
+    <TRInputs />
+    <TRListView />
+  </main>
 </template>
 
 <script>
-import TRListView from './TRListView'
-import TRSearch from './inputs/TRSearch'
-import TRAdd from './inputs/TRAdd'
-import TRActions from './inputs/TRActions'
-import { mapActions } from 'vuex'
+  import TRInputs from '@/components/layout/TRInputs'
+  import TRListView from '@/components/layout/TRListView'
 
-export default {
-  name: 'TRMain',
-  components: {
-    TRListView,
-    TRSearch,
-    TRAdd,
-    TRActions,
-  },
-  mounted() {
-    // On Main mount initialize toReadList and directories arrays.
-    this.initLists()
-  },
-  methods: {
-    ...mapActions(['initLists']),
-  },
-}
+  import { mapActions } from 'vuex'
+
+  export default {
+    name: 'TRMain',
+    components: {
+      TRInputs,
+      TRListView,
+    },
+    mounted() {
+      // On Main mount initialize toReadList and directories arrays.
+      this.initLists()
+    },
+    methods: {
+      ...mapActions(['initLists']),
+    },
+  }
 </script>
+
+<style lang="postcss" scoped>
+  .main-container {
+    @apply w-full h-full flex flex-col overflow-x-hidden;
+  }
+</style>

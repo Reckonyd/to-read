@@ -1,15 +1,26 @@
 <template>
-  <button
-    class="absolute top-0 right-0 h-8 w-8 btn text-xl rounded-tr shadow"
-    aria-label="Delete Item"
-    @click="$emit('delete')"
-  >
-    &times;
+  <button aria-label="Delete Item" @click="$emit('delete')">
+    <SvgIconHelper
+      :icon-id="deleteIcon.id"
+      :icon-view-box="deleteIcon.viewBox"
+    />
   </button>
 </template>
 
 <script>
-export default {
-  name: 'TRDelete',
-}
+  import SvgIconHelper from '@/components/helpers/SvgIconHelper'
+
+  import deleteIcon from '@/assets/svg/delete.svg'
+
+  export default {
+    name: 'TRDelete',
+    components: {
+      SvgIconHelper,
+    },
+    data() {
+      return {
+        deleteIcon,
+      }
+    },
+  }
 </script>

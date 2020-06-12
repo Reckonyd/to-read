@@ -1,25 +1,15 @@
 module.exports = {
-  purge: {
-    enabled: true,
-    content: ['./src/**/*.html', './src/**/*.vue'],
-  },
+  purge: ['./src/**/*.html', './src/**/*.vue'],
   theme: {
-    extend: {},
-  },
-  variants: {
-    backgroundColor: ['responsive', 'odd', 'even', 'focus', 'hover', 'active'],
-  },
-  plugins: [
-    function ({ addUtilities }) {
-      const justifyEvenly = {
-        '.justify-evenly': {
-          justifyContent: 'space-evenly',
-        },
-      }
-
-      addUtilities(justifyEvenly, {
-        variants: ['responsive'],
-      })
+    extend: {
+      colors: {
+        themeFontColor: 'var(--theme-font-color)',
+        themeSecondaryFontColor: 'var(--theme-secondary-font-color)',
+        themePlaceholderColor: 'var(--theme-placeholder-color)',
+        directory: '#201d1d',
+        light: '#fffdf7',
+        dark: '#363131',
+      },
     },
-  ],
+  },
 }

@@ -1,3 +1,4 @@
+const path = require('path')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 
@@ -7,10 +8,12 @@ module.exports = {
     rules: [
       {
         test: /\.vue$/,
+        include: path.resolve(__dirname, 'src'),
         use: ['vue-loader'],
       },
       {
         test: /\.js$/,
+        include: path.resolve(__dirname, 'src'),
         exclude: /node_modules/,
         use: [
           {
@@ -25,16 +28,42 @@ module.exports = {
         ],
       },
       {
-        test: /\.css$/,
+        test: /\.postcss$/,
+        include: path.resolve(__dirname, 'src'),
         use: [
           { loader: 'css-loader', options: { importLoaders: 1 } },
           'postcss-loader',
         ],
       },
+      {
+        test: /\.(gif|png|jpe?g)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name][contentHash].[ext]',
+              outputPath: 'assets',
+            },
+          },
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              disable: true,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.svg$/,
+        use: ['svg-sprite-loader', 'svgo-loader'],
+      },
     ],
   },
   resolve: {
-    extensions: ['*', '.js', '.vue'],
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+    },
+    extensions: ['.js', '.vue'],
   },
   plugins: [
     new VueLoaderPlugin(),

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-between w-full p-5 bg-red-800 shadow">
+  <header class="mt-32 mb-24 flex flex-col justify-center items-center">
     <input
       v-show="false"
       ref="fileInput"
@@ -7,44 +7,55 @@
       accept=".json"
       @change="onImport"
     />
-    <TRImport @import="$refs.fileInput.click()" />
-    <h1 class="font-serif font-semibold text-3xl text-center text-white">
+
+    <h1 class="text-6xl font-semibold font-mono text-themeFontColor">
       ToRead
     </h1>
-    <TRExport @export="this.export" />
-  </div>
+
+    <div>
+      <button
+        aria-label="Import ToRead Items"
+        class="btn btn-action text-lg"
+        @click="$refs.fileInput.click()"
+      >
+        Import
+      </button>
+
+      <button
+        aria-label="Export ToRead Items"
+        class="btn btn-action text-lg"
+        @click="this.export"
+      >
+        Export
+      </button>
+    </div>
+  </header>
 </template>
 
 <script>
-import TRImport from '../buttons/TRImport'
-import TRExport from '../buttons/TRExport'
-import { mapActions } from 'vuex'
+  import { mapActions } from 'vuex'
 
-export default {
-  name: 'TRHeader',
-  components: {
-    TRImport,
-    TRExport,
-  },
-  methods: {
-    ...mapActions(['import', 'export']),
+  export default {
+    name: 'TRHeader',
+    methods: {
+      ...mapActions(['import', 'export']),
 
-    // Create a new file reader and read the imported file's data.
-    onImport(ev) {
-      // Self is used to capture the Vue environment instead of the window environment.
-      var self = this
-      const reader = new FileReader()
+      // Create a new file reader and read the imported file's data.
+      onImport(ev) {
+        // Self is used to capture the Vue environment instead of the window environment.
+        var self = this
+        const reader = new FileReader()
 
-      // On success call the import function.
-      reader.onload = function (ev) {
-        self.import(ev.target.result)
-      }
-      // Read file data in text format.
-      reader.readAsText(ev.target.files[0])
+        // On success call the import function.
+        reader.onload = function (ev) {
+          self.import(ev.target.result)
+        }
+        // Read file data in text format.
+        reader.readAsText(ev.target.files[0])
 
-      // Reset the input value so it can accept the same file from the user.
-      this.$refs.fileInput.value = ''
+        // Reset the input value so it can accept the same file from the user.
+        this.$refs.fileInput.value = ''
+      },
     },
-  },
-}
+  }
 </script>

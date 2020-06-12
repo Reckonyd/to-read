@@ -1,7 +1,7 @@
-const tailwindcss = require('tailwindcss')
-const stylelint = require('stylelint')
-const autoprefixer = require('autoprefixer')
-
 module.exports = {
-  plugins: [stylelint, tailwindcss, autoprefixer],
+  plugins: [
+    require('stylelint'),
+    require('tailwindcss'),
+    require('postcss-preset-env')({ stage: 1 }),
+  ],
 }

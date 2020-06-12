@@ -1,29 +1,34 @@
 <template>
-  <button
-    class="absolute px-2 py-1 bg-orange-600 hover:bg-orange-500 outline-none text-md focus:shadow-outline shadow rounded-tl"
-    aria-label="Select Item"
-    @click="onSelect()"
-  >
-    <font-awesome-icon :icon="[selected ? 'fas' : 'far', 'square']" />
+  <button aria-label="Select Item" @click="$emit('select', !selected)">
+    <SvgIconHelper
+      :icon-id="selected ? minusSquareIcon.id : squareIcon.id"
+      :icon-view-box="selected ? minusSquareIcon.viewBox : squareIcon.viewBox"
+    />
   </button>
 </template>
 
 <script>
-export default {
-  name: 'TRSelect',
-  props: {
-    selected: {
-      type: Boolean,
-      default: false,
-      required: false,
+  import squareIcon from '@/assets/svg/square.svg'
+  import minusSquareIcon from '@/assets/svg/minus-square.svg'
+
+  import SvgIconHelper from '@/components/helpers/SvgIconHelper'
+
+  export default {
+    name: 'TRSelect',
+    components: {
+      SvgIconHelper,
     },
-  },
-  methods: {
-    // Change selected state and emit that value.
-    onSelect() {
-      const selection = this.selected ? false : true
-      this.$emit('select', selection)
+    props: {
+      selected: {
+        type: Boolean,
+        required: true,
+      },
     },
-  },
-}
+    data() {
+      return {
+        squareIcon,
+        minusSquareIcon,
+      }
+    },
+  }
 </script>

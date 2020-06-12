@@ -5,7 +5,10 @@
       true, {
         "ignoreAtRules": [
           "tailwind",
-          "apply"
+          "apply",
+          "variants",
+          "responsive",
+          "screen"
         ]
       }
     ]

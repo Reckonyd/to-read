@@ -1,3 +1,2 @@
-[production testing]
 defaults
-not ie <= 8
+not ie < 10

@@ -38,8 +38,6 @@ exports.handler = async (event, _context) => {
     // Launch puppeteer default chromium arguments.
     console.log('Launching Puppeteer...')
 
-    console.log(await chromium.executablePath)
-
     browser = await chromium.puppeteer.launch({
       executablePath: await chromium.executablePath,
       args: chromium.args,
@@ -92,7 +90,11 @@ exports.handler = async (event, _context) => {
       try {
         tempObj.title = extractMetaTitle()
       } catch (err) {
-        tempObj.title = document.querySelector('title').innerText
+        try {
+          tempObj.title = document.querySelector('title').innerText
+        } catch (err) {
+          tempObj.title = url
+        }
       }
 
       // Get description string from meta tags

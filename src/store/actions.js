@@ -82,7 +82,7 @@ const actions = {
 
     // If image_url is not set from getSiteData scraping,
     // invoke getSiteScreenshot Netlify function (default 'networkidle0' option).
-    if (pageDataResults.data.image_url) {
+    if (pageDataResults.data.image_url === '') {
       try {
         let imageData = await axios.post(
           '/.netlify/functions/getSiteScreenshot',
@@ -96,11 +96,13 @@ const actions = {
           pageDataResults.data.image_url = `data:image/jpeg;base64,${imageData.data}`
           pageDataResults.data.encoded = true
         } else {
-          pageDataResults.data.image_url = '/assets/android-chrome-256x256.png'
+          pageDataResults.data.image_url = await require('@/assets/favicon.png')
+            .default
         }
       } catch (err) {
         // On failure set image_url to favicon (chosen because of size).
-        pageDataResults.data.image_url = '/assets/android-chrome-256x256.png'
+        pageDataResults.data.image_url = await require('@/assets/favicon.png')
+          .default
       }
     }
 

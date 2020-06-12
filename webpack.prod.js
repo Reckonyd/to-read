@@ -7,6 +7,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
+process.env.NODE_ENV = 'production'
+
 module.exports = merge.smartStrategy({
   'module.rules.use': 'prepend',
 })(common, {
@@ -17,11 +19,23 @@ module.exports = merge.smartStrategy({
   },
   optimization: {
     minimizer: [new OptimizeCssAssetsWebpackPlugin(), new TerserPlugin()],
+    moduleIds: 'hashed',
+    runtimeChunk: 'single',
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all',
+        },
+      },
+    },
   },
   module: {
     rules: [
       {
-        test: /\.css$/,
+        test: /\.postcss$/,
+        include: path.resolve(__dirname, 'src'),
         use: [MiniCssExtractPlugin.loader],
       },
     ],
