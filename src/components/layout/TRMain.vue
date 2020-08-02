@@ -5,26 +5,31 @@
   </main>
 </template>
 
-<script>
-  import TRInputs from '@/components/layout/TRInputs'
-  import TRListView from '@/components/layout/TRListView'
+<script lang="ts">
+  import { defineComponent, onMounted } from 'vue'
+  import { useStore } from 'vuex'
 
-  import { mapActions } from 'vuex'
+  import TRInputs from '@/components/layout/TRInputs.vue'
+  import TRListView from '@/components/layout/TRListView.vue'
 
-  export default {
+  import { State } from '../../store/types'
+
+  export default defineComponent({
     name: 'TRMain',
     components: {
       TRInputs,
       TRListView,
     },
-    mounted() {
+    setup() {
       // On Main mount initialize toReadList and directories arrays.
-      this.initLists()
+      onMounted(() => {
+        const { dispatch } = useStore<State>()
+        dispatch('initLists')
+      })
+
+      return {}
     },
-    methods: {
-      ...mapActions(['initLists']),
-    },
-  }
+  })
 </script>
 
 <style lang="postcss" scoped>

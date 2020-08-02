@@ -1,17 +1,11 @@
 const path = require('path')
-const merge = require('webpack-merge')
-const common = require('./webpack.common.js')
 const TerserPlugin = require('terser-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
-process.env.NODE_ENV = 'production'
-
-module.exports = merge.smartStrategy({
-  'module.rules.use': 'prepend',
-})(common, {
+module.exports = {
   mode: 'production',
   output: {
     filename: '[name].[contentHash].js',
@@ -55,4 +49,4 @@ module.exports = merge.smartStrategy({
       filename: '[name].[contentHash].css',
     }),
   ],
-})
+}

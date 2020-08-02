@@ -7,20 +7,23 @@
   </button>
 </template>
 
-<script>
-  import SvgIconHelper from '@/components/helpers/SvgIconHelper'
+<script lang="ts">
+  import { defineComponent } from 'vue'
 
   import deleteIcon from '@/assets/svg/delete.svg'
 
-  export default {
+  import SvgIconHelper from '@/components/helpers/SvgIconHelper.vue'
+
+  export default defineComponent({
     name: 'TRDelete',
     components: {
       SvgIconHelper,
     },
-    data() {
+    emits: ['delete'],
+    setup() {
       return {
         deleteIcon,
       }
     },
-  }
+  })
 </script>

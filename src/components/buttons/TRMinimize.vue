@@ -7,30 +7,34 @@
   </button>
 </template>
 
-<script>
+<script lang="ts">
+  import { defineComponent, ref } from 'vue'
+
   import minimizeIcon from '@/assets/svg/minimize.svg'
   import maximizeIcon from '@/assets/svg/maximize.svg'
 
-  import SvgIconHelper from '@/components/helpers/SvgIconHelper'
+  import SvgIconHelper from '@/components/helpers/SvgIconHelper.vue'
 
-  export default {
+  export default defineComponent({
     name: 'TRMinimize',
     components: {
       SvgIconHelper,
     },
-    data() {
+    emits: ['minimize'],
+    setup(_, { emit }) {
+      const minimized = ref(false)
+
+      const onMinimize = () => {
+        minimized.value = !minimized.value
+        emit('minimize', minimized.value)
+      }
+
       return {
-        minimized: false,
+        minimized,
         minimizeIcon,
         maximizeIcon,
+        onMinimize,
       }
     },
-    methods: {
-      // Change selected state and emit that value.
-      onMinimize() {
-        this.minimized = !this.minimized
-        this.$emit('minimize', this.minimized)
-      },
-    },
-  }
+  })
 </script>

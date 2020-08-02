@@ -1,7 +1,7 @@
 <template>
   <div
     :class="[
-      selectedItems.length > 0 ? 'flex' : 'hidden',
+      state.selectedItems.length > 0 ? 'flex' : 'hidden',
       'w-full md:w-3/5 mx-auto justify-evenly items-center bg-gray-400 bg-opacity-25 border border-directory',
     ]"
   >
@@ -21,7 +21,7 @@
         </li>
 
         <li
-          v-for="directory in directories"
+          v-for="directory in state.directories"
           :key="directory.id"
           class=""
           @click="onMoveToFolder(directory.id)"
@@ -45,32 +45,32 @@
   </div>
 </template>
 
-<script>
-  import { mapState, mapActions } from 'vuex'
+<script lang="ts">
+  import { defineComponent, ref } from 'vue'
+  import { useStore } from 'vuex'
 
-  export default {
+  import { State } from '../../../store/types'
+
+  export default defineComponent({
     name: 'TRActions',
-    data() {
+    setup() {
+      const { dispatch, state } = useStore<State>()
+      const showDirs = ref(false)
+
+      const onMoveToFolder = (dirId: string | number) => {
+        dispatch('moveItemsToDirectory', dirId)
+        showDirs.value = false
+      }
+
+      const onDelete = () => dispatch('deleteSelected')
+
       return {
-        showDirs: false,
+        state,
+        showDirs,
+        clearSelected: () => dispatch('clearSelected'),
+        onMoveToFolder,
+        onDelete,
       }
     },
-    computed: {
-      ...mapState(['selectedItems', 'directories']),
-    },
-    methods: {
-      ...mapActions([
-        'moveItemsToDirectory',
-        'deleteSelected',
-        'clearSelected',
-      ]),
-      onMoveToFolder(dirId) {
-        this.moveItemsToDirectory(dirId)
-        this.showDirs = false
-      },
-      onDelete() {
-        this.deleteSelected()
-      },
-    },
-  }
+  })
 </script>

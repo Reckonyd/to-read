@@ -20,23 +20,30 @@
   </div>
 </template>
 
-<script>
-  import { mapActions } from 'vuex'
-  export default {
+<script lang="ts">
+  import { defineComponent, ref } from 'vue'
+  import { useStore } from 'vuex'
+
+  import { State } from '../../../store/types'
+
+  export default defineComponent({
     name: 'TRAddDirectory',
-    data() {
+    setup() {
+      const { dispatch } = useStore<State>()
+
+      const dirName = ref('')
+
+      const onCreateDir = () => {
+        if (dirName.value) {
+          dispatch('addDirectory', dirName.value)
+          dirName.value = ''
+        }
+      }
+
       return {
-        dirName: '',
+        dirName,
+        onCreateDir,
       }
     },
-    methods: {
-      ...mapActions(['addDirectory']),
-      onCreateDir() {
-        if (this.dirName) {
-          this.addDirectory(this.dirName)
-          this.dirName = ''
-        }
-      },
-    },
-  }
+  })
 </script>

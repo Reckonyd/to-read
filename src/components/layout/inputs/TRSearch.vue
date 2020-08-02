@@ -16,35 +16,39 @@
   </div>
 </template>
 
-<script>
-  import debounce from 'lodash/debounce'
-  import { mapActions } from 'vuex'
+<script lang="ts">
+  import { defineComponent, ref, watch } from 'vue'
+  import { useStore } from 'vuex'
+  import { debounce } from 'lodash'
 
-  export default {
+  import { State } from '../../../store/types'
+
+  export default defineComponent({
     name: 'TRSearch',
-    data() {
-      return {
-        search: '',
-        searching: false,
+    setup() {
+      const { dispatch } = useStore<State>()
+
+      const search = ref('')
+      const searching = ref(false)
+
+      const debouncedEmit = () => {
+        searching.value = false
+        dispatch('searchAction', search.value)
       }
-    },
-    watch: {
-      search() {
-        this.searching = true
-        this.debounceFunc()
-      },
-    },
-    methods: {
-      ...mapActions(['searchAction']),
-      debouncedEmit: function () {
-        this.searching = false
-        this.searchAction(this.search)
-      },
 
       // Using lodash Debounce to limit the calls to searchAction.
-      debounceFunc: debounce(function () {
-        this.debouncedEmit()
-      }, 300),
+      const debounceFunc = debounce(() => debouncedEmit(), 300)
+
+      watch(search, () => {
+        searching.value = true
+        debounceFunc()
+      })
+
+      return {
+        search,
+        searching,
+        debouncedEmit,
+      }
     },
-  }
+  })
 </script>

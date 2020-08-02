@@ -10,7 +10,7 @@
     @drop.self.prevent="onListDrop"
   >
     <TRDirectory
-      v-for="directory in getDirectories"
+      v-for="directory in getters.getDirectories"
       :key="directory.id"
       :dir="directory"
     />
@@ -26,47 +26,60 @@
   </section>
 </template>
 
-<script>
-  import TRListItem from '@/components/layout/items/TRListItem'
-  import TRDirectory from '@/components/layout/items/TRDirectory'
-  import { mapActions, mapGetters } from 'vuex'
+<script lang="ts">
+  import { defineComponent, ref, computed } from 'vue'
+  import { useStore } from 'vuex'
 
-  export default {
+  import TRListItem from '@/components/layout/items/TRListItem.vue'
+  import TRDirectory from '@/components/layout/items/TRDirectory.vue'
+
+  import { State, ToReadItem, DraggedItemInfo } from '../../store/types'
+
+  export default defineComponent({
     name: 'TRListView',
     components: {
       TRListItem,
       TRDirectory,
     },
-    data() {
-      return {
-        overList: false,
-      }
-    },
-    computed: {
-      ...mapGetters(['getFilteredToReadList', 'getDirectories']),
+    setup() {
+      const { dispatch, getters } = useStore<State>()
+
+      const overList = ref(false)
 
       // Return every item that is on the global directory (-1).
-      noDirList: function () {
-        return this.getFilteredToReadList.filter(item => item.dirId === -1)
-      },
+      const noDirList = computed(() =>
+        getters.getFilteredToReadList.filter(
+          (item: ToReadItem) => item.dirId === -1,
+        ),
+      )
+
+      const onDragStart = (itemInfo: DraggedItemInfo) => {
+        dispatch('changeDraggedItemInfo', itemInfo)
+      }
+
+      const onDrop = (itemInfo: DraggedItemInfo) =>
+        dispatch('swapItems', itemInfo)
+
+      const onListDrop = () => {
+        dispatch('swapDirs', -1)
+        dispatch('changeDraggedItemInfo', {})
+        overList.value = false
+      }
+
+      const onDragEnd = () => {
+        dispatch('changeDraggedItemInfo', {})
+        overList.value = false
+      }
+
+      return {
+        overList,
+        getters,
+        noDirList,
+        onDragStart,
+        onDrop,
+        onListDrop,
+        onDragEnd,
+      }
     },
-    methods: {
-      ...mapActions(['swapItems', 'swapDirs', 'changeDraggedItemInfo']),
-      onDragStart(itemInfo) {
-        this.changeDraggedItemInfo(itemInfo)
-      },
-      onDrop(itemInfo) {
-        this.swapItems(itemInfo)
-      },
-      onListDrop() {
-        this.swapDirs(-1)
-        this.changeDraggedItemInfo({})
-        this.overList = false
-      },
-      onDragEnd() {
-        this.changeDraggedItemInfo({})
-        this.overList = false
-      },
-    },
-  }
+  })
 </script>

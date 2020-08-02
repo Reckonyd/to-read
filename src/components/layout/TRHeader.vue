@@ -16,7 +16,7 @@
       <button
         aria-label="Import ToRead Items"
         class="btn btn-action text-lg"
-        @click="$refs.fileInput.click()"
+        @click="fileInput.click()"
       >
         Import
       </button>
@@ -32,30 +32,43 @@
   </header>
 </template>
 
-<script>
-  import { mapActions } from 'vuex'
+<script lang="ts">
+  import { defineComponent, ref } from 'vue'
+  import { useStore } from 'vuex'
 
-  export default {
+  import { State } from '../../store/types'
+
+  interface HTMLInputEvent extends Event {
+    target: HTMLInputElement & EventTarget
+  }
+
+  export default defineComponent({
     name: 'TRHeader',
-    methods: {
-      ...mapActions(['import', 'export']),
+    setup() {
+      const { dispatch } = useStore<State>()
+
+      const fileInput = ref<HTMLInputElement>()
 
       // Create a new file reader and read the imported file's data.
-      onImport(ev) {
-        // Self is used to capture the Vue environment instead of the window environment.
-        var self = this
+      const onImport = (ev: HTMLInputEvent) => {
         const reader = new FileReader()
 
         // On success call the import function.
         reader.onload = function (ev) {
-          self.import(ev.target.result)
+          dispatch('import', ev.target?.result)
         }
         // Read file data in text format.
-        reader.readAsText(ev.target.files[0])
+        if (ev.target.files !== null) reader.readAsText(ev.target?.files[0])
 
         // Reset the input value so it can accept the same file from the user.
-        this.$refs.fileInput.value = ''
-      },
+        if (fileInput.value) fileInput.value.value = ''
+      }
+
+      return {
+        fileInput,
+        onImport,
+        export: () => dispatch('export'),
+      }
     },
-  }
+  })
 </script>

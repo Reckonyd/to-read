@@ -12,24 +12,28 @@
   </div>
 </template>
 
-<script>
-  import TRHeader from '@/components/layout/TRHeader'
-  import TRMain from '@/components/layout/TRMain'
-  import TRThemeToggle from '@/components/buttons/TRThemeToggle'
+<script lang="ts">
+  import { defineComponent, ref } from 'vue'
 
-  export default {
+  import TRHeader from '@/components/layout/TRHeader.vue'
+  import TRMain from '@/components/layout/TRMain.vue'
+  import TRThemeToggle from '@/components/buttons/TRThemeToggle.vue'
+
+  export default defineComponent({
     name: 'App',
     components: {
       TRHeader,
       TRMain,
       TRThemeToggle,
     },
-    data() {
+    setup() {
+      const themeDark = ref(false)
+
       return {
-        themeDark: false,
+        themeDark,
       }
     },
-  }
+  })
 </script>
 
 <style lang="postcss">

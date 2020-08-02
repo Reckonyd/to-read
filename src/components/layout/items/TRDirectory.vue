@@ -15,7 +15,7 @@
       @minimize="minimizeDir = $event"
     />
 
-    <h2 class="mx-4 text-gray-200 text-xl">{{ dir.name | capitalize }}</h2>
+    <h2 class="mx-4 text-gray-200 text-xl">{{ capitalize(dir.name) }}</h2>
 
     <div
       :class="[{ hidden: minimizeDir }, 'flex flex-wrap justify-evenly my-2']"
@@ -32,25 +32,22 @@
   </div>
 </template>
 
-<script>
-  import TRListItem from '@/components/layout/items/TRListItem'
-  import TRDelete from '@/components/buttons/TRDelete'
-  import TRMinimize from '@/components/buttons/TRMinimize'
-  import { mapActions, mapGetters, mapState } from 'vuex'
+<script lang="ts">
+  import { defineComponent, ref, computed } from 'vue'
+  import { useStore } from 'vuex'
 
-  export default {
+  import TRListItem from '@/components/layout/items/TRListItem.vue'
+  import TRDelete from '@/components/buttons/TRDelete.vue'
+  import TRMinimize from '@/components/buttons/TRMinimize.vue'
+
+  import { State, ToReadItem, DraggedItemInfo } from '../../../store/types'
+
+  export default defineComponent({
     name: 'TRDirectory',
     components: {
       TRListItem,
       TRDelete,
       TRMinimize,
-    },
-    filters: {
-      capitalize: function (value) {
-        if (!value) return ''
-        value = value.toString()
-        return value.charAt(0).toUpperCase() + value.slice(1)
-      },
     },
     props: {
       dir: {
@@ -58,50 +55,55 @@
         required: true,
       },
     },
-    data() {
-      return {
-        minimizeDir: false,
-      }
-    },
-    computed: {
-      ...mapState(['search']),
-      ...mapGetters(['getFilteredToReadList']),
+    setup(props) {
+      const { dispatch, state, getters } = useStore<State>()
+
+      const minimizeDir = ref(false)
 
       // Return only items that are inside this directory.
-      directoryList: function () {
-        return this.getFilteredToReadList.filter(
-          item => item.dirId === this.dir.id,
-        )
-      },
+      const directoryList = computed(() =>
+        getters.getFilteredToReadList.filter(
+          (item: ToReadItem) => item.dirId === props.dir.id,
+        ),
+      )
 
       // On user search show this directory only if contains the searched item.
-      hasSearchItem: function () {
-        return this.directoryList.length > 0 || this.search === ''
-      },
+      const hasSearchItem = computed(
+        () => directoryList.value.length > 0 || state.search === '',
+      )
+
+      const capitalize = (value: string) => {
+        if (!value) return ''
+        value = value.toString()
+        return value.charAt(0).toUpperCase() + value.slice(1)
+      }
+
+      const onDelete = (id: string | number) => dispatch('deleteDirectory', id)
+
+      const onDragStart = (itemInfo: DraggedItemInfo) =>
+        dispatch('changeDraggedItemInfo', itemInfo)
+
+      const onDrop = (itemInfo: DraggedItemInfo) =>
+        dispatch('swapItems', itemInfo)
+
+      const onDirDrop = () => {
+        dispatch('swapDirs', props.dir.id)
+        dispatch('changeDraggedItemInfo', {})
+      }
+
+      const onDragEnd = () => dispatch('changeDraggedItemInfo', {})
+
+      return {
+        minimizeDir,
+        directoryList,
+        hasSearchItem,
+        capitalize,
+        onDelete,
+        onDragStart,
+        onDragEnd,
+        onDrop,
+        onDirDrop,
+      }
     },
-    methods: {
-      ...mapActions([
-        'deleteDirectory',
-        'swapItems',
-        'swapDirs',
-        'changeDraggedItemInfo',
-      ]),
-      onDelete(id) {
-        this.deleteDirectory(id)
-      },
-      onDragStart(itemInfo) {
-        this.changeDraggedItemInfo(itemInfo)
-      },
-      onDrop(itemInfo) {
-        this.swapItems(itemInfo)
-      },
-      onDirDrop() {
-        this.swapDirs(this.dir.id)
-        this.changeDraggedItemInfo({})
-      },
-      onDragEnd() {
-        this.changeDraggedItemInfo({})
-      },
-    },
-  }
+  })
 </script>

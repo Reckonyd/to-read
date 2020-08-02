@@ -1,6 +1,7 @@
 // No need to import puppeteer or puppeteer core
 // because chrome-aws-lambda chooses between the two
 // based on development or production respectively.
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const chromium = require('chrome-aws-lambda')
 
 // List of ad domains used on page Interceptor.
@@ -37,7 +38,9 @@ exports.handler = async (event, _context) => {
     // except viewport (1366x768) for screenshot purpose.
     console.log('Launching Puppeteer...')
     browser = await chromium.puppeteer.launch({
-      executablePath: await chromium.executablePath,
+      executablePath: process.env.NETLIFY_DEV
+        ? null
+        : await chromium.executablePath,
       args: chromium.args,
       defaultViewport: { width: 1366, height: 768 },
       headless: chromium.headless,

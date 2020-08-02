@@ -10,13 +10,15 @@
   </section>
 </template>
 
-<script>
-  import TRSearch from '@/components/layout/inputs/TRSearch'
-  import TRAddItem from '@/components/layout/inputs/TRAddItem'
-  import TRAddDirectory from '@/components/layout/inputs/TRAddDirectory'
-  import TRActions from '@/components/layout/inputs/TRActions'
+<script lang="ts">
+  import { defineComponent } from 'vue'
 
-  export default {
+  import TRSearch from '@/components/layout/inputs/TRSearch.vue'
+  import TRAddItem from '@/components/layout/inputs/TRAddItem.vue'
+  import TRAddDirectory from '@/components/layout/inputs/TRAddDirectory.vue'
+  import TRActions from '@/components/layout/inputs/TRActions.vue'
+
+  export default defineComponent({
     name: 'TRInputs',
     components: {
       TRSearch,
@@ -24,5 +26,5 @@
       TRAddDirectory,
       TRActions,
     },
-  }
+  })
 </script>

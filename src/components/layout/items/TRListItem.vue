@@ -34,7 +34,7 @@
         :src="toReadItem.image_url"
         :alt="toReadItem.image_alt || `Image of ${toReadItem.title}`"
         draggable="false"
-        @error="toReadItem.image_url = require('@/assets/favicon.png').default"
+        @error="require('@/assets/favicon.png').default"
       />
     </a>
 
@@ -54,12 +54,16 @@
   </div>
 </template>
 
-<script>
-  import TRDelete from '@/components/buttons/TRDelete'
-  import TRSelect from '@/components/buttons/TRSelect'
-  import { mapActions, mapState } from 'vuex'
+<script lang="ts">
+  import { defineComponent, computed } from 'vue'
+  import { useStore } from 'vuex'
 
-  export default {
+  import TRDelete from '@/components/buttons/TRDelete.vue'
+  import TRSelect from '@/components/buttons/TRSelect.vue'
+
+  import { State } from '../../../store/types'
+
+  export default defineComponent({
     name: 'TRListItem',
     components: {
       TRDelete,
@@ -71,43 +75,51 @@
         required: true,
       },
     },
-    computed: {
-      ...mapState(['selectedItems']),
+    emits: ['drag-started', 'dropped', 'drag-ended'],
+    setup(props, { emit }) {
+      const { dispatch, state } = useStore<State>()
 
       // On user select change the select icon.
-      isSelected: function () {
-        return this.selectedItems.find(
-          selectedItem => this.toReadItem.id === selectedItem.itemId,
+      const isSelected = computed(() =>
+        state.selectedItems.find(
+          selectedItem => props.toReadItem.id === selectedItem.itemId,
         )
           ? true
-          : false
-      },
-    },
-    methods: {
-      ...mapActions(['deleteItem', 'selectAction']),
-      onSelect(isSelected) {
-        this.selectAction({
-          id: this.toReadItem.id,
-          dirId: this.toReadItem.dirId,
+          : false,
+      )
+
+      const onSelect = (isSelected: boolean) =>
+        dispatch('selectAction', {
+          id: props.toReadItem.id,
+          dirId: props.toReadItem.dirId,
           isSelected,
         })
-      },
-      onDragStart() {
-        event.dataTransfer.setData('text', 'anything') // Added for Firefox dragNdrop support.
-        this.$emit('drag-started', {
-          id: this.toReadItem.id,
-          dir: this.toReadItem.dirId,
+
+      const onDragStart = (ev: DragEvent) => {
+        ev?.dataTransfer?.setData('text', 'anything') // Added for Firefox dragNdrop support.
+
+        emit('drag-started', {
+          id: props.toReadItem.id,
+          dir: props.toReadItem.dirId,
         })
-      },
-      onDrop() {
-        this.$emit('dropped', {
-          id: this.toReadItem.id,
-          dir: this.toReadItem.dirId,
+      }
+
+      const onDrop = () =>
+        emit('dropped', {
+          id: props.toReadItem.id,
+          dir: props.toReadItem.dirId,
         })
-      },
-      onDragEnd() {
-        this.$emit('drag-ended')
-      },
+
+      const onDragEnd = () => emit('drag-ended')
+
+      return {
+        isSelected,
+        onSelect,
+        onDragStart,
+        onDrop,
+        onDragEnd,
+        deleteItem: (itemId: string) => dispatch('deleteItem', itemId),
+      }
     },
-  }
+  })
 </script>

@@ -1,10 +1,12 @@
 import LocalStorageController from '../local_storage/LocalStorageController'
 import { saveAs } from 'file-saver'
+import { MutationTree } from 'vuex'
+import { State } from './types'
 
 // Initialize Local Storage Controller
 const LSController = new LocalStorageController()
 
-const mutations = {
+const mutations: MutationTree<State> = {
   // Get temporary object containing toReadList and directories arrays.
   // Overwrite both arrays' values.
   INIT_LISTS(state) {
@@ -79,8 +81,12 @@ const mutations = {
   // and set its directory id value to the specified directory id.
   // Change Local Storage entry to reflect the current store state.
   MOVE_TO_DIR(state, { dirId, itemId }) {
-    state.toReadList.find(item => item.id === itemId).dirId = dirId
-    LSController.modifyLocalStorageList('toReadList', state.toReadList)
+    const toReadItem = state.toReadList.find(item => item.id === itemId)
+
+    if (toReadItem) {
+      toReadItem.dirId = dirId
+      LSController.modifyLocalStorageList('toReadList', state.toReadList)
+    }
   },
 
   // Add user selected item to selectedItems array.
@@ -110,35 +116,41 @@ const mutations = {
   // Change Local Storage entry to reflect the current store state.
   SWAP_ITEMS(state, droppedOnItemInfo) {
     const firstItemIndex = state.toReadList.findIndex(
-      item => item.id === state.draggedItemInfo.id,
+      item => item.id === state?.draggedItemInfo?.id,
     )
     const secondItemIndex = state.toReadList.findIndex(
       item => item.id === droppedOnItemInfo.id,
     )
     const firstItem = state.toReadList.find(
-      item => item.id === state.draggedItemInfo.id,
+      item => item.id === state?.draggedItemInfo?.id,
     )
     const secondItem = state.toReadList.find(
       item => item.id === droppedOnItemInfo.id,
     )
 
-    firstItem.dirId = droppedOnItemInfo.dir
-    secondItem.dirId = state.draggedItemInfo.dir
-    state.toReadList.splice(firstItemIndex, 1, secondItem)
-    state.toReadList.splice(secondItemIndex, 1, firstItem)
+    if (firstItem && secondItem && state.draggedItemInfo) {
+      firstItem.dirId = droppedOnItemInfo.dir
+      secondItem.dirId = state.draggedItemInfo.dir
 
-    LSController.modifyLocalStorageList('toReadList', state.toReadList)
+      state.toReadList.splice(firstItemIndex, 1, secondItem)
+      state.toReadList.splice(secondItemIndex, 1, firstItem)
+
+      LSController.modifyLocalStorageList('toReadList', state.toReadList)
+    }
   },
 
   // Find item that is currently being dragged and change its
   // directory id to the id of the directory that the user drops it on.
   // Change Local Storage entry to reflect the current store state.
   SWAP_DIRS(state, dirId) {
-    state.toReadList.find(
-      item => item.id === state.draggedItemInfo.id,
-    ).dirId = dirId
+    const toReadItem = state.toReadList.find(
+      item => item.id === state?.draggedItemInfo?.id,
+    )
 
-    LSController.modifyLocalStorageList('toReadList', state.toReadList)
+    if (toReadItem) {
+      toReadItem.dirId = dirId
+      LSController.modifyLocalStorageList('toReadList', state.toReadList)
+    }
   },
 
   // Set temporary object of currently being dragged item object.

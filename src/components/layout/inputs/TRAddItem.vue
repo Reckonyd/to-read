@@ -5,12 +5,14 @@
     <input
       v-model="url"
       type="text"
-      :aria-label="failStatus || 'e.g. https://www.example.com/'"
-      :placeholder="failStatus || 'Enter a valid URL: https://www.example.com/'"
+      :aria-label="state.failStatus || 'e.g. https://www.example.com/'"
+      :placeholder="
+        state.failStatus || 'Enter a valid URL: https://www.example.com/'
+      "
       :class="[
         'w-full md:w-3/4 md:mr-2 mb-2',
         { success: isUrl },
-        { error: (!isUrl && url) || (failStatus && !url) },
+        { error: (!isUrl && url) || (state.failStatus && !url) },
       ]"
       @keypress.enter="onAdd"
     />
@@ -19,47 +21,53 @@
       :class="[
         'btn md:w-1/4',
         { success: isUrl },
-        { error: (!isUrl && url) || (failStatus && !url) },
-        { waiting },
+        { error: (!isUrl && url) || (state.failStatus && !url) },
+        { waiting: state.waiting },
       ]"
       @click="onAdd"
     >
-      {{ waiting ? 'Fetching...' : 'Add Item' }}
+      {{ state.waiting ? 'Fetching...' : 'Add Item' }}
     </button>
   </div>
 </template>
 
-<script>
-  import { mapActions, mapState } from 'vuex'
+<script lang="ts">
+  import { defineComponent, ref, computed } from 'vue'
+  import { useStore } from 'vuex'
 
-  export default {
+  import { State } from '../../../store/types'
+
+  export default defineComponent({
     name: 'TRAddItem',
-    data() {
-      return {
-        url: '',
-      }
-    },
-    computed: {
-      ...mapState(['waiting', 'failStatus']),
-      isUrl: function () {
+    setup() {
+      const { dispatch, state } = useStore<State>()
+
+      const url = ref('')
+
+      const isUrl = computed(() => {
         const urlMatch =
-          this.url.match(
+          url.value.match(
             /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/g,
           ) || []
 
         return urlMatch.length > 0
-      },
-    },
-    methods: {
-      ...mapActions(['addItem']),
-      onAdd() {
-        if (this.isUrl) {
-          this.addItem(this.url)
-          this.url = ''
+      })
+
+      const onAdd = () => {
+        if (isUrl.value) {
+          dispatch('addItem', url.value)
+          url.value = ''
         }
-      },
+      }
+
+      return {
+        state,
+        url,
+        isUrl,
+        onAdd,
+      }
     },
-  }
+  })
 </script>
 
 <style lang="postcss" scoped>

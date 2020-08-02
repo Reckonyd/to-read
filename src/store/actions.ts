@@ -1,7 +1,10 @@
 import axios from 'axios'
-import { v4 as uuidv4 } from 'uuid'
 
-const actions = {
+import { v4 as uuidv4 } from 'uuid'
+import { ActionTree } from 'vuex'
+import { State, ToReadItem } from './types'
+
+const actions: ActionTree<State, State> = {
   // Initialize Lists.
   initLists({ commit }) {
     commit('INIT_LISTS')
@@ -55,9 +58,10 @@ const actions = {
     dispatch('setFailStatus', '')
 
     // Final object to be pushed to toReadList array.
-    let pageInfo = {}
+    let pageInfo = {} as ToReadItem & { error: boolean; notFound: boolean }
+
     // Collected data from page.
-    let pageDataResults = {}
+    let pageDataResults
 
     // Invoke getSiteData Netlify Function with 'networkidel0' option.
     // On Error re-invoke with 'domcontentloaded' option for faster page loading.
@@ -82,9 +86,9 @@ const actions = {
 
     // If image_url is not set from getSiteData scraping,
     // invoke getSiteScreenshot Netlify function (default 'networkidle0' option).
-    if (pageDataResults.data.image_url === '') {
+    if (pageDataResults?.data?.image_url === '') {
       try {
-        let imageData = await axios.post(
+        const imageData = await axios.post(
           '/.netlify/functions/getSiteScreenshot',
           url,
         )
@@ -96,11 +100,13 @@ const actions = {
           pageDataResults.data.image_url = `data:image/jpeg;base64,${imageData.data}`
           pageDataResults.data.encoded = true
         } else {
+          // eslint-disable-next-line @typescript-eslint/no-var-requires
           pageDataResults.data.image_url = await require('@/assets/favicon.png')
             .default
         }
       } catch (err) {
         // On failure set image_url to favicon (chosen because of size).
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
         pageDataResults.data.image_url = await require('@/assets/favicon.png')
           .default
       }
@@ -116,7 +122,7 @@ const actions = {
     pageInfo.url = url
     pageInfo = {
       ...pageInfo,
-      ...pageDataResults.data,
+      ...pageDataResults?.data,
     }
 
     // If object has neither notFound or error properties

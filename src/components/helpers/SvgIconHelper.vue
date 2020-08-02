@@ -7,8 +7,10 @@
   </svg>
 </template>
 
-<script>
-  export default {
+<script lang="ts">
+  import { defineComponent } from 'vue'
+
+  export default defineComponent({
     name: 'SvgIconHelper',
     props: {
       iconId: {
@@ -24,5 +26,5 @@
         default: 'w-5 h-5',
       },
     },
-  }
+  })
 </script>

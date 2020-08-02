@@ -10,13 +10,15 @@
   </button>
 </template>
 
-<script>
+<script lang="ts">
+  import { defineComponent } from 'vue'
+
   import toggleLeftIcon from '@/assets/svg/toggle-left.svg'
   import toggleRightIcon from '@/assets/svg/toggle-right.svg'
 
-  import SvgIconHelper from '@/components/helpers/SvgIconHelper'
+  import SvgIconHelper from '@/components/helpers/SvgIconHelper.vue'
 
-  export default {
+  export default defineComponent({
     name: 'TRThemeToggle',
     components: {
       SvgIconHelper,
@@ -27,11 +29,12 @@
         default: false,
       },
     },
-    data() {
+    emits: ['toggle-theme'],
+    setup() {
       return {
         toggleLeftIcon,
         toggleRightIcon,
       }
     },
-  }
+  })
 </script>

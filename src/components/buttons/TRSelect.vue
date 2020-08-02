@@ -7,13 +7,15 @@
   </button>
 </template>
 
-<script>
+<script lang="ts">
+  import { defineComponent } from 'vue'
+
   import squareIcon from '@/assets/svg/square.svg'
   import minusSquareIcon from '@/assets/svg/minus-square.svg'
 
-  import SvgIconHelper from '@/components/helpers/SvgIconHelper'
+  import SvgIconHelper from '@/components/helpers/SvgIconHelper.vue'
 
-  export default {
+  export default defineComponent({
     name: 'TRSelect',
     components: {
       SvgIconHelper,
@@ -24,11 +26,12 @@
         required: true,
       },
     },
-    data() {
+    emits: ['select'],
+    setup() {
       return {
         squareIcon,
         minusSquareIcon,
       }
     },
-  }
+  })
 </script>

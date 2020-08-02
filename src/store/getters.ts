@@ -1,4 +1,7 @@
-const getters = {
+import { GetterTree } from 'vuex'
+import { State } from './types'
+
+const getters: GetterTree<State, State> = {
   // Return all items of toReadList array based on user search value.
   // Each item is filtered based on its title, being the same as the search value.
   // The resulting array is reversed before it is returned, so items will be shown

@@ -1,18 +1,16 @@
 const path = require('path')
-const merge = require('webpack-merge')
-const common = require('./webpack.common.js')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { HotModuleReplacementPlugin } = require('webpack')
 
-process.env.NODE_ENV = 'development'
-
-module.exports = merge.smartStrategy({
-  'module.rules.use': 'prepend',
-})(common, {
+module.exports = {
   mode: 'development',
   devtool: 'eval-source-map',
   devServer: {
-    contentBase: './dist',
+    contentBase: [
+      path.resolve(__dirname, 'dist'),
+      path.resolve(__dirname, 'node_modules'),
+    ],
+    publicPath: '/',
     hot: true,
     open: false,
     historyApiFallback: true,
@@ -34,4 +32,4 @@ module.exports = merge.smartStrategy({
       template: 'src/index.html',
     }),
   ],
-})
+}
