@@ -1,7 +1,7 @@
 {
-  "name": "todolearn",
-  "version": "1.0.0",
-  "description": "TodoLearn helps readers and learners to organize their material and thoughts to a seamless space.",
+  "name": "toread",
+  "version": "1.1.0",
+  "description": "ToRead helps readers and learners to organize their material and thoughts to a seamless space.",
   "private": true,
   "scripts": {
     "build": "webpack --env.production --config webpack.common.js",
