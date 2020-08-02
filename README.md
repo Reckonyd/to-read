@@ -4,8 +4,8 @@
 
 ## [Live Demo](https://toread.netlify.com/)
 
-![Site Preview Light](/site_preview_images/SitePreviewLight.png){: .shadow}
-![Site Preview Dark](/site_preview_images/SitePreviewDark.png){: .shadow}
+![Site Preview Light](/site_preview_images/SitePreviewLight.png)
+![Site Preview Dark](/site_preview_images/SitePreviewDark.png)
 
 
 ## **Features**
