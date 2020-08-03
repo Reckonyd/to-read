@@ -1,10 +1,30 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 // No need to import puppeteer or puppeteer core
 // because chrome-aws-lambda chooses between the two
 // based on development or production respectively.
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const chromium = require('chrome-aws-lambda')
-const { PuppeteerBlocker } = require('@cliqz/adblocker-puppeteer')
-const fetch = require('cross-fetch')
+
+// List of ad domains used on page Interceptor.
+const blockedResources = [
+  'quantserve',
+  'adzerk',
+  'doubleclick',
+  'adition',
+  'exelator',
+  'sharethrough',
+  'twitter',
+  'google-analytics',
+  'fontawesome',
+  'facebook',
+  'analytics',
+  'optimizely',
+  'clicktale',
+  'mixpanel',
+  'zedo',
+  'clicksor',
+  'tiqcdn',
+  'googlesyndication',
+]
 
 exports.handler = async (event, _context) => {
   // Browser handle
@@ -33,9 +53,19 @@ exports.handler = async (event, _context) => {
     const page = await browser.newPage()
 
     // Intercept any ads.
-    PuppeteerBlocker.fromPrebuiltAdsAndTracking(fetch).then(blocker =>
-      blocker.enableBlockingInPage(page),
-    )
+    await page.setRequestInterception(true)
+
+    page.on('request', request => {
+      if (
+        blockedResources.some(
+          resource => request.url().indexOf(resource) !== -1,
+        )
+      ) {
+        request.abort()
+      } else {
+        request.continue()
+      }
+    })
 
     // Open user requested page.
     /* Based on the value of wait:

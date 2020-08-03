@@ -83,10 +83,8 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
-    "@cliqz/adblocker-puppeteer": "^1.17.0",
     "chrome-aws-lambda": "^5.2.0",
     "core-js": "^3.6.5",
-    "cross-fetch": "^3.0.5",
     "puppeteer-core": "^5.2.1"
   }
 }
