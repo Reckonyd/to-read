@@ -8,12 +8,11 @@
       @change="onImport"
     />
 
-    <h1 class="text-6xl font-semibold font-mono text-themeFontColor">
-      ToRead
-    </h1>
+    <h1 class="text-6xl font-semibold font-mono text-themeFontColor">ToRead</h1>
 
     <div>
       <button
+        data-test="import"
         aria-label="Import ToRead Items"
         class="btn btn-action text-lg"
         @click="fileInput.click()"
@@ -22,9 +21,10 @@
       </button>
 
       <button
+        data-test="export"
         aria-label="Export ToRead Items"
         class="btn btn-action text-lg"
-        @click="this.export"
+        @click="exportBackup"
       >
         Export
       </button>
@@ -67,7 +67,7 @@
       return {
         fileInput,
         onImport,
-        export: () => dispatch('export'),
+        exportBackup: () => dispatch('export'),
       }
     },
   })

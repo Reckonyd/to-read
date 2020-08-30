@@ -16,9 +16,7 @@
           'z-50 flex flex-col items-center bg-gray-400 bg-opacity-25 border-r border-l border-b border-directory select-none cursor-pointer',
         ]"
       >
-        <li class="" @click="onMoveToFolder(-1)">
-          No Folder
-        </li>
+        <li class="" @click="onMoveToFolder(-1)">No Folder</li>
 
         <li
           v-for="directory in state.directories"
