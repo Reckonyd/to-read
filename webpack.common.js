@@ -1,5 +1,5 @@
 const path = require('path')
-const merge = require('webpack-merge')
+const {mergeWithCustomize } = require('webpack-merge')
 const { VueLoaderPlugin } = require('vue-loader')
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 const WebpackCdnPlugin = require('webpack-cdn-plugin')
@@ -13,9 +13,31 @@ const webpackConfig = env => {
 
   process.env.NODE_ENV = env.production ? 'production' : 'development'
 
-  return merge.smartStrategy({
-    'module.rules.use': 'append',
-    plugins: 'append',
+  return mergeWithCustomize({
+    customizeArray(a, b, key) {
+      if (key === 'plugins') {
+        return [...a, ...b]
+      }
+
+      if(key === 'module.rules') {
+        const aArr = a.map(aRule => {
+          let bRule = b.find(({ test }) => test.toString() === aRule.test.toString())
+
+          if(!bRule) return aRule
+
+          return {
+            ...aRule,
+            use: [...aRule.use, ...bRule.use]
+          }
+        })
+
+        const bArr = b.filter(bRule => !a.find(aRule => aRule.test.toString() === bRule.test.toString()))
+
+        return [...aArr, ...bArr]
+      }
+
+      return undefined
+    }
   })(config, {
     entry: './src/app.ts',
     module: {

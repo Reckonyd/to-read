@@ -11,3 +11,4 @@
   publish = "dist"
   port = 3000
   targetPort = 8080
+  autoLaunch = false

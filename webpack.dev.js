@@ -21,7 +21,7 @@ module.exports = {
       {
         test: /\.postcss$/,
         include: path.resolve(__dirname, 'src'),
-        use: ['vue-style-loader'],
+        use: ['style-loader'],
       },
     ],
   },
