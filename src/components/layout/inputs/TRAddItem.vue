@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-full mx-auto flex flex-col md:flex-row items-center justify-center"
+    class="flex flex-col items-center justify-center w-full mx-auto md:flex-row"
   >
     <input
       v-model="url"

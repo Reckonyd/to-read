@@ -1,13 +1,13 @@
 <template>
   <div
-    class="w-full mx-auto flex flex-col md:flex-row items-center justify-center"
+    class="flex flex-col items-center justify-center w-full mx-auto md:flex-row"
   >
     <input
       v-model="dirName"
       type="text"
       aria-label="Enter a Folder name"
       placeholder="Enter a Folder Name"
-      class="w-full md:w-3/4 md:mr-2 mb-2"
+      class="w-full mb-2 md:w-3/4 md:mr-2"
     />
 
     <button

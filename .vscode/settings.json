@@ -1,16 +1,12 @@
 {
-  "eslint.validate": [
-    "vue",
-    "javascript"
-  ],
-  "editor.formatOnPaste": false,
-  "editor.formatOnSave": false,
-  "vetur.validation.template": true,
+  "eslint.validate": ["vue", "javascript", "typescript"],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
-  "files.eol": "\n",
   "css.validate": false,
   "less.validate": false,
-  "scss.validate": false
+  "scss.validate": false,
+  "vetur.validation.template": false,
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "files.eol": "\n"
 }

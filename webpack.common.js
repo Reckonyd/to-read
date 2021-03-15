@@ -1,9 +1,9 @@
 const path = require('path')
-const {mergeWithCustomize } = require('webpack-merge')
+const { mergeWithCustomize } = require('webpack-merge')
 const { VueLoaderPlugin } = require('vue-loader')
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 const WebpackCdnPlugin = require('webpack-cdn-plugin')
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 
 const devConfig = require('./webpack.dev')
 const prodConfig = require('./webpack.prod')
@@ -19,25 +19,30 @@ const webpackConfig = env => {
         return [...a, ...b]
       }
 
-      if(key === 'module.rules') {
+      if (key === 'module.rules') {
         const aArr = a.map(aRule => {
-          let bRule = b.find(({ test }) => test.toString() === aRule.test.toString())
+          let bRule = b.find(
+            ({ test }) => test.toString() === aRule.test.toString(),
+          )
 
-          if(!bRule) return aRule
+          if (!bRule) return aRule
 
           return {
             ...aRule,
-            use: [...aRule.use, ...bRule.use]
+            use: [...aRule.use, ...bRule.use],
           }
         })
 
-        const bArr = b.filter(bRule => !a.find(aRule => aRule.test.toString() === bRule.test.toString()))
+        const bArr = b.filter(
+          bRule =>
+            !a.find(aRule => aRule.test.toString() === bRule.test.toString()),
+        )
 
         return [...aArr, ...bArr]
       }
 
       return undefined
-    }
+    },
   })(config, {
     entry: './src/app.ts',
     module: {
@@ -57,8 +62,8 @@ const webpackConfig = env => {
               loader: 'ts-loader',
               options: {
                 transpileOnly: true,
-                appendTsSuffixTo: [/\.vue$/]
-              }
+                appendTsSuffixTo: [/\.vue$/],
+              },
             },
           ],
         },
@@ -157,17 +162,17 @@ const webpackConfig = env => {
       }),
       new ForkTsCheckerWebpackPlugin({
         eslint: {
-          files: ['./src/**/*.{ts,vue}', './functions/**/*.js']
+          files: ['./src/**/*.{ts,vue}', './functions/**/*.js'],
         },
         typescript: {
           extensions: {
             vue: {
               enabled: true,
-              compiler: '@vue/compiler-sfc'
-            }
-          }
-        }
-      })
+              compiler: '@vue/compiler-sfc',
+            },
+          },
+        },
+      }),
     ],
   })
 }

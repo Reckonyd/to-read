@@ -1,5 +1,5 @@
 <template>
-  <header class="mt-32 mb-24 flex flex-col justify-center items-center">
+  <header class="flex flex-col items-center justify-center mt-32 mb-24">
     <input
       v-show="false"
       ref="fileInput"
@@ -8,13 +8,13 @@
       @change="onImport"
     />
 
-    <h1 class="text-6xl font-semibold font-mono text-themeFontColor">ToRead</h1>
+    <h1 class="font-mono text-6xl font-semibold text-themeFontColor">ToRead</h1>
 
     <div>
       <button
         data-test="import"
         aria-label="Import ToRead Items"
-        class="btn btn-action text-lg"
+        class="text-lg btn btn-action"
         @click="fileInput.click()"
       >
         Import
@@ -23,7 +23,7 @@
       <button
         data-test="export"
         aria-label="Export ToRead Items"
-        class="btn btn-action text-lg"
+        class="text-lg btn btn-action"
         @click="exportBackup"
       >
         Export

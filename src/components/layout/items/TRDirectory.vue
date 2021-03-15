@@ -1,21 +1,21 @@
 <template>
   <div
     v-show="hasSearchItem"
-    class="relative col-span-1 md:col-span-2 lg:col-span-3 w-11/12 mx-auto p-3 bg-directory rounded-t shadow-md"
+    class="relative w-11/12 col-span-1 p-3 mx-auto rounded-t shadow-md md:col-span-2 lg:col-span-3 bg-directory"
     @dragover.prevent
     @drop.prevent="onDirDrop"
   >
     <TRDelete
-      class="absolute right-0 mr-2 mt-2 text-light"
+      class="absolute right-0 mt-2 mr-2 text-light"
       @delete="onDelete(dir.id)"
     />
 
     <TRMinimize
-      class="absolute right-0 mr-10 mt-2 text-light"
+      class="absolute right-0 mt-2 mr-10 text-light"
       @minimize="minimizeDir = $event"
     />
 
-    <h2 class="mx-4 text-gray-200 text-xl">{{ capitalize(dir.name) }}</h2>
+    <h2 class="mx-4 text-xl text-gray-200">{{ capitalize(dir.name) }}</h2>
 
     <div
       :class="[{ hidden: minimizeDir }, 'flex flex-wrap justify-evenly my-2']"

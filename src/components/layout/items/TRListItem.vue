@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative max-w-sm sm:max-w-lg w-11/12 mx-auto text-gray-200 bg-gray-700 rounded-t shadow-md"
+    class="relative w-11/12 max-w-sm mx-auto text-gray-200 bg-gray-700 rounded-t shadow-md sm:max-w-lg"
     draggable="true"
     @dragstart="onDragStart"
     @dragover.prevent
@@ -8,13 +8,13 @@
     @dragend="onDragEnd"
   >
     <TRDelete
-      class="absolute right-0 mr-2 mt-2 p-1 bg-gray-900 text-light rounded"
+      class="absolute right-0 p-1 mt-2 mr-2 bg-gray-900 rounded text-light"
       draggable="false"
       @delete="deleteItem(toReadItem.id)"
     />
 
     <TRSelect
-      class="absolute right-0 mr-10 mt-2 p-1 bg-gray-900 text-light rounded"
+      class="absolute right-0 p-1 mt-2 mr-10 bg-gray-900 rounded text-light"
       draggable="false"
       :selected="isSelected"
       @select="onSelect"
@@ -39,14 +39,14 @@
     </a>
 
     <h2
-      class="my-4 mx-4 font-bold text-center text-lg md:text-xl"
+      class="mx-4 my-4 text-lg font-bold text-center md:text-xl"
       draggable="false"
     >
       {{ toReadItem.title }}
     </h2>
 
     <p
-      class="mb-8 mx-6 lg:text-lg text-left leading-tight overflow-y-hidden"
+      class="mx-6 mb-8 overflow-y-hidden leading-tight text-left lg:text-lg"
       draggable="false"
     >
       {{ toReadItem.description }}

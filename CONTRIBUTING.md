@@ -28,4 +28,4 @@ the hosting of the web app and the serverless functions together.
 
 - To start the development server just run `ntl dev` on the root of the project folder.
 - To build the web app just run `npm run build` and in the **dist** folder you will find
-the output files.
+  the output files.
