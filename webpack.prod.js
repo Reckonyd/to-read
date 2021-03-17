@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path')
 const TerserPlugin = require('terser-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
@@ -8,18 +9,17 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 module.exports = {
   mode: 'production',
   output: {
-    filename: '[name].[contentHash].js',
+    filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
   },
   optimization: {
     minimizer: [new OptimizeCssAssetsWebpackPlugin(), new TerserPlugin()],
-    moduleIds: 'hashed',
     runtimeChunk: 'single',
     splitChunks: {
       cacheGroups: {
-        vendor: {
+        defaultVendors: {
           test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
+          idHint: 'vendors',
           chunks: 'all',
         },
       },
@@ -46,7 +46,7 @@ module.exports = {
       },
     }),
     new MiniCssExtractPlugin({
-      filename: '[name].[contentHash].css',
+      filename: '[name].[contenthash].css',
     }),
   ],
 }

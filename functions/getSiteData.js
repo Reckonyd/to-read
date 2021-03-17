@@ -1,7 +1,7 @@
 // No need to import puppeteer or puppeteer core
 // because chrome-aws-lambda chooses between the two
 // based on development or production respectively.
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+/* eslint-disable no-console, @typescript-eslint/no-var-requires */
 const chromium = require('chrome-aws-lambda')
 
 // List of ad domains used on page Interceptor.

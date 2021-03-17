@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path')
 const { mergeWithCustomize } = require('webpack-merge')
 const { VueLoaderPlugin } = require('vue-loader')
@@ -11,7 +12,11 @@ const prodConfig = require('./webpack.prod')
 const webpackConfig = env => {
   const config = env.production ? prodConfig : devConfig
 
-  process.env.NODE_ENV = env.production ? 'production' : 'development'
+  process.env.NODE_ENV = env.production
+    ? 'production'
+    : env.development
+    ? 'development'
+    : ''
 
   return mergeWithCustomize({
     customizeArray(a, b, key) {
@@ -87,7 +92,7 @@ const webpackConfig = env => {
             {
               loader: 'file-loader',
               options: {
-                name: '[name][contentHash].[ext]',
+                name: '[name].[contenthash].[ext]',
                 outputPath: 'assets',
               },
             },
@@ -115,6 +120,8 @@ const webpackConfig = env => {
       new VueLoaderPlugin(),
       new FaviconsWebpackPlugin({
         logo: './src/assets/favicon.png',
+        mode: 'webapp',
+        devMode: 'light',
         favicons: {
           appName: 'ToRead',
           appShortName: 'ToRead',
