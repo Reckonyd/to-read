@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const { HotModuleReplacementPlugin } = require('webpack')
 
 module.exports = {
   mode: 'development',
@@ -28,7 +27,6 @@ module.exports = {
     ],
   },
   plugins: [
-    new HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       title: 'ToRead',
       template: 'src/index.html',

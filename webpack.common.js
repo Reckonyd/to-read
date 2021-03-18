@@ -87,22 +87,9 @@ const webpackConfig = env => {
           ],
         },
         {
-          test: /\.(gif|png|jpe?g)$/i,
-          use: [
-            {
-              loader: 'file-loader',
-              options: {
-                name: '[name].[contenthash].[ext]',
-                outputPath: 'assets',
-              },
-            },
-            {
-              loader: 'image-webpack-loader',
-              options: {
-                disable: true,
-              },
-            },
-          ],
+          test: /\.(png|jpg|jpeg|gif)$/i,
+          type: 'asset/resource',
+          generator: { filename: '[name].[contenthash].[ext]' },
         },
         {
           test: /\.svg$/,
@@ -133,6 +120,12 @@ const webpackConfig = env => {
           background: '#edf2f7',
           theme_color: '#9b2c2c',
           version: '1.0.0',
+          icons: {
+            appleStartup: false,
+            windows: false,
+            coast: false,
+            yandex: false,
+          },
         },
       }),
       new WebpackCdnPlugin({
