@@ -51,8 +51,8 @@
   }
 
   input {
-    @apply bg-transparent border-b-2 border-themeFontColor text-themeFontColor rounded-sm duration-200 ease-linear outline-none;
     transition-property: padding;
+    @apply bg-transparent border-b-2 border-themeFontColor text-themeFontColor rounded-sm duration-200 ease-linear outline-none;
 
     &:hover,
     &:focus {
