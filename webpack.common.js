@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path')
 const { mergeWithCustomize } = require('webpack-merge')
 const { VueLoaderPlugin } = require('vue-loader')

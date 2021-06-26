@@ -1,1 +1,5 @@
-dist/
+.husky
+.vscode
+node_modules
+dist
+site_preview_images
