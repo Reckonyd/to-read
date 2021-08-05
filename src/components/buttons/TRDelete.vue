@@ -1,16 +1,11 @@
 <template>
   <button aria-label="Delete Item" @click="$emit('delete')">
-    <SvgIconHelper
-      :icon-id="deleteIcon.id"
-      :icon-view-box="deleteIcon.viewBox"
-    />
+    <SvgIconHelper icon-name="delete" />
   </button>
 </template>
 
 <script lang="ts">
   import { defineComponent } from 'vue'
-
-  import deleteIcon from '@/assets/svg/delete.svg'
 
   import SvgIconHelper from '@/components/helpers/SvgIconHelper.vue'
 
@@ -20,10 +15,5 @@
       SvgIconHelper,
     },
     emits: ['delete'],
-    setup() {
-      return {
-        deleteIcon,
-      }
-    },
   })
 </script>

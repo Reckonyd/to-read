@@ -1,9 +1,6 @@
 <template>
-  <svg
-    :class="[iconClass, 'fill-current select-none']"
-    :viewBox="`${iconViewBox}`"
-  >
-    <use :xlink:href="`#${iconId}`" />
+  <svg :class="[iconClass, 'fill-current select-none']">
+    <use :xlink:href="`spritemap.svg#sprite-${iconName}`" />
   </svg>
 </template>
 
@@ -13,11 +10,7 @@
   export default defineComponent({
     name: 'SvgIconHelper',
     props: {
-      iconId: {
-        type: String,
-        required: true,
-      },
-      iconViewBox: {
+      iconName: {
         type: String,
         required: true,
       },

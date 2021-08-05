@@ -100,15 +100,16 @@ const actions: ActionTree<State, State> = {
           pageDataResults.data.image_url = `data:image/jpeg;base64,${imageData.data}`
           pageDataResults.data.encoded = true
         } else {
-          // eslint-disable-next-line @typescript-eslint/no-var-requires
-          pageDataResults.data.image_url = await require('@/assets/favicon.png')
-            .default
+          pageDataResults.data.image_url =
+            // eslint-disable-next-line @typescript-eslint/no-var-requires
+            await require('@/assets/img/logo.png').default
         }
       } catch (err) {
         // On failure set image_url to favicon (chosen because of size).
         // eslint-disable-next-line @typescript-eslint/no-var-requires
-        pageDataResults.data.image_url = await require('@/assets/favicon.png')
-          .default
+        pageDataResults.data.image_url =
+          // eslint-disable-next-line @typescript-eslint/no-var-requires
+          await require('@/assets/img/logo.png').default
       }
     }
 

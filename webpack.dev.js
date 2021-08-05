@@ -1,20 +1,18 @@
 const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-  mode: 'development',
   devtool: 'eval-source-map',
   devServer: {
-    static: [
-      path.resolve(__dirname, 'dist'),
-      path.resolve(__dirname, 'node_modules'),
-    ],
-    dev: {
-      publicPath: '/',
-    },
-    open: false,
-    historyApiFallback: true,
+    static: path.resolve(__dirname, 'dist'),
     host: '0.0.0.0',
+    port: 8080,
+    hot: true,
+    client: {
+      overlay: {
+        errors: true,
+        warnings: false,
+      },
+    },
   },
   module: {
     rules: [
@@ -25,10 +23,4 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      title: 'ToRead',
-      template: 'src/index.html',
-    }),
-  ],
 }

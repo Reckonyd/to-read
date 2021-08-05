@@ -19,7 +19,6 @@
 <script lang="ts">
   import { defineComponent, ref, watch } from 'vue'
   import { useStore } from 'vuex'
-  import { debounce } from 'lodash'
 
   import { State } from '../../../store/types'
 
@@ -31,23 +30,37 @@
       const search = ref('')
       const searching = ref(false)
 
-      const debouncedEmit = () => {
+      const debounce = (
+        func: (...args: unknown[]) => unknown,
+        delay: number,
+        { leading }: Record<string, unknown> = {},
+      ) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        let timerId: any
+
+        return (...args: unknown[]) => {
+          if (!timerId && leading) {
+            func(...args)
+          }
+          clearTimeout(timerId)
+
+          timerId = setTimeout(() => func(...args), delay)
+        }
+      }
+
+      const doSearch = () => {
         searching.value = false
         dispatch('searchAction', search.value)
       }
 
-      // Using lodash Debounce to limit the calls to searchAction.
-      const debounceFunc = debounce(() => debouncedEmit(), 300)
-
       watch(search, () => {
         searching.value = true
-        debounceFunc()
+        debounce(doSearch, 300)
       })
 
       return {
         search,
         searching,
-        debouncedEmit,
       }
     },
   })

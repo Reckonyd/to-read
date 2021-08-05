@@ -1,6 +1,16 @@
 <template>
   <div
-    class="relative w-11/12 max-w-sm mx-auto text-gray-200 bg-gray-700 rounded-t shadow-md sm:max-w-lg"
+    class="
+      relative
+      w-11/12
+      max-w-sm
+      mx-auto
+      text-gray-200
+      bg-gray-700
+      rounded-t
+      shadow-md
+      sm:max-w-lg
+    "
     draggable="true"
     @dragstart="onDragStart"
     @dragover.prevent
@@ -34,7 +44,7 @@
         :src="toReadItem.image_url"
         :alt="toReadItem.image_alt || `Image of ${toReadItem.title}`"
         draggable="false"
-        @error="require('@/assets/favicon.png').default"
+        @error="require('@/assets/img/logo.png').default"
       />
     </a>
 
