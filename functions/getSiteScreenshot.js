@@ -31,6 +31,9 @@ exports.handler = async (event, _context) => {
 
   let image_url = ''
 
+  // Destructure user requested url and wait value.
+  const { url, waitUntil } = JSON.parse(event.body)
+
   // Begin Web Sraping
   try {
     // Launch puppeteer default chromium arguments.
@@ -46,7 +49,7 @@ exports.handler = async (event, _context) => {
     })
 
     // Open user requested page.
-    console.log('Opening:', event.body)
+    console.log('Opening:', url)
     const page = await browser.newPage()
 
     // Intercept any ads.
@@ -67,7 +70,7 @@ exports.handler = async (event, _context) => {
     // Open user requested page.
     // Networkidle0 means that we wait for the page to load
     // and 0 connections for 500ms.
-    await page.goto(event.body, { waitUntil: 'networkidle0' })
+    await page.goto(url, { waitUntil })
 
     // Take screenshot and save it as a base64 string.
     console.log('Getting Page Image...')

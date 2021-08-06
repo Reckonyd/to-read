@@ -1,7 +1,6 @@
-import axios from 'axios'
-
-import { v4 as uuidv4 } from 'uuid'
 import { ActionTree } from 'vuex'
+import fetchData from '@/helpers/fetchData'
+import uuidv4 from '@/helpers/uuidv4'
 import { State, ToReadItem } from './types'
 
 const actions: ActionTree<State, State> = {
@@ -61,7 +60,7 @@ const actions: ActionTree<State, State> = {
     let pageInfo = {} as ToReadItem & { error: boolean; notFound: boolean }
 
     // Collected data from page.
-    let pageDataResults
+    let pageData
 
     // Invoke getSiteData Netlify Function with 'networkidel0' option.
     // On Error re-invoke with 'domcontentloaded' option for faster page loading.
@@ -69,45 +68,54 @@ const actions: ActionTree<State, State> = {
     // with notFound property set to true.
     // If both fail set error property to emitted error.
     try {
-      pageDataResults = await axios.post(
+      const response = await fetchData(
         '/.netlify/functions/getSiteData',
-        JSON.stringify({ url, wait: 'networkidle0' }),
+        url,
+        'networkidle0',
       )
+
+      pageData = await response.json()
     } catch (err) {
       try {
-        pageDataResults = await axios.post(
+        const response = await fetchData(
           '/.netlify/functions/getSiteData',
-          JSON.stringify({ url, wait: 'domcontentloaded' }),
+          url,
+          'domcontentloaded',
         )
+
+        pageData = await response.json()
       } catch (err) {
         pageInfo.error = err
       }
     }
 
     // If image_url is not set from getSiteData scraping,
-    // invoke getSiteScreenshot Netlify function (default 'networkidle0' option).
-    if (pageDataResults?.data?.image_url === '') {
+    // invoke getSiteScreenshot Netlify function.
+    if (!pageData?.image_url) {
       try {
-        const imageData = await axios.post(
+        const response = await fetchData(
           '/.netlify/functions/getSiteScreenshot',
           url,
+          'networkidle0',
         )
 
+        const imageUrl = await response.text()
+
         // Check if getSiteScreenshot failed to capture the site
-        if (imageData.data !== '') {
+        if (imageUrl) {
           // Set image_url to returned base64 string
           // and set encoded property to true so styling would be handled differently.
-          pageDataResults.data.image_url = `data:image/jpeg;base64,${imageData.data}`
-          pageDataResults.data.encoded = true
+          pageData.image_url = `data:image/jpeg;base64,${imageUrl}`
+          pageData.encoded = true
         } else {
-          pageDataResults.data.image_url =
+          pageData.image_url =
             // eslint-disable-next-line @typescript-eslint/no-var-requires
             await require('@/assets/img/logo.png').default
         }
       } catch (err) {
         // On failure set image_url to favicon (chosen because of size).
         // eslint-disable-next-line @typescript-eslint/no-var-requires
-        pageDataResults.data.image_url =
+        pageData.image_url =
           // eslint-disable-next-line @typescript-eslint/no-var-requires
           await require('@/assets/img/logo.png').default
       }
@@ -123,7 +131,7 @@ const actions: ActionTree<State, State> = {
     pageInfo.url = url
     pageInfo = {
       ...pageInfo,
-      ...pageDataResults?.data,
+      ...pageData,
     }
 
     // If object has neither notFound or error properties

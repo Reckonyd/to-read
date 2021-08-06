@@ -31,7 +31,7 @@ exports.handler = async (event, _context) => {
   // Scrape Results Object.
   let resObj = {}
   // Destructure user requested url and wait value.
-  const { url, wait } = JSON.parse(event.body)
+  const { url, waitUntil } = JSON.parse(event.body)
 
   // Begin Web Sraping.
   try {
@@ -73,7 +73,7 @@ exports.handler = async (event, _context) => {
         Domcontentloaded means that we wait for the HTML document to be completely loaded and parsed
         without waiting for stylesheets, images, and subframes to finish loading.
     */
-    await page.goto(url, { waitUntil: wait })
+    await page.goto(url, { waitUntil })
 
     // Scrape Data - Using Facebook and Twitter meta tags.
     console.log('Getting Page Data...')
