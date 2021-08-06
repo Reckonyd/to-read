@@ -8,7 +8,7 @@
   import { defineComponent } from 'vue'
 
   export default defineComponent({
-    name: 'SvgIconHelper',
+    name: 'SvgIcon',
     props: {
       iconName: {
         type: String,

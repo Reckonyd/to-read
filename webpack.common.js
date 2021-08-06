@@ -104,11 +104,6 @@ const commonConfig = {
     }),
     new SVGSpritemapPlugin(
       path.resolve(__dirname, 'src/assets/svg/sprites/**/*.svg'),
-      {
-        output: {
-          filename: 'spritemap.svg',
-        },
-      },
     ),
     new HtmlWebpackPlugin({
       title: 'ToRead',
@@ -122,8 +117,8 @@ const commonConfig = {
   },
 }
 
-module.exports = () => {
-  return mergeWithRules({
+module.exports = () =>
+  mergeWithRules({
     module: {
       rules: {
         test: 'match',
@@ -134,4 +129,3 @@ module.exports = () => {
     commonConfig,
     process.env.NODE_ENV === 'development' ? devConfig : prodConfig,
   )
-}

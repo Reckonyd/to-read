@@ -1,18 +1,18 @@
 <template>
   <button aria-label="Delete Item" @click="$emit('delete')">
-    <SvgIconHelper icon-name="delete" />
+    <SvgIcon icon-name="delete" />
   </button>
 </template>
 
 <script lang="ts">
   import { defineComponent } from 'vue'
 
-  import SvgIconHelper from '@/components/helpers/SvgIconHelper.vue'
+  import SvgIcon from '@/components/SvgIcon.vue'
 
   export default defineComponent({
     name: 'TRDelete',
     components: {
-      SvgIconHelper,
+      SvgIcon,
     },
     emits: ['delete'],
   })

@@ -1,18 +1,18 @@
 <template>
   <button aria-label="Minimize Folder" @click="onMinimize">
-    <SvgIconHelper :icon-name="minimized ? 'minimize' : 'maximize'" />
+    <SvgIcon :icon-name="minimized ? 'minimize' : 'maximize'" />
   </button>
 </template>
 
 <script lang="ts">
   import { defineComponent, ref } from 'vue'
 
-  import SvgIconHelper from '@/components/helpers/SvgIconHelper.vue'
+  import SvgIcon from '@/components/SvgIcon.vue'
 
   export default defineComponent({
     name: 'TRMinimize',
     components: {
-      SvgIconHelper,
+      SvgIcon,
     },
     emits: ['minimize'],
     setup(_, { emit }) {
