@@ -57,7 +57,7 @@ const actions: ActionTree<State, State> = {
     dispatch('setFailStatus', '')
 
     // Final object to be pushed to toReadList array.
-    let pageInfo = {} as ToReadItem & { error: boolean; notFound: boolean }
+    let pageInfo = {} as ToReadItem & { error: unknown; notFound: boolean }
 
     // Collected data from page.
     let pageData
