@@ -12,11 +12,14 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
     'plugin:vue/vue3-recommended',
+    'plugin:@typescript-eslint/recommended',
     'prettier',
   ],
   rules: {
+    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
+    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     'vue/component-name-in-template-casing': ['error', 'PascalCase'],
     'vue/html-self-closing': [
       'error',
@@ -27,9 +30,6 @@ module.exports = {
         },
       },
     ],
-    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
-    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
   },
   overrides: [
     {

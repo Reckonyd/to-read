@@ -1,12 +1,15 @@
 {
-  "eslint.validate": ["vue", "javascript", "typescript"],
+  "files.eol": "\n",
+  "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": true,
+    "source.fixAll.stylelint": true
   },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "eslint.validate": ["javascript", "typescript", "vue"],
+  "stylelint.validate": ["css", "postcss", "html", "vue"],
+  "typescript.tsdk": "node_modules\\typescript\\lib",
   "css.validate": false,
   "less.validate": false,
-  "scss.validate": false,
-  "vetur.validation.template": false,
-  "typescript.tsdk": "node_modules\\typescript\\lib",
-  "files.eol": "\n"
+  "scss.validate": false
 }

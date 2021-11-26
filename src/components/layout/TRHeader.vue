@@ -15,7 +15,7 @@
         data-test="import"
         aria-label="Import ToRead Items"
         class="text-lg btn btn-action"
-        @click="fileInput.click()"
+        @click="fileInput?.click()"
       >
         Import
       </button>
@@ -38,10 +38,6 @@
 
   import { State } from '../../store/types'
 
-  interface HTMLInputEvent extends Event {
-    target: HTMLInputElement & EventTarget
-  }
-
   export default defineComponent({
     name: 'TRHeader',
     setup() {
@@ -50,7 +46,7 @@
       const fileInput = ref<HTMLInputElement>()
 
       // Create a new file reader and read the imported file's data.
-      const onImport = (ev: HTMLInputEvent) => {
+      const onImport = (ev: Event) => {
         const reader = new FileReader()
 
         // On success call the import function.
@@ -58,7 +54,11 @@
           dispatch('import', ev.target?.result)
         }
         // Read file data in text format.
-        if (ev.target.files !== null) reader.readAsText(ev.target?.files[0])
+        if ((ev.target as HTMLInputElement).files !== null) {
+          reader.readAsText(
+            ((ev.target as HTMLInputElement).files as FileList)[0],
+          )
+        }
 
         // Reset the input value so it can accept the same file from the user.
         if (fileInput.value) fileInput.value.value = ''
