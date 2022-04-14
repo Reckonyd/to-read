@@ -5,6 +5,7 @@ const { VueLoaderPlugin } = require('vue-loader')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const SVGSpritemapPlugin = require('svg-spritemap-webpack-plugin')
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
+const ESLintPlugin = require('eslint-webpack-plugin')
 
 const devConfig = require('./webpack.dev')
 const prodConfig = require('./webpack.prod')
@@ -89,10 +90,8 @@ const commonConfig = {
       __VUE_PROD_DEVTOOLS__: JSON.stringify(false),
     }),
     new VueLoaderPlugin(),
+    new ESLintPlugin({ files: ['./src/**/*.{ts,vue}'] }),
     new ForkTsCheckerWebpackPlugin({
-      eslint: {
-        files: ['./src/**/*.{ts,vue}'],
-      },
       typescript: {
         extensions: {
           vue: {

@@ -4,15 +4,7 @@ module.exports = {
     'at-rule-no-unknown': [
       true,
       {
-        ignoreAtRules: [
-          'tailwind',
-          'apply',
-          'layer',
-          'variants',
-          'responsive',
-          'screen',
-          'extend',
-        ],
+        ignoreAtRules: ['tailwind', 'apply', 'layer', 'screen', 'extend'],
       },
     ],
     'selector-max-id': 0,

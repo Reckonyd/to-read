@@ -1,6 +1,5 @@
 module.exports = {
-  mode: 'jit',
-  purge: ['./src/**/*.html', './src/**/*.vue'],
+  content: ['./src/**/*.html', './src/**/*.vue'],
   theme: {
     extend: {
       colors: {
