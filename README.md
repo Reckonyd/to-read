@@ -2,6 +2,8 @@
 
 **ToRead App** helps readers and learners to organize their material and thoughts to a _seamless_ space.
 
+## [Live Demo](https://toread.netlify.app/)
+
 ![Site Preview Light](/site_preview_images/SitePreviewLight.png)
 ![Site Preview Dark](/site_preview_images/SitePreviewDark.png)
 
